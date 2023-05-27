@@ -36,16 +36,38 @@ npm i eslint --save-dev
 npm install eslint-config-airbnb-typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser --save-dev
 
 ### Use of Personal Access Token
- git push  https://egangotri:PAT@github.com/eGangotri/egangotri-react-page-counter.git
+ git push  https://egangotri:PAT@github.com/eGangotri/egangotri-react-daily-work-report.git
  insert your Tokern in PAT above
 
-### firebase Deployment
+### Google Firebase Deployment
+https://www.geeksforgeeks.org/how-to-deploy-react-project-on-firebase/
+
 First time
  npm install -g firebase-tools
  firebase init 
-afterwards
+
+ afterwards
+
 firebase login
+
+    Are you ready to proceed? Yes
+    ? Which Firebase features do you want to set up for this directory? Press Space to select features, then Enter to confirm your choices. (Press <space> to select, <a>
+    to toggle all, <i> to invert selection, and <enter> to proceed)
+    Choose:
+    (*) Hosting: Configure files for Firebase Hosting and (optionally) set up GitHub Action deploys
+
+   ? What do you want to use as your public directory? build
+   ? Configure as a single-page app (rewrite all urls to /index.html)? (y/N) y
+   ? Set up automatic builds and deploys with GitHub? (y/N) 
+
+What do you want to use as your public directory? public
+Configure as a single-page app (rewrite all urls to /index.html)? Yes
+Setup automatic builds No
+
+
+npm run build
 firebase deploy
 
-https://egangotri-react-page-counter.web.app/
-https://egangotri-react-page-counter.firebaseapp.com/
+These below are the old version installed for https://github.com/eGangotri/egangotri-react-daily-work-report
+https://egangotri-react-daily-work-report.web.app/
+https://egangotri-react-daily-work-report.firebaseapp.com/

@@ -27,6 +27,7 @@ import { DailyWorkReportType } from "types/dailyyWorkReportTypes";
 import AllPdfStats from "vo/AllPdfStats";
 import { libraryMenuOptions, centers } from "pages/constants";
 import SendReportDialog from "pages/SendToServerDialog";
+import globalConsts from 'global.json';
 
 const DailyReport = () => {
 
@@ -73,9 +74,14 @@ const DailyReport = () => {
   };
 
   const loginToPortal = async () => {
-    const logIn:boolean = await HelperService.logIn(staffName,password);
-    setLoggedIn(logIn);
-    setValidationMsg(!logIn);
+    if (globalConsts.OVER_RIDE_LOGIN) {
+      setLoggedIn(globalConsts.OVER_RIDE_LOGIN);
+    }
+    else {
+      const logIn: boolean = await HelperService.logIn(staffName, password);
+      setLoggedIn(logIn);
+      setValidationMsg(!logIn);
+    }
   };
 
   const handleLibChange = (event: SelectChangeEvent) => {
@@ -99,55 +105,54 @@ const DailyReport = () => {
 
   return (
     <Stack spacing={2}>
-       <Typography variant="h2" >eGangotri Daily Work Report</Typography>
+      <Typography variant="h2" >eGangotri Daily Work Report</Typography>
       <Box>
-            <Icon icon="gangotri" height="300px" width="650px" />
+        <Icon icon="gangotri" height="300px" width="650px" />
       </Box>
 
       <Box sx={{ display: "flex", flexDirection: "row" }}>
-        {loggedIn ? 
-        <>Hi {staffName} </> :
-        <>
-        <Box sx={panelOneCSS}>
-          First Name:{" "}
-          <TextField
-            variant="outlined"
-            label="Required"
-            error={_.isEmpty(staffName)}
-            size="small"
-            onChange={(e) => setStaffName(e.target.value)}
-          />
-        </Box>
-        <Box sx={panelOneCSS}>
-          Password:{" "}
-          <TextField
-            variant="outlined"
-            label="Required"
-            error={_.isEmpty(password)}
-            size="small"
-            type="password"
-            onSubmit={()=>loginToPortal()}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Box>
+        {loggedIn ?
+          <>Hi {staffName} </> :
+          <>
+            <Box sx={panelOneCSS}>
+              First Name:{" "}
+              <TextField
+                variant="outlined"
+                label="Required"
+                error={_.isEmpty(staffName)}
+                size="small"
+                onChange={(e) => setStaffName(e.target.value)}
+              />
+            </Box>
+            <Box sx={panelOneCSS}>
+              Password:{" "}
+              <TextField
+                variant="outlined"
+                label="Required"
+                error={_.isEmpty(password)}
+                size="small"
+                type="password"
+                onSubmit={() => loginToPortal()}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Box>
 
-        <Box sx={panelOneCSS}>
-          <Button
-            color="primary"
-            variant="contained"
-            component="span"
-            disabled={(_.isEmpty(staffName) && _.isEmpty(password)) || loggedIn}
-            onClick={()=>loginToPortal()}
-            endIcon={<FiLogIn style={{ color: "primary" }} />}
-          >
-            Login
-          </Button>
-        </Box>
-        {validationMsg && <Typography sx={{color:"red"}}>Login Failure/Wrong UserId or Password</Typography>}
-        </>
+            <Box sx={panelOneCSS}>
+              <Button
+                color="primary"
+                variant="contained"
+                component="span"
+                disabled={(_.isEmpty(staffName) && _.isEmpty(password)) || loggedIn}
+                onClick={() => loginToPortal()}
+                endIcon={<FiLogIn style={{ color: "primary" }} />}
+              >
+                Login
+              </Button>
+            </Box>
+            {validationMsg && <Typography sx={{ color: "red" }}>Login Failure/Wrong UserId or Password</Typography>}
+          </>
         }
       </Box>
-      <Typography>if can't login, then use <a href="https://egangotri-react-page-counter.web.app/">this login-free site</a></Typography>
       <Box sx={{ display: "flex", flexDirection: "row" }}>
         <Box sx={panelOneCSS}>
           <InputLabel id="l1">Center</InputLabel>
@@ -158,7 +163,7 @@ const DailyReport = () => {
             id="demo-simple-select-standard"
             value={center}
             onChange={handleCenterChange}
-            sx={{minWidth: '200px'}}
+            sx={{ minWidth: '200px' }}
             disabled={!loggedIn}
           >
             {centers.map((option: string) => (
@@ -178,7 +183,7 @@ const DailyReport = () => {
             value={library}
             onChange={handleLibChange}
             label="Library"
-            sx={{minWidth: '200px'}}
+            sx={{ minWidth: '200px' }}
             disabled={!loggedIn}
           >
             {(libraries || []).map((option: string, index: number) => (
@@ -226,8 +231,8 @@ const DailyReport = () => {
           Send to Server
         </Button> */}
 
-        <SendReportDialog pdfData={pdfData} setPdfData={setPdfData} snackBarOpen={snackBarOpen} setSnackBarOpen={setSnackBarOpen}/>
-        
+        <SendReportDialog pdfData={pdfData} setPdfData={setPdfData} snackBarOpen={snackBarOpen} setSnackBarOpen={setSnackBarOpen} />
+
         {/* <Button
           variant="contained"
           endIcon={<FaCopy style={{ color: "primary" }} />}
@@ -244,13 +249,13 @@ const DailyReport = () => {
         >
           Clear
         </Button>
-       <Box>
-       <Snackbar open={snackBarOpen} autoHideDuration={6000}>
-          <Alert severity="success" sx={{ width: '100%' }}>
-            Report Sent succcessfully
-          </Alert>
-        </Snackbar>
-       </Box>
+        <Box>
+          <Snackbar open={snackBarOpen} autoHideDuration={6000}>
+            <Alert severity="success" sx={{ width: '100%' }}>
+              Report Sent succcessfully. Now paste report in your whatsapp group
+            </Alert>
+          </Snackbar>
+        </Box>
       </Stack>
       <Box ref={dataHoldingElement}>{AllPdfStats.decorate(pdfData)}</Box>
     </Stack>
