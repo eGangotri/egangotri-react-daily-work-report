@@ -1,7 +1,5 @@
 import { backendServer } from "api/constants"
 import { DailyWorkReportType } from "types/dailyyWorkReportTypes"
-import { Buffer } from 'buffer';
-const bcrypt = require("bcryptjs");
 
 type LoginUser = {
   username: string,

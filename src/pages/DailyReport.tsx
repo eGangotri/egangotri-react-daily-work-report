@@ -2,7 +2,6 @@ import "./DailyReport.css";
 
 import {
   Alert,
-  AlertTitle,
   Box,
   Button,
   Grid,
@@ -15,19 +14,19 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { pushReport as pushReportToServer } from "api/service/callApi";
 import Icon from "components/common/Icons";
 import _ from "lodash";
 import React, { useRef, useState } from "react";
-import { FaCopy, FaRegTrashAlt, FaUpload } from "react-icons/fa";
+import { FaRegTrashAlt } from "react-icons/fa";
 import { FiLogIn } from "react-icons/fi";
 import { GoFileMedia } from "react-icons/go";
 import HelperService from "service/HelperService";
-import { DailyWorkReportType } from "types/dailyyWorkReportTypes";
 import AllPdfStats from "vo/AllPdfStats";
 import { libraryMenuOptions, centers } from "pages/constants";
 import SendReportDialog from "pages/SendToServerDialog";
 import globalConsts from 'global.json';
+
+
 
 const DailyReport = () => {
 
@@ -105,14 +104,17 @@ const DailyReport = () => {
 
   return (
     <Stack spacing={2}>
-      <Typography variant="h2" >eGangotri Daily Work Report</Typography>
+      <Typography variant="h3" >eGangotri Daily Work Report</Typography>
       <Box>
         <Icon icon="gangotri" height="300px" width="650px" />
       </Box>
 
+      <Box>
+      <Typography variant="h5">नीचे फिलहाल कोई भी पास्वर्ड डाल दो/Use any password for now</Typography>
+      </Box>
       <Box sx={{ display: "flex", flexDirection: "row" }}>
         {loggedIn ?
-          <>Hi {staffName} </> :
+          <Typography variant="h5">Hi {_.capitalize(staffName)}</Typography> :
           <>
             <Box sx={panelOneCSS}>
               First Name:{" "}
@@ -133,6 +135,7 @@ const DailyReport = () => {
                 size="small"
                 type="password"
                 onSubmit={() => loginToPortal()}
+                placeholder="Will accept any password for now"
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Box>

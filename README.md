@@ -71,3 +71,14 @@ firebase deploy
 These below are the old version installed for https://github.com/eGangotri/egangotri-react-daily-work-report
 https://egangotri-react-daily-work-report.web.app/
 https://egangotri-react-daily-work-report.firebaseapp.com/
+
+
+###ENvironment Variables
+
+//can be prod or dev
+REACT_APP_DEV_ENV=prod
+REACT_APP_FAST_REFRESH=false
+REACT_APP_BACKEND_SERVER_PROD=https://XXXXXXXX.com/
+REACT_APP_BACKEND_SERVER_DEV=http://localhost:80/
+
+
