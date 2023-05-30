@@ -30,9 +30,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "start2": "npm run lint_fix && react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-dotenv && react-scripts start",
+    "start2": "react-dotenv && npm run lint_fix && react-scripts start",
+    "build": "react-dotenv && react-scripts build",
     "test": "react-scripts test",
     "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
     "lint_fix": "npx eslint --fix . --ext .js,.jsx,.ts,.tsx"

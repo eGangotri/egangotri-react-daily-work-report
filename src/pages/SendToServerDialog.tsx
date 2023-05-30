@@ -32,6 +32,7 @@ interface SendReportDialogProps {
     setPdfData: React.Dispatch<React.SetStateAction<AllPdfStats>>;
     snackBarOpen: boolean;
     setSnackBarOpen:React.Dispatch<React.SetStateAction<boolean>>;
+    password:string;
 }
 
 function BootstrapDialogTitle(props: DialogTitleProps) {
@@ -58,7 +59,7 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
     );
 }
 
-const SendReportDialog: React.FC<SendReportDialogProps> = ({ pdfData,setPdfData,snackBarOpen,setSnackBarOpen }) => {
+const SendReportDialog: React.FC<SendReportDialogProps> = ({ pdfData,setPdfData,snackBarOpen,setSnackBarOpen,password }) => {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -79,7 +80,7 @@ const SendReportDialog: React.FC<SendReportDialogProps> = ({ pdfData,setPdfData,
         const dailyReport: DailyWorkReportType =
             AllPdfStats.convertPdfStatsToDailyWorkReportTypeObject(pdfData);
         console.log(`dailyReport ${JSON.stringify(dailyReport)}`);
-        pushReportToServer(dailyReport);
+        pushReportToServer(dailyReport,password);
         setSnackBarOpen(true);
         copyResults();
     };

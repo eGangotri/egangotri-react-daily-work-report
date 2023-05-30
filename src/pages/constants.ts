@@ -10,7 +10,7 @@ export const centers = appendOthersItemToList(["Choose Center", "Delhi", "Haridw
 export const libraryMenuOptions = [
     {
         name: centers[0],
-        centers: [""],
+        centers: ["Choose Library"],
     },
     {
         name: centers[1],

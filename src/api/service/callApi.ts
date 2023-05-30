@@ -6,14 +6,18 @@ type LoginUser = {
   password: string
 }
 
-export async function pushReport(dailyReport:DailyWorkReportType) {
+export async function pushReport(dailyReport:DailyWorkReportType,password:string) {
   const _url = `${backendServer}dailyWorkReport/add`
   console.log(`_url ${_url}`)
 
+  const _reportBody = {
+    ...dailyReport,
+    password:password
+  }
   const options: RequestInit = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(dailyReport),
+    body: JSON.stringify(_reportBody)
   }
 
   const res = await fetch(_url, options)

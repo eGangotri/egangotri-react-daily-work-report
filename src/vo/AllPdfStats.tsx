@@ -80,7 +80,7 @@ export default class AllPdfStats {
             {DailyReportUtil.sizeInfo(all.totalSize)}
           </span>
         </Typography>
-        <Typography>
+        <Typography component="span">
           <DenseTable rows={all.pdfs} />
         </Typography>
       </Box>

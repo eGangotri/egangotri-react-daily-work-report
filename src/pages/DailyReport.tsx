@@ -1,4 +1,5 @@
 import "./DailyReport.css";
+import env from "react-dotenv";
 
 import {
   Alert,
@@ -24,7 +25,6 @@ import HelperService from "service/HelperService";
 import AllPdfStats from "vo/AllPdfStats";
 import { libraryMenuOptions, centers } from "pages/constants";
 import SendReportDialog from "pages/SendToServerDialog";
-import globalConsts from 'global.json';
 
 
 
@@ -73,8 +73,8 @@ const DailyReport = () => {
   };
 
   const loginToPortal = async () => {
-    if (globalConsts.OVER_RIDE_LOGIN) {
-      setLoggedIn(globalConsts.OVER_RIDE_LOGIN);
+    if (JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN)) {
+      setLoggedIn(true);
     }
     else {
       const logIn: boolean = await HelperService.logIn(staffName, password);
@@ -110,7 +110,7 @@ const DailyReport = () => {
       </Box>
 
       <Box>
-      <Typography variant="h5">नीचे फिलहाल कोई भी पास्वर्ड डाल दो/Use any password for now</Typography>
+      {JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN) ? <Typography variant="h5">नीचे फिलहाल कोई भी पास्वर्ड डाल दो/Use any password for now</Typography>:<></>}
       </Box>
       <Box sx={{ display: "flex", flexDirection: "row" }}>
         {loggedIn ?
@@ -234,7 +234,7 @@ const DailyReport = () => {
           Send to Server
         </Button> */}
 
-        <SendReportDialog pdfData={pdfData} setPdfData={setPdfData} snackBarOpen={snackBarOpen} setSnackBarOpen={setSnackBarOpen} />
+        <SendReportDialog pdfData={pdfData} setPdfData={setPdfData} snackBarOpen={snackBarOpen} setSnackBarOpen={setSnackBarOpen} password={password} />
 
         {/* <Button
           variant="contained"
@@ -261,6 +261,14 @@ const DailyReport = () => {
         </Box>
       </Stack>
       <Box ref={dataHoldingElement}>{AllPdfStats.decorate(pdfData)}</Box>
+      <Box  sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100%"
+      }}>
+          <Typography sx={{fontWeight:"600px"}}>eGangotri Foundation</Typography>
+      </Box>
     </Stack>
 
   );
