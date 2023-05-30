@@ -65,12 +65,11 @@ Configure as a single-page app (rewrite all urls to /index.html)? Yes
 Setup automatic builds No
 
 
-npm run build
+yarn run build
 firebase deploy
 
-These below are the old version installed for https://github.com/eGangotri/egangotri-react-daily-work-report
-https://egangotri-react-daily-work-report.web.app/
-https://egangotri-react-daily-work-report.firebaseapp.com/
+Code will be viewable below:
+https://egangotri-daily-work-report.web.app
 
 
 ###ENvironment Variables
