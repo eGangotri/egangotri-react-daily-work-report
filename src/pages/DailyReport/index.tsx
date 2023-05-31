@@ -17,7 +17,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { GoFileMedia } from "react-icons/go";
 import HelperService from "service/HelperService";
 import AllPdfStats from "vo/AllPdfStats";
-import { libraryMenuOptions, centers } from "pages/constants";
+import { libraryMenuOptions, centers, panelOneCSS } from "pages/constants";
 import SendReportDialog from "pages/DailyReport/SendToServerDialog";
 import LoginPanel from "pages/LoginPanel";
 import {
@@ -52,8 +52,7 @@ const DailyReport = () => {
   );
   const [library, setLibrary] = React.useState<string>(libraries[0]);
 
-  const panelOneCSS = { bgcolor: "white", marginRight: "10px" };
-
+  
   const clearResults = () => {
     setIsLoggedIn(false);
     setLoggedUser("");

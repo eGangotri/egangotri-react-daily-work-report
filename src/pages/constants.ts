@@ -43,3 +43,5 @@ export const libraryMenuOptions = [
         centers: appendOthersItemToList([]),
     },
 ];
+
+export const panelOneCSS = { bgcolor: "white", marginRight: "10px" };
