@@ -15,3 +15,8 @@ export type PageCountStatsType = {
   pageCount: number;
   fileSize: string;
 };
+
+export type LoginPanelProps = {
+  username: string;
+  password: number;
+};
