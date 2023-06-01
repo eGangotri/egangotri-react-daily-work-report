@@ -6,14 +6,14 @@ import type PdfStat from 'vo/PdfStat';
 
 export class HelperService {
   static processFiles = async (files: File[], staffName: string, center: string, lib: string) => {
-    const data = await this.createData(files);
-    return this.processData(data, staffName, center, lib);
+    const pdfStats = await this.createData(files);
+    return this.processData(pdfStats, staffName, center, lib);
   };
 
   static createData = async (files: File[]) => {
     const promises: Promise<PdfStat>[] = [];
     files.forEach((file: File) => {
-      promises.push(this.countPages(file));
+      promises.push(this.fetchPdfStats(file));
     });
 
     const data = await Promise.all(promises);
@@ -50,13 +50,13 @@ export class HelperService {
   //     }
   //   }
   //   clipBoardData += `Total Page Count: ${pdfInfo.globalCount}`;
-  //   clipBoardData += `\nTotal Size: ${DailyReportUtil.sizeInfo(
+  //   clipBoardData += `\nTotal Size: ${FrontEndBackendCommonCode.sizeInfo(
   //     pdfInfo.totalSize
   //   )}`;
   //   return clipBoardData;
   // };
 
-  static countPages = async (file: File): Promise<PdfStat> => {
+  static fetchPdfStats = async (file: File): Promise<PdfStat> => {
     const buffer = await file.arrayBuffer();
     const pdfDoc = await PDFDocument.load(buffer, {
       ignoreEncryption: true,
@@ -64,6 +64,7 @@ export class HelperService {
 
     const pageCount = pdfDoc.getPageCount();
     const pdfSize = file.size;
+
     const row: PdfStat = {
       name: file.name,
       pageCount,

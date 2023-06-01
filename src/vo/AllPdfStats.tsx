@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import DenseTable from 'components/Table';
 
-import * as DailyReportUtil from 'utils/DailyReportUtil';
+import * as FrontEndBackendCommonCode from 'mirror/FrontEndBackendCommonCode';
 import * as GeneralUtils from 'utils/GeneralUtils';
 import Decorator from 'vo/Decorator';
 
@@ -77,7 +77,7 @@ export default class AllPdfStats {
         <Typography>
           Total Size:{' '}
           <span style={{ fontWeight: 'bold' }}>
-            {DailyReportUtil.sizeInfo(all.totalSize)}
+            {FrontEndBackendCommonCode.sizeInfo(all.totalSize)}
           </span>
         </Typography>
         <Typography component="span">
@@ -98,7 +98,7 @@ export default class AllPdfStats {
   static pdfDataToString = (pdfStat: PdfStat, index: number) => {
     return `(${index}) ${pdfStat.name}\t ${
       pdfStat.pageCount
-    } pages \t ${DailyReportUtil.sizeInfo(pdfStat.pdfSize)}\n\n`;
+    } pages \t ${FrontEndBackendCommonCode.sizeInfo(pdfStat.pdfSize)}\n\n`;
   };
 
   static toString = (all: AllPdfStats): string => {
@@ -106,7 +106,8 @@ export default class AllPdfStats {
       all.pdfCount
     } pdf(s) On ${all.timeOfRequest}\n
 Total Page Count:${all.globalCount}
-Total Size: ${DailyReportUtil.sizeInfo(all.totalSize)}\n
+Total Size: ${FrontEndBackendCommonCode.sizeInfo(all.totalSize)}\n
+Total Size Raw: ${all.totalSize}\n
 ${AllPdfStats.pdfDataArrayToString(all.pdfs)}`;
   };
 
@@ -118,7 +119,8 @@ ${AllPdfStats.pdfDataArrayToString(all.pdfs)}`;
         "lib": pdfData.lib,
         "totalPdfCount": pdfData.pdfCount,
         "totalPageCount": pdfData.globalCount,
-        "totalSize": DailyReportUtil.sizeInfo(pdfData.totalSize),
+        "totalSize": FrontEndBackendCommonCode.sizeInfo(pdfData.totalSize),
+        "totalSizeRaw": pdfData.totalSize,
         "dateOfReport":  pdfData.dateOfReport,
         pageCountStats:[]
       }
@@ -127,7 +129,8 @@ ${AllPdfStats.pdfDataArrayToString(all.pdfs)}`;
         dailyWorkReport.pageCountStats.push({
           "fileName": _pdf.name,
           "pageCount": _pdf.pageCount,
-          "fileSize": DailyReportUtil.sizeInfo(_pdf.pdfSize)
+          "fileSize": FrontEndBackendCommonCode.sizeInfo(_pdf.pdfSize),
+          "fileSizeRaw": _pdf.pdfSize
         })
       })
       return dailyWorkReport

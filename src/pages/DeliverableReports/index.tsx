@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Stack, TextField, Typography } from "@mui/material";
+import { Box, Stack, TextField, Button } from "@mui/material";
 import {
     useRecoilState,
 } from 'recoil';
@@ -24,6 +24,10 @@ const DeliverableReports = () => {
     const [operatorName, setOperatorName] = useState("");
     const [selectedStartDate, setSelectedStartDate] = React.useState<Date | null>(null);
     const [selectedEndDate, setSelectedEndDate] = React.useState<Date | null>(null);
+
+    const filterReport = () => {
+        console.log(`filterReport`);
+    }
 
     const handleStartDateChange = (date: any) => {
         setSelectedStartDate(date);
@@ -62,7 +66,6 @@ const DeliverableReports = () => {
                             onChange={(e) => setOperatorName(e.target.value)}
                         />
                     </Box>
-                        <Box sx={panelOneCSS}>
                             Filter by Time:{" "}
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DemoContainer components={['DateRangePicker', 'DateRangePicker']}>
@@ -74,7 +77,14 @@ const DeliverableReports = () => {
                                     </DemoItem>
                                 </DemoContainer>
                             </LocalizationProvider>
-                        </Box>
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            component="span"
+                            onClick={() => filterReport()}
+                        >
+                            Filter Report
+                        </Button>
                     </>
                     :
                     <></>}
