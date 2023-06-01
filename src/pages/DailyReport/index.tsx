@@ -18,7 +18,7 @@ import { GoFileMedia } from "react-icons/go";
 import HelperService from "service/HelperService";
 import AllPdfStats from "vo/AllPdfStats";
 import { libraryMenuOptions, centers, panelOneCSS } from "pages/constants";
-import SendReportDialog from "pages/DailyReport/SendToServerDialog";
+import SendReportDialog, { SUCCESS_MSG } from "pages/DailyReport/SendToServerDialog";
 import LoginPanel from "pages/LoginPanel";
 import {
   useRecoilState,
@@ -31,7 +31,7 @@ const DailyReport = () => {
   const [_loggedUser, setLoggedUser] = useRecoilState(loggedUser);
 
   const [pdfData, setPdfData] = useState<AllPdfStats>(new AllPdfStats());
-  const [snackBarOpen, setSnackBarOpen] = useState<boolean>(false);
+  const [snackBarMsg, setSnackBarMsg] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [disabledState, setDisabledState] = useState<boolean>(false);
   const [center, setCenter] = React.useState<string>(centers[0]);
@@ -59,7 +59,7 @@ const DailyReport = () => {
     setPassword("");
     setPdfData(new AllPdfStats());
     setDisabledState(true);
-    setSnackBarOpen(false);
+    setSnackBarMsg("");
   };
 
   const handleCenterChange = (event: SelectChangeEvent) => {
@@ -173,7 +173,7 @@ const DailyReport = () => {
           Send to Server
         </Button> */}
 
-        <SendReportDialog pdfData={pdfData} setPdfData={setPdfData} snackBarOpen={snackBarOpen} setSnackBarOpen={setSnackBarOpen} password={password} />
+        <SendReportDialog pdfData={pdfData} setPdfData={setPdfData} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} password={password} />
 
         {/* <Button
           variant="contained"
@@ -192,9 +192,9 @@ const DailyReport = () => {
           Clear
         </Button>
         <Box>
-          <Snackbar open={snackBarOpen} autoHideDuration={6000}>
-            <Alert severity="success" sx={{ width: '100%' }}>
-              Report Sent succcessfully. Now paste report in your whatsapp group
+          <Snackbar open={snackBarMsg !== ""} autoHideDuration={6000}>
+            <Alert severity={snackBarMsg === SUCCESS_MSG? "success": "error"} sx={{ width: '100%' }}>
+              {snackBarMsg}
             </Alert>
           </Snackbar>
         </Box>

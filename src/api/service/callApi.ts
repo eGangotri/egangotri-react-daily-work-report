@@ -1,12 +1,12 @@
 import { backendServer } from "api/constants"
-import { DailyWorkReportType } from "types/dailyyWorkReportTypes"
+import { AddDailyReportResponseType, DailyWorkReportType } from "types/dailyyWorkReportTypes"
 
 type LoginUser = {
   username: string,
   password: string
 }
 
-export async function pushReportToServer(dailyReport:DailyWorkReportType,password:string) {
+export async function pushReportToServer(dailyReport:DailyWorkReportType,password:string):Promise<AddDailyReportResponseType> {
   const _url = `${backendServer}dailyWorkReport/add`
   console.log(`_url ${_url}`)
 
@@ -23,7 +23,7 @@ export async function pushReportToServer(dailyReport:DailyWorkReportType,passwor
   const res = await fetch(_url, options)
   console.log(`res ${JSON.stringify(res)}`)
   const items = await res.json()
-  console.log(`items ${items.length}`)
+  console.log(`items ${JSON.stringify(items)}`)
   return items
 }
 

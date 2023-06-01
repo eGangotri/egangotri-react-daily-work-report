@@ -22,3 +22,10 @@ export type LoginPanelProps = {
   username: string;
   password: number;
 };
+
+export type AddDailyReportResponseType = {
+  success?: string;
+  error?: string;
+  //[key: string]: any;
+};
+

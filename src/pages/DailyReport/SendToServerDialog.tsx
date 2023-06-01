@@ -21,6 +21,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
+export const SUCCESS_MSG = "Report Sent succcessfully to Server. Now paste report in your whatsapp group";
+export const ERROR_MSG = "Report not Sent to Server. Pls. notify management";
+
 export interface DialogTitleProps {
     id: string;
     children?: React.ReactNode;
@@ -30,8 +33,8 @@ export interface DialogTitleProps {
 interface SendReportDialogProps {
     pdfData: AllPdfStats;
     setPdfData: React.Dispatch<React.SetStateAction<AllPdfStats>>;
-    snackBarOpen: boolean;
-    setSnackBarOpen:React.Dispatch<React.SetStateAction<boolean>>;
+    snackBarMsg: string;
+    setSnackBarMsg:React.Dispatch<React.SetStateAction<string>>;
     password:string;
 }
 
@@ -59,7 +62,7 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
     );
 }
 
-const SendReportDialog: React.FC<SendReportDialogProps> = ({ pdfData,setPdfData,snackBarOpen,setSnackBarOpen,password }) => {
+const SendReportDialog: React.FC<SendReportDialogProps> = ({ pdfData,setPdfData,snackBarMsg,setSnackBarMsg,password }) => {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -69,20 +72,26 @@ const SendReportDialog: React.FC<SendReportDialogProps> = ({ pdfData,setPdfData,
         setOpen(false);
     };
 
-    const copyResults = () => {
+    const copyResults = (msg:string = "") => {
         // TODO: Toast Message that Results have been copied.
-        navigator.clipboard.writeText(AllPdfStats.toString(pdfData));
+        navigator.clipboard.writeText(msg || AllPdfStats.toString(pdfData));
       };
     
 
-    const prepareReportForPush = () => {
+    const prepareReportForPush = async () => {
         handleClose();
         const dailyReport: DailyWorkReportType =
             AllPdfStats.convertPdfStatsToDailyWorkReportTypeObject(pdfData);
         console.log(`dailyReport ${JSON.stringify(dailyReport)}`);
-        pushReportToServer(dailyReport,password);
-        setSnackBarOpen(true);
-        copyResults();
+        const jsonResp = await pushReportToServer(dailyReport,password);
+        if(jsonResp.success){
+            setSnackBarMsg(SUCCESS_MSG);
+            copyResults();
+        }
+        else {
+            setSnackBarMsg(ERROR_MSG);
+            copyResults("There was an error sending data to Server. So nothing copied. Pls. notify management");
+        }
     };
 
     return (
