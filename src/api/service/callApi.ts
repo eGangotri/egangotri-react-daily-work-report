@@ -1,12 +1,43 @@
 import { backendServer } from "api/constants"
-import { AddDailyReportResponseType, DailyWorkReportType, LoginProps } from "types/dailyyWorkReportTypes"
+import { AddDailyReportResponseType, DailyWorkReportType, LoginProps, LoginUser } from "types/dailyyWorkReportTypes"
 
-type LoginUser = {
-  username: string,
-  password: string
+export const callBackendGetApiForBlob = async (route: string, params: any): Promise<void> => {
+  try {
+
+    const _url = new URL(`${backendServer}${route}`)
+    console.log(`_url ${_url}`)
+
+    Object.keys(params).forEach(key => _url.searchParams.append(key, params[key]));
+
+    const resp = await fetch(_url, {
+      method: 'GET',
+      // responseType: 'blob' // Set the response type to blob
+    });
+
+    if (resp.ok) {
+      const fileBlob = await resp.blob();
+      const url = URL.createObjectURL(fileBlob);
+      window.open(url, '_blank');
+    } else {
+      console.log('Error fetching file:', resp.status);
+    }
+  } catch (error) {
+    console.log('Error fetching file:', error);
+  }
+};;
+
+export const callBackendGetApi = async (route: string, params: any) => {
+  const _url = new URL(`${backendServer}${route}`)
+  console.log(`_url ${_url}`)
+
+  Object.keys(params).forEach(key => _url.searchParams.append(key, params[key]));
+
+  const resp = await fetch(_url)
+  return resp;
 }
 
-export const callBackendPostApi = async (route:string, _jsonBody:{}) => {
+
+export const callBackendPostApi = async (route: string, _jsonBody: {}) => {
   const _url = `${backendServer}${route}`
   console.log(`_url ${_url}`)
 
@@ -18,56 +49,4 @@ export const callBackendPostApi = async (route:string, _jsonBody:{}) => {
   const resp = await fetch(_url, options)
 
   return resp;
-}
-
-export async function pushReportToServer(dailyReport: DailyWorkReportType, password: string): Promise<AddDailyReportResponseType> {
-
-  const _reportBody = {
-    ...dailyReport,
-    password
-  }
-
-  const resp = await callBackendPostApi("dailyWorkReport/add", _reportBody);
-  console.log(`res ${JSON.stringify(resp)}`)
-  const respAsJson = await resp.json()
-  console.log(`respAsJson ${JSON.stringify(respAsJson)}`)
-  return respAsJson
-}
-
-export async function sendFilteredFormToServer(operators:string,centers:string, selectedStartDate:Date|null, selectedEndDate:Date|null) {
-
-  const _reportBody = {
-    operators,
-    centers,
-    selectedStartDate,
-    selectedEndDate
-  }
-
-  const resp = await callBackendPostApi("dailyWorkReport/add", _reportBody);
-  console.log(`res ${JSON.stringify(resp)}`)
-  const respAsJson = await resp.json()
-  console.log(`respAsJson ${JSON.stringify(respAsJson)}`)
-  return respAsJson
-}
-
-export async function checkValidCredentials(staffName: string, password: string):Promise<LoginProps> {
-  const loginInfo = {
-    username: staffName,
-    password: password
-  } as LoginUser;
-
-  const _url = `${backendServer}user/checkValidCredentials`
-  console.log(`_url ${_url}`)
-
-  const options: RequestInit = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(loginInfo),
-  }
-
-  const res = await fetch(_url, options)
-  //shall be  {"response":false} or {"response":true}
-  const items = await res.json()
-  console.log(`checkValidCredentials:res ${JSON.stringify(items)}`)
-  return items
 }

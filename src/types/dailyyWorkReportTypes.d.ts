@@ -18,10 +18,11 @@ export type PageCountStatsType = {
   fileSizeRaw: number;
 };
 
-export type LoginPanelProps = {
-  username: string;
-  password: number;
-};
+
+export type LoginUser = {
+  username: string,
+  password: string
+}
 
 export type AddDailyReportResponseType = {
   success?: string;
@@ -29,7 +30,6 @@ export type AddDailyReportResponseType = {
   warning?: string;
   //[key: string]: any;
 };
-
 
 export type LoginProps = {
   success: boolean;

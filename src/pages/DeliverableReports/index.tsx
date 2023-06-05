@@ -16,7 +16,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateRange } from '@mui/x-date-pickers-pro';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { sendFilteredFormToServer } from "api/service/callApi";
+import { sendFilteredFormToServerGet, sendFilteredFormToServerPost } from "api/service/DailyReportService";
 import { BASIC_ROLE } from "utils/DailyReportUtil";
 
 
@@ -33,7 +33,7 @@ const DeliverableReports = () => {
 
     const filterReport = () => {
         console.log(`filterReport`);
-        sendFilteredFormToServer(operators, centers, selectedStartDate, selectedEndDate)
+        sendFilteredFormToServerGet(operators, centers, selectedStartDate, selectedEndDate)
     }
     const [value, setValue] = React.useState<DateRange<Dayjs | null>>([
         dayjs(new Date()),

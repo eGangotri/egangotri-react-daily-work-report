@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import { FaRegWindowClose } from 'react-icons/fa';
 import AllPdfStats from 'vo/AllPdfStats';
 import { DailyWorkReportType } from 'types/dailyyWorkReportTypes';
-import { pushReportToServer } from "api/service/callApi";
+import { pushReportToServer } from "api/service/DailyReportService";
 import  {AlertColor } from "@mui/material/Alert/Alert";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
