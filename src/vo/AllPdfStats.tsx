@@ -63,12 +63,12 @@ export default class AllPdfStats {
         </Typography>
         <Typography>
           {' '}
-          Total Pdf Count{' '}
-          <span style={{ fontWeight: 'bold' }}> {all.pdfCount} </span>
+          On <span style={{ fontWeight: 'bold' }}>{all.timeOfRequest}</span>
         </Typography>
         <Typography>
           {' '}
-          On <span style={{ fontWeight: 'bold' }}>{all.timeOfRequest}</span>
+          Total Pdf Count{' '}
+          <span style={{ fontWeight: 'bold' }}> {all.pdfCount} </span>
         </Typography>
         <Typography>
           Total Page Count:{' '}
@@ -100,14 +100,13 @@ export default class AllPdfStats {
       pdfStat.pageCount
     } pages \t ${FrontEndBackendCommonCode.sizeInfo(pdfStat.pdfSize)}\n\n`;
   };
-
+  
   static toString = (all: AllPdfStats): string => {
-    return `${GeneralUtils.capitalize(all.staffName)} (${all.center}/${all.lib}) Work Status for ${
-      all.pdfCount
-    } pdf(s) On ${all.timeOfRequest}\n
-Total Page Count:${all.globalCount}
+    return `Work Status for ${GeneralUtils.capitalize(all.staffName)} (${all.center}/${all.lib})
+On ${all.timeOfRequest}\n
+Total Pdf Count: ${all.pdfCount} 
+Total Page Count:${all.globalCount}\n
 Total Size: ${FrontEndBackendCommonCode.sizeInfo(all.totalSize)}\n
-Total Size Raw: ${all.totalSize}\n
 ${AllPdfStats.pdfDataArrayToString(all.pdfs)}`;
   };
 

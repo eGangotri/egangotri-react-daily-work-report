@@ -1,5 +1,6 @@
 import { checkValidCredentials } from 'api/service/callApi';
 import { PDFDocument } from 'pdf-lib';
+import { LoginProps } from 'types/dailyyWorkReportTypes';
 import * as DailyReportUtil from 'utils/DailyReportUtil';
 import AllPdfStats from 'vo/AllPdfStats';
 import type PdfStat from 'vo/PdfStat';
@@ -73,7 +74,7 @@ export class HelperService {
     return row;
   };
 
-  static logIn = async (staffName: string, password: string) => {
+  static logIn = async (staffName: string, password: string):Promise<LoginProps>  => {
     return await checkValidCredentials(staffName,password);
   }
 }

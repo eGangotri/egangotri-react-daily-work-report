@@ -26,6 +26,15 @@ export type LoginPanelProps = {
 export type AddDailyReportResponseType = {
   success?: string;
   error?: string;
+  warning?: string;
   //[key: string]: any;
 };
+
+
+export type LoginProps = {
+  success: boolean;
+  role: string;
+};
+
+
 

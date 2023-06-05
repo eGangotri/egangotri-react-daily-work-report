@@ -15,11 +15,14 @@ import {
     useRecoilState,
     useRecoilValue,
   } from 'recoil'
-import { loggedInState, loggedUser } from "pages/Dashboard";
+import { loggedInState, loggedUser,loggedUserRole } from "pages/Dashboard";
+import { LoginProps } from "types/dailyyWorkReportTypes";
+import { BASIC_ROLE } from "utils/DailyReportUtil";
 
 const LoginPanel: React.FC = () => {
     const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
-    const [_loggedUser, setLoggedUser] = useRecoilState(loggedUser);
+    const [_loggedUser, setLoggedUser] = useRecoilState(loggedUser); 
+    const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
 
   const [validationMsg, setValidationMsg] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
@@ -29,11 +32,14 @@ const LoginPanel: React.FC = () => {
   const loginToPortal = async () => {
     if (JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN)) {
         setIsLoggedIn(true);
+        setLoggedUserRole(BASIC_ROLE);
     }
     else {
-      const logIn: boolean = await HelperService.logIn(_loggedUser, password);
-      setIsLoggedIn(logIn);
-      setValidationMsg(!logIn);
+      const logIn: LoginProps = await HelperService.logIn(_loggedUser, password);
+      console.log( `logIn.success  ${logIn.success } ${typeof logIn.success }`)
+      setIsLoggedIn(logIn.success === true);
+      setValidationMsg(!logIn.success);
+      setLoggedUserRole(logIn.role);
     }
   };
 

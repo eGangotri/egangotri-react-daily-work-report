@@ -23,15 +23,17 @@ import LoginPanel from "pages/LoginPanel";
 import {
   useRecoilState,
 } from 'recoil'
-import { loggedInState, loggedUser } from "pages/Dashboard";
+import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
+import { BASIC_ROLE } from "utils/DailyReportUtil";
 
 const DailyReport = () => {
 
   const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
   const [_loggedUser, setLoggedUser] = useRecoilState(loggedUser);
+  const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
 
   const [pdfData, setPdfData] = useState<AllPdfStats>(new AllPdfStats());
-  const [snackBarMsg, setSnackBarMsg] = useState<string>("");
+  const [snackBarMsg, setSnackBarMsg] = useState<string[]>(["",""]);
   const [password, setPassword] = useState<string>("");
   const [disabledState, setDisabledState] = useState<boolean>(false);
   const [center, setCenter] = React.useState<string>(centers[0]);
@@ -56,10 +58,11 @@ const DailyReport = () => {
   const clearResults = () => {
     setIsLoggedIn(false);
     setLoggedUser("");
+    setLoggedUserRole(BASIC_ROLE);
     setPassword("");
     setPdfData(new AllPdfStats());
     setDisabledState(true);
-    setSnackBarMsg("");
+    setSnackBarMsg(["",""]);
   };
 
   const handleCenterChange = (event: SelectChangeEvent) => {
@@ -192,9 +195,9 @@ const DailyReport = () => {
           Clear
         </Button>
         <Box>
-          <Snackbar open={snackBarMsg !== ""} autoHideDuration={6000}>
-            <Alert severity={snackBarMsg === SUCCESS_MSG? "success": "error"} sx={{ width: '100%' }}>
-              {snackBarMsg}
+          <Snackbar open={snackBarMsg[0] !== ""} autoHideDuration={6000}>
+            <Alert severity={snackBarMsg[0] === "success" ? "success": (snackBarMsg[0] === "warning" ? "warning":"error")} sx={{ width: '100%' }}>
+              {snackBarMsg[1]}
             </Alert>
           </Snackbar>
         </Box>

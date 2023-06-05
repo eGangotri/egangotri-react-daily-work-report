@@ -11,3 +11,7 @@ export function aggregate(summable: number[]) {
 }
 
 export const DD_MM_YYYY_FORMAT = 'DD-MMM-YYYY'
+
+export const BASIC_ROLE = "Basic";
+export const ADMIN_ROLE = "Admin";
+export const SUPER_ADMIN_ROLE = "SuperAdmin";

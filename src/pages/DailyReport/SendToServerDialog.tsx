@@ -11,6 +11,7 @@ import { FaRegWindowClose } from 'react-icons/fa';
 import AllPdfStats from 'vo/AllPdfStats';
 import { DailyWorkReportType } from 'types/dailyyWorkReportTypes';
 import { pushReportToServer } from "api/service/callApi";
+import  {AlertColor } from "@mui/material/Alert/Alert";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -33,8 +34,8 @@ export interface DialogTitleProps {
 interface SendReportDialogProps {
     pdfData: AllPdfStats;
     setPdfData: React.Dispatch<React.SetStateAction<AllPdfStats>>;
-    snackBarMsg: string;
-    setSnackBarMsg:React.Dispatch<React.SetStateAction<string>>;
+    snackBarMsg: string[];
+    setSnackBarMsg:React.Dispatch<React.SetStateAction<string[]>>;
     password:string;
 }
 
@@ -84,12 +85,12 @@ const SendReportDialog: React.FC<SendReportDialogProps> = ({ pdfData,setPdfData,
             AllPdfStats.convertPdfStatsToDailyWorkReportTypeObject(pdfData);
         console.log(`dailyReport ${JSON.stringify(dailyReport)}`);
         const jsonResp = await pushReportToServer(dailyReport,password);
-        if(jsonResp.success){
-            setSnackBarMsg(SUCCESS_MSG);
+        const resp = jsonResp.success || jsonResp.warning || jsonResp.error || ""
+        setSnackBarMsg([Object.values(jsonResp)[0], resp]);
+        if(jsonResp.success || jsonResp.warning){
             copyResults();
         }
         else {
-            setSnackBarMsg(ERROR_MSG);
             copyResults("There was an error sending data to Server. So nothing copied. Pls. notify management");
         }
     };

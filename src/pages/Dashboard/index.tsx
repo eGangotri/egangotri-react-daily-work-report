@@ -13,10 +13,8 @@ import caepeTheme from 'themes/DWSTheme';
 import {
   RecoilRoot,
   atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
 } from 'recoil';
+import { BASIC_ROLE } from 'utils/DailyReportUtil';
 
 export const loggedInState = atom({
   key: 'loggedInState',
@@ -26,6 +24,11 @@ export const loggedInState = atom({
 export const loggedUser = atom({
   key: 'loggedUser',
   default: "",
+});
+
+export const loggedUserRole = atom({
+  key: 'loggedUserRole',
+  default: BASIC_ROLE,
 });
 
 const Dashboard: React.FC = () => {
