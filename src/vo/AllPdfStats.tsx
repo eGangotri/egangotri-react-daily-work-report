@@ -105,7 +105,7 @@ export default class AllPdfStats {
     return `Work Status for ${GeneralUtils.capitalize(all.staffName)} (${all.center}/${all.lib})
 On ${all.timeOfRequest}\n
 Total Pdf Count: ${all.pdfCount} 
-Total Page Count:${all.globalCount}\n
+Total Page Count: ${all.globalCount}\n
 Total Size: ${FrontEndBackendCommonCode.sizeInfo(all.totalSize)}\n
 ${AllPdfStats.pdfDataArrayToString(all.pdfs)}`;
   };
