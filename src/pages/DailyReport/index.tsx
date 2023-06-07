@@ -59,10 +59,6 @@ const DailyReport = () => {
 
 
   const clearResults = () => {
-    setIsLoggedIn(false);
-    setLoggedUser("");
-    setLoggedUserRole(BASIC_ROLE);
-    setPassword("");
     setPdfData(new AllPdfStats());
     setDisabledState(true);
     setSnackBarMsg(["", ""]);
@@ -182,7 +178,7 @@ const DailyReport = () => {
             variant="contained"
             endIcon={<FaRegTrashAlt style={{ color: "primary" }} />}
             onClick={() => clearResults()}
-            disabled={AllPdfStats.isEmpty(pdfData)}
+            //disabled={AllPdfStats.isEmpty(pdfData)}
           >
             Clear
           </Button>
@@ -195,6 +191,8 @@ const DailyReport = () => {
           </Box>
         </Stack>
         <Box ref={dataHoldingElement}>{AllPdfStats.decorate(pdfData)}</Box>
+        <Box sx={{paddingTop:"30px"}}></Box>
+
       </>
 
     </Stack>

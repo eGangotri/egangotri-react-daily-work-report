@@ -48,7 +48,6 @@ const DeliverableReports = () => {
     ]);
 
     const clearResults = () => {
-        console.log("clearResults");
         setOperators("")
         setCenters("")
         setDayRangeValue([

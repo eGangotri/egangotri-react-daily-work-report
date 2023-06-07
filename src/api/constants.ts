@@ -14,6 +14,8 @@ const development = {
       console.log(`getServer env.REACT_APP_DEV_ENV ${env.REACT_APP_DEV_ENV}`)
       const _environment = env.REACT_APP_DEV_ENV === 'prod' ? production : development;
       console.log(`getServer:_environment ${_environment.BACKEND_SERVER}`)
+      console.log(`Last Deployment:. ${env.REACT_APP_LAST_DEPOYMENT_ON} `);
+
      return _environment.BACKEND_SERVER;
   } 
 

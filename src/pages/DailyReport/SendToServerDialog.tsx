@@ -11,7 +11,7 @@ import { FaRegWindowClose } from 'react-icons/fa';
 import AllPdfStats from 'vo/AllPdfStats';
 import { DailyWorkReportType } from 'types/dailyyWorkReportTypes';
 import { pushReportToServer } from "api/service/DailyReportService";
-import  {AlertColor } from "@mui/material/Alert/Alert";
+import { AlertColor } from "@mui/material/Alert/Alert";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -35,8 +35,8 @@ interface SendReportDialogProps {
     pdfData: AllPdfStats;
     setPdfData: React.Dispatch<React.SetStateAction<AllPdfStats>>;
     snackBarMsg: string[];
-    setSnackBarMsg:React.Dispatch<React.SetStateAction<string[]>>;
-    password:string;
+    setSnackBarMsg: React.Dispatch<React.SetStateAction<string[]>>;
+    password: string;
 }
 
 function BootstrapDialogTitle(props: DialogTitleProps) {
@@ -63,7 +63,7 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
     );
 }
 
-const SendReportDialog: React.FC<SendReportDialogProps> = ({ pdfData,setPdfData,snackBarMsg,setSnackBarMsg,password }) => {
+const SendReportDialog: React.FC<SendReportDialogProps> = ({ pdfData, setPdfData, snackBarMsg, setSnackBarMsg, password }) => {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -73,21 +73,19 @@ const SendReportDialog: React.FC<SendReportDialogProps> = ({ pdfData,setPdfData,
         setOpen(false);
     };
 
-    const copyResults = (msg:string = "") => {
-        // TODO: Toast Message that Results have been copied.
+    const copyResults = (msg: string = "") => {
         navigator.clipboard.writeText(msg || AllPdfStats.toString(pdfData));
-      };
-    
+    };
+
 
     const prepareReportForPush = async () => {
         handleClose();
         const dailyReport: DailyWorkReportType =
             AllPdfStats.convertPdfStatsToDailyWorkReportTypeObject(pdfData);
         console.log(`dailyReport ${JSON.stringify(dailyReport)}`);
-        const jsonResp = await pushReportToServer(dailyReport,password);
-        const resp = jsonResp.success || jsonResp.warning || jsonResp.error || ""
-        setSnackBarMsg([Object.values(jsonResp)[0], resp]);
-        if(jsonResp.success || jsonResp.warning){
+        const jsonResp = await pushReportToServer(dailyReport, password);
+        setSnackBarMsg([Object.keys(jsonResp)[0], Object.values(jsonResp)[0]]);
+        if (jsonResp.success || jsonResp.warning) {
             copyResults();
         }
         else {

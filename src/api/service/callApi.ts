@@ -1,5 +1,4 @@
 import { backendServer } from "api/constants"
-import { AddDailyReportResponseType, DailyWorkReportType, LoginProps, LoginUser } from "types/dailyyWorkReportTypes"
 
 export const callBackendGetApiForBlob = async (route: string, params: any): Promise<void> => {
   try {

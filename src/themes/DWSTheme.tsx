@@ -24,18 +24,18 @@ const commonTextStyle: React.CSSProperties = {
 };
 
 export default createTheme({
-  typography: {
-    fontFamily: 'Inter',
-    body1: {
-      color: BLACK,
-      fontSize: '13px',
-    }
-  },
-  palette: {
-    primary: {
-      main: PRIMARY_BLUE, // Button background
-      light: WHITE,
-      contrastText: WHITE, // Button text
-    },
-  },
+  // typography: {
+  //   fontFamily: 'Inter',
+  //   body1: {
+  //     color: BLACK,
+  //     fontSize: '13px',
+  //   }
+  // },
+  // palette: {
+  //   primary: {
+  //     main: PRIMARY_BLUE, // Button background
+  //     light: WHITE,
+  //     contrastText: WHITE, // Button text
+  //   },
+  // },
 });

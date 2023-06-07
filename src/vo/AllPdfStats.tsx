@@ -74,7 +74,7 @@ export default class AllPdfStats {
           Total Page Count:{' '}
           <span style={{ fontWeight: 'bold' }}>{all.globalCount}</span>{' '}
         </Typography>
-        <Typography>
+        <Typography sx={{paddingBottom:"30px"}}>
           Total Size:{' '}
           <span style={{ fontWeight: 'bold' }}>
             {FrontEndBackendCommonCode.sizeInfo(all.totalSize)}

@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import _ from "lodash";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FiLogIn } from "react-icons/fi";
 import HelperService from "service/HelperService";
 import {
@@ -19,6 +19,7 @@ import { loggedInState, loggedUser,loggedUserRole } from "pages/Dashboard";
 import { LoginProps } from "types/dailyyWorkReportTypes";
 import { BASIC_ROLE } from "utils/DailyReportUtil";
 import { Link } from "react-router-dom";
+import { panelOneCSS } from "pages/constants";
 
 const LoginPanel: React.FC = () => {
     const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
@@ -27,8 +28,6 @@ const LoginPanel: React.FC = () => {
 
   const [validationMsg, setValidationMsg] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
-
-  const panelOneCSS = { bgcolor: "white", paddingRight: "10px" };
 
   const reportsLinkCss = { 
     ...panelOneCSS,
@@ -42,6 +41,7 @@ const LoginPanel: React.FC = () => {
 
   const logout = async () => {
       setIsLoggedIn(false);
+      setLoggedUser("");
       setLoggedUserRole("");
   };
 
@@ -58,6 +58,10 @@ const LoginPanel: React.FC = () => {
       setLoggedUserRole(logIn.role);
     }
   };
+
+  useEffect(() => {
+  });
+
   return (
     <Stack spacing={2}>
       <Stack sx={{display:"flex", flexDirection: "row" }} spacing="2">
@@ -72,8 +76,8 @@ const LoginPanel: React.FC = () => {
         {_isLoggedIn ?
           <Typography variant="h5">Hi {_.capitalize(_loggedUser)}</Typography> :
           <>
-            <Box sx={panelOneCSS}>
-              First Name:{" "}
+            <Box sx={{...panelOneCSS}}>
+            <Typography component="span">Username:{" "}</Typography>
               <TextField
                 variant="outlined"
                 label="Required"
@@ -83,7 +87,7 @@ const LoginPanel: React.FC = () => {
               />
             </Box>
             <Box sx={panelOneCSS}>
-              Password:{" "}
+            <Typography component="span">Password:{" "}</Typography>
               <TextField
                 variant="outlined"
                 label="Required"
