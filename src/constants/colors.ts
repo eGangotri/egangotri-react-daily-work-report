@@ -1,8 +1,3 @@
-/* ***************************************************************************
- * Copyright © Biqmind Pte Ltd – 2021 - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and confidential
- * ************************************************************************ */
 export const BLACK = '#000000';
 export const WHITE = '#FFFFFF';
 export const PRIMARY_BLUE = '#34A3D3';

@@ -1,6 +1,10 @@
 import { AddDailyReportResponseType, DailyWorkReportType, LoginProps, LoginUser } from "types/dailyyWorkReportTypes"
 import {  callBackendGetApiForBlob, callBackendPostApi } from "./callApi";
 
+export async function sendFilteredFormToServerGetForBasicUser(operator: string, selectedStartDate: string | null, selectedEndDate: string | null) {
+    return sendFilteredFormToServerGet(operator,"",selectedStartDate,selectedEndDate)
+}
+
 export async function sendFilteredFormToServerGet(operators: string, centers: string, selectedStartDate: string | null, selectedEndDate: string | null) {
     const params = {
         operatorName: operators,

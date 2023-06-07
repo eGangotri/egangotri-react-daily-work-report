@@ -7,12 +7,10 @@ import Icon from "components/common/Icons";
 
 const Header = () => {
     return (
-        <Stack spacing={2}>
-            <Typography variant="h3" >eGangotri Daily Work Report</Typography>
-            <Box>
-                <Icon icon="gangotri" height="300px" width="650px" />
-            </Box>
-        </Stack>
+        <Box component="div">
+            <Icon icon="gangotri" height="100px" width="220px" />
+            <Typography variant="h3" sx={{paddingBottom:"30px"}}>eGangotri Daily Work Report</Typography>
+        </Box>
     )
 }
 export default Header

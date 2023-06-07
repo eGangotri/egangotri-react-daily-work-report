@@ -5,7 +5,7 @@ import {
 } from 'recoil';
 import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
 import LoginPanel from "pages/LoginPanel";
-import { panelOneCSS } from "pages/constants";
+import { SUPERADMIN_ROLE, panelOneCSS } from "pages/constants";
 
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -16,7 +16,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateRange } from '@mui/x-date-pickers-pro';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { sendFilteredFormToServerGet, sendFilteredFormToServerPost } from "api/service/DailyReportService";
+import { sendFilteredFormToServerGet, sendFilteredFormToServerGetForBasicUser, sendFilteredFormToServerPost } from "api/service/DailyReportService";
 import _ from "lodash";
 import moment from "moment";
 import { DD_MM_YYYY_FORMAT } from "utils/DailyReportUtil";
@@ -35,16 +35,21 @@ const DeliverableReports = () => {
     const [selectedStartDate, setSelectedStartDate] = React.useState<string | null>(null);
     const [selectedEndDate, setSelectedEndDate] = React.useState<string | null>(null);
 
-    const filterReport = async () => {
-        console.log(`filterReport`);
+    const generateReport = async () => {
+        console.log(`generateReport`);
         setIsLoading(true);
-        await sendFilteredFormToServerGet(operators, centers, selectedStartDate, selectedEndDate);
+        if(_loggedUserRole === SUPERADMIN_ROLE){
+            await sendFilteredFormToServerGet(operators, centers, selectedStartDate, selectedEndDate);
+        } 
+        else {
+            await sendFilteredFormToServerGetForBasicUser(_loggedUser, selectedStartDate, selectedEndDate);
+        }
         setIsLoading(false);
     }
 
     const [dayRangeValue, setDayRangeValue] = React.useState<DateRange<Dayjs | null>>([
-        dayjs(new Date()),
-        dayjs(new Date()),
+        dayjs(null),
+        dayjs(null),
     ]);
 
     const clearResults = () => {
@@ -77,7 +82,7 @@ const DeliverableReports = () => {
             <Box sx={{ display: "flex", flexDirection: "column" }}>
                 {_isLoggedIn ?
                     <Stack spacing={2}>
-                        <Box sx={panelOneCSS} alignItems="columns">
+                        { _loggedUserRole === SUPERADMIN_ROLE && <Box sx={panelOneCSS} alignItems="columns">
                             <Typography>Filter by Operator Name:{" "}</Typography>
                             <Typography>(Use comman separation for multiple values):{" "}</Typography>
                             <TextField
@@ -87,8 +92,8 @@ const DeliverableReports = () => {
                                 value={operators}
                                 onChange={(e) => setOperators(e.target.value)}
                             />
-                        </Box>
-                        <Box sx={panelOneCSS} alignItems="columns">
+                        </Box> }
+                        { _loggedUserRole === SUPERADMIN_ROLE && <Box sx={panelOneCSS} alignItems="columns">
                             <Typography>Filter by Centers :{" "}</Typography>
                             <Typography>(Use comman separation for multiple values):{" "}</Typography>
                             <TextField
@@ -98,7 +103,7 @@ const DeliverableReports = () => {
                                 value={centers}
                                 onChange={(e) => setCenters(e.target.value)}
                             />
-                        </Box>
+                        </Box>}
 
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer components={['DateRangePicker', 'DateRangePicker']}>
@@ -115,10 +120,10 @@ const DeliverableReports = () => {
                             color="primary"
                             variant="contained"
                             component="span"
-                            onClick={() => filterReport()}
-                            sx={{ width: "140px" }}
+                            onClick={() => generateReport()}
+                            sx={{ width: "180px" }}
                         >
-                            Filter Report
+                            Generate Report
                         </Button>
                         <Button
                             variant="contained"

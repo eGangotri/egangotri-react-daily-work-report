@@ -8,76 +8,71 @@ import {
   Typography,
 } from "@mui/material";
 import _ from "lodash";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { FiLogIn } from "react-icons/fi";
 import HelperService from "service/HelperService";
 import {
-    useRecoilState,
-    useRecoilValue,
-  } from 'recoil'
-import { loggedInState, loggedUser,loggedUserRole } from "pages/Dashboard";
+  useRecoilState,
+} from 'recoil';
+import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
 import { LoginProps } from "types/dailyyWorkReportTypes";
-import { BASIC_ROLE } from "utils/DailyReportUtil";
 import { Link } from "react-router-dom";
-import { panelOneCSS } from "pages/constants";
+import { SUPERADMIN_ROLE, BASIC_ROLE, panelOneCSS } from "pages/constants";
 
 const LoginPanel: React.FC = () => {
-    const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
-    const [_loggedUser, setLoggedUser] = useRecoilState(loggedUser); 
-    const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
+  const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
+  const [_loggedUser, setLoggedUser] = useRecoilState(loggedUser);
+  const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
 
   const [validationMsg, setValidationMsg] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
 
-  const reportsLinkCss = { 
+  const reportsLinkCss = {
     ...panelOneCSS,
-    display: `${_loggedUserRole === "superadmin"?"block":"none"}`
+    //display: `${_loggedUserRole === SUPERADMIN_ROLE ? "block" : "none"}`
   }
 
-  const logoutCss = { 
-    ...panelOneCSS ,
-    display: `${(JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN) === true || _isLoggedIn === false ) ?"none":"block"}`
+  const logoutCss = {
+    ...panelOneCSS,
+    display: `${(JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN) === true || _isLoggedIn === false) ? "none" : "block"}`
   }
 
   const logout = async () => {
-      setIsLoggedIn(false);
-      setLoggedUser("");
-      setLoggedUserRole("");
+    setIsLoggedIn(false);
+    setLoggedUser("");
+    setLoggedUserRole("");
   };
 
   const loginToPortal = async () => {
     if (JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN)) {
-        setIsLoggedIn(true);
-        setLoggedUserRole(BASIC_ROLE);
+      setIsLoggedIn(true);
+      setLoggedUserRole(BASIC_ROLE);
     }
     else {
       const logIn: LoginProps = await HelperService.logIn(_loggedUser, password);
-      console.log( `logIn.success  ${logIn.success } ${typeof logIn.success }`)
+      console.log(`logIn.success  ${logIn.success} ${typeof logIn.success}`)
       setIsLoggedIn(logIn.success === true);
       setValidationMsg(!logIn.success);
       setLoggedUserRole(logIn.role);
     }
   };
 
-  useEffect(() => {
-  });
-
   return (
     <Stack spacing={2}>
-      <Stack sx={{display:"flex", flexDirection: "row" }} spacing="2">
+      <Stack sx={{ display: "flex", flexDirection: "row" }} spacing="2">
         <Box sx={panelOneCSS}><Link to="/">Home</Link></Box>
         <Box sx={reportsLinkCss}><Link to="/reports">Reports</Link></Box>
-        <Box sx={logoutCss}><a href="#" onClick={()=> logout()}>Logout</a></Box>
+        <Box sx={logoutCss}><a href="#" onClick={() => logout()}>Logout</a></Box>
       </Stack>
       <Box>
-      {JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN) ? <Typography variant="h5">नीचे फिलहाल कोई भी पास्वर्ड डाल दो/Use any password for now</Typography>:<></>}
+        {JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN) ? <Typography variant="h5">नीचे फिलहाल कोई भी पास्वर्ड डाल दो/Use any password for now</Typography> : <></>}
       </Box>
       <Box sx={{ display: "flex", flexDirection: "row" }}>
         {_isLoggedIn ?
           <Typography variant="h5">Hi {_.capitalize(_loggedUser)}</Typography> :
           <>
-            <Box sx={{...panelOneCSS}}>
-            <Typography component="span">Username:{" "}</Typography>
+            <Box sx={{ ...panelOneCSS }}>
+              <Typography component="span">Username:{" "}</Typography>
               <TextField
                 variant="outlined"
                 label="Required"
@@ -87,7 +82,7 @@ const LoginPanel: React.FC = () => {
               />
             </Box>
             <Box sx={panelOneCSS}>
-            <Typography component="span">Password:{" "}</Typography>
+              <Typography component="span">Password:{" "}</Typography>
               <TextField
                 variant="outlined"
                 label="Required"

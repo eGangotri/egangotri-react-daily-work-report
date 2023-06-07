@@ -1,8 +1,3 @@
-/* ***************************************************************************
- * Copyright © Biqmind Pte Ltd – 2021 - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and confidential
- * ************************************************************************ */
 import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 
@@ -14,7 +9,7 @@ import {
   RecoilRoot,
   atom,
 } from 'recoil';
-import { BASIC_ROLE } from 'utils/DailyReportUtil';
+import { BASIC_ROLE } from 'pages/constants';
 
 export const loggedInState = atom({
   key: 'loggedInState',

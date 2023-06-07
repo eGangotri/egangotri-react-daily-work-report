@@ -24,7 +24,6 @@ import {
   useRecoilState,
 } from 'recoil'
 import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
-import { BASIC_ROLE } from "utils/DailyReportUtil";
 import Spinner from "widgets/Spinner";
 
 const DailyReport = () => {

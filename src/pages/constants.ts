@@ -44,4 +44,8 @@ export const libraryMenuOptions = [
     },
 ];
 
-export const panelOneCSS = { bgcolor: "white", marginRight: "10px" };
+export const panelOneCSS = { bgcolor: "white", paddingRight: "10px" };
+
+export const BASIC_ROLE = "Basic";
+export const ADMIN_ROLE = "Admin";
+export const SUPERADMIN_ROLE = "superadmin";

@@ -4,17 +4,10 @@
  * Proprietary and confidential
  * ************************************************************************ */
 import React, { PropsWithChildren, useEffect } from 'react';
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import Layout from 'pages/Layout';
 
 const ProtectedRoute: React.FC<PropsWithChildren> = ({ children }) => {
-  const location = useLocation();
-  const isUserLoggedIn = true
-
-  if (!isUserLoggedIn){
-    return <Navigate to="/login" state={{ pathname: location.pathname }} />;
-  }
-
   return <Layout>{children?children:<Outlet />}</Layout>;
 };
 

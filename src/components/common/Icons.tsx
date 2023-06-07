@@ -1,9 +1,3 @@
-/* ***************************************************************************
- * Copyright © Biqmind Pte Ltd – 2021 - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and confidential
- * ************************************************************************ */
-
 /** This common component is used for custom icons, not present in MUI */
 import gangotri from 'assets/images/gangotriGlacier.jpg';
 import React from 'react';
