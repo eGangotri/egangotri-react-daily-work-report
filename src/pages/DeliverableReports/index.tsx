@@ -105,18 +105,19 @@ const DeliverableReports = () => {
                             <DemoContainer components={['DateRangePicker', 'DateRangePicker']}>
                                 <DemoItem label="Filter by Time: " component="DateRangePicker">
                                     <DateRangePicker
+                                        sx={{width:"500px"}}
                                         value={dayRangeValue}
                                         onChange={(newValue: DateRange<Dayjs>) => onDatePickerChange(newValue)}
                                     />
                                 </DemoItem>
                             </DemoContainer>
                         </LocalizationProvider>
-                            <Button
+                        <Button
                             color="primary"
                             variant="contained"
                             component="span"
                             onClick={() => filterReport()}
-                            sx={{width:"140px"}}
+                            sx={{ width: "140px" }}
                         >
                             Filter Report
                         </Button>
@@ -124,7 +125,7 @@ const DeliverableReports = () => {
                             variant="contained"
                             endIcon={<FaRegTrashAlt style={{ color: "primary" }} />}
                             onClick={() => clearResults()}
-                            sx={{width:"100px", textAlign:"left"}}
+                            sx={{ width: "100px", textAlign: "left" }}
                         >
                             Clear
                         </Button>

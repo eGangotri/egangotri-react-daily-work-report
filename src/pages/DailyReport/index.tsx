@@ -177,27 +177,7 @@ const DailyReport = () => {
           </Button>
         </label>
         <Stack spacing={2} direction="row">
-          {/* <Button
-        color="primary"
-        variant="contained"
-        component="span"
-       // disabled={!loggedIn || AllPdfStats.isEmpty(pdfData)}
-        endIcon={<FaUpload style={{ color: "primary" }} />}
-       // onClick={() => prepareReportForPush()}
-      >
-        Send to Server
-      </Button> */}
-
           <SendReportDialog pdfData={pdfData} setPdfData={setPdfData} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} password={password} />
-
-          {/* <Button
-        variant="contained"
-        endIcon={<FaCopy style={{ color: "primary" }} />}
-        onClick={copyResults}
-        disabled={AllPdfStats.isEmpty(pdfData)}
-      >
-        Copy
-      </Button> */}
           <Button
             variant="contained"
             endIcon={<FaRegTrashAlt style={{ color: "primary" }} />}

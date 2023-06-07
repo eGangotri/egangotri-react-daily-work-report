@@ -18,6 +18,7 @@ import {
 import { loggedInState, loggedUser,loggedUserRole } from "pages/Dashboard";
 import { LoginProps } from "types/dailyyWorkReportTypes";
 import { BASIC_ROLE } from "utils/DailyReportUtil";
+import { Link } from "react-router-dom";
 
 const LoginPanel: React.FC = () => {
     const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
@@ -27,7 +28,22 @@ const LoginPanel: React.FC = () => {
   const [validationMsg, setValidationMsg] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
 
-  const panelOneCSS = { bgcolor: "white", marginRight: "10px" };
+  const panelOneCSS = { bgcolor: "white", paddingRight: "10px" };
+
+  const reportsLinkCss = { 
+    ...panelOneCSS,
+    display: `${_loggedUserRole === "superadmin"?"block":"none"}`
+  }
+
+  const logoutCss = { 
+    ...panelOneCSS ,
+    display: `${(JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN) === true || _isLoggedIn === false ) ?"none":"block"}`
+  }
+
+  const logout = async () => {
+      setIsLoggedIn(false);
+      setLoggedUserRole("");
+  };
 
   const loginToPortal = async () => {
     if (JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN)) {
@@ -42,9 +58,13 @@ const LoginPanel: React.FC = () => {
       setLoggedUserRole(logIn.role);
     }
   };
-
   return (
     <Stack spacing={2}>
+      <Stack sx={{display:"flex", flexDirection: "row" }} spacing="2">
+        <Box sx={panelOneCSS}><Link to="/">Home</Link></Box>
+        <Box sx={reportsLinkCss}><Link to="/reports">Reports</Link></Box>
+        <Box sx={logoutCss}><a href="#" onClick={()=> logout()}>Logout</a></Box>
+      </Stack>
       <Box>
       {JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN) ? <Typography variant="h5">नीचे फिलहाल कोई भी पास्वर्ड डाल दो/Use any password for now</Typography>:<></>}
       </Box>
