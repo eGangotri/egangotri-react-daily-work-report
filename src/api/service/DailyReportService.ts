@@ -1,8 +1,5 @@
 import { AddDailyReportResponseType, DailyWorkReportType, LoginProps, LoginUser } from "types/dailyyWorkReportTypes"
-import { callBackendGetApi, callBackendGetApiForBlob, callBackendPostApi } from "./callApi";
-import { backendServer } from "api/constants";
-
-
+import {  callBackendGetApiForBlob, callBackendPostApi } from "./callApi";
 
 export async function sendFilteredFormToServerGet(operators: string, centers: string, selectedStartDate: string | null, selectedEndDate: string | null) {
     const params = {
@@ -12,8 +9,8 @@ export async function sendFilteredFormToServerGet(operators: string, centers: st
         endDate: selectedEndDate
     }
     const resp = await callBackendGetApiForBlob("dailyWorkReport/csvAsFile", params);
-    console.log(`res ${JSON.stringify(resp)}`)
-    return resp
+    console.log(`res ${JSON.stringify(resp)}`);
+    return resp;
 }
 
 export async function pushReportToServer(dailyReport: DailyWorkReportType, password: string): Promise<AddDailyReportResponseType> {

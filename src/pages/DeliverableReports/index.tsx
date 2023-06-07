@@ -20,12 +20,14 @@ import { sendFilteredFormToServerGet, sendFilteredFormToServerPost } from "api/s
 import _ from "lodash";
 import moment from "moment";
 import { DD_MM_YYYY_FORMAT } from "utils/DailyReportUtil";
+import Spinner from "widgets/Spinner";
 
 
 const DeliverableReports = () => {
     const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
     const [_loggedUser, setLoggedUser] = useRecoilState(loggedUser);
     const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [operators, setOperators] = useState("");
     const [centers, setCenters] = useState("");
@@ -33,9 +35,11 @@ const DeliverableReports = () => {
     const [selectedStartDate, setSelectedStartDate] = React.useState<string | null>(null);
     const [selectedEndDate, setSelectedEndDate] = React.useState<string | null>(null);
 
-    const filterReport = () => {
+    const filterReport = async () => {
         console.log(`filterReport`);
-        sendFilteredFormToServerGet(operators, centers, selectedStartDate, selectedEndDate)
+        setIsLoading(true);
+        await sendFilteredFormToServerGet(operators, centers, selectedStartDate, selectedEndDate);
+        setIsLoading(false);
     }
 
     const [dayRangeValue, setDayRangeValue] = React.useState<DateRange<Dayjs | null>>([
@@ -67,12 +71,13 @@ const DeliverableReports = () => {
 
     return (
         <Stack spacing={2}>
+            {isLoading && <Spinner />}
             <Box>
                 <LoginPanel />
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
                 {_isLoggedIn ?
-                    <>
+                    <Stack spacing={2}>
                         <Box sx={panelOneCSS} alignItems="columns">
                             <Typography>Filter by Operator Name:{" "}</Typography>
                             <Typography>(Use comman separation for multiple values):{" "}</Typography>
@@ -106,23 +111,24 @@ const DeliverableReports = () => {
                                 </DemoItem>
                             </DemoContainer>
                         </LocalizationProvider>
-                        <Button
+                            <Button
                             color="primary"
                             variant="contained"
                             component="span"
                             onClick={() => filterReport()}
+                            sx={{width:"140px"}}
                         >
                             Filter Report
                         </Button>
-                        <Box></Box>
                         <Button
                             variant="contained"
                             endIcon={<FaRegTrashAlt style={{ color: "primary" }} />}
                             onClick={() => clearResults()}
+                            sx={{width:"100px", textAlign:"left"}}
                         >
                             Clear
                         </Button>
-                    </>
+                    </Stack>
                     :
                     <></>}
             </Box>
