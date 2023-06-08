@@ -17,7 +17,7 @@ import {
 import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
 import { LoginProps } from "types/dailyyWorkReportTypes";
 import { Link } from "react-router-dom";
-import { SUPERADMIN_ROLE, BASIC_ROLE, panelOneCSS } from "pages/constants";
+import { BASIC_ROLE, panelOneCSS } from "pages/constants";
 
 const LoginPanel: React.FC = () => {
   const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
@@ -26,11 +26,6 @@ const LoginPanel: React.FC = () => {
 
   const [validationMsg, setValidationMsg] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
-
-  const reportsLinkCss = {
-    ...panelOneCSS,
-    //display: `${_loggedUserRole === SUPERADMIN_ROLE ? "block" : "none"}`
-  }
 
   const logoutCss = {
     ...panelOneCSS,
@@ -61,7 +56,7 @@ const LoginPanel: React.FC = () => {
     <Stack spacing={2}>
       <Stack sx={{ display: "flex", flexDirection: "row" }} spacing="2">
         <Box sx={panelOneCSS}><Link to="/">Home</Link></Box>
-        <Box sx={reportsLinkCss}><Link to="/reports">Reports</Link></Box>
+        <Box sx={panelOneCSS}><Link to="/reports">Reports</Link></Box>
         <Box sx={logoutCss}><a href="#" onClick={() => logout()}>Logout</a></Box>
       </Stack>
       <Box>

@@ -48,4 +48,4 @@ export const panelOneCSS = { bgcolor: "white", paddingRight: "10px" };
 
 export const BASIC_ROLE = "Basic";
 export const ADMIN_ROLE = "Admin";
-export const SUPERADMIN_ROLE = "superadmin";
+export const SUPERADMIN_ROLE = "Superadmin";

@@ -5,7 +5,7 @@ import {
 } from 'recoil';
 import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
 import LoginPanel from "pages/LoginPanel";
-import { SUPERADMIN_ROLE, panelOneCSS } from "pages/constants";
+import { ADMIN_ROLE, SUPERADMIN_ROLE, panelOneCSS } from "pages/constants";
 
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -38,7 +38,7 @@ const DeliverableReports = () => {
     const generateReport = async () => {
         console.log(`generateReport`);
         setIsLoading(true);
-        if(_loggedUserRole === SUPERADMIN_ROLE){
+        if(_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE){
             await sendFilteredFormToServerGet(operators, centers, selectedStartDate, selectedEndDate);
         } 
         else {
@@ -82,7 +82,7 @@ const DeliverableReports = () => {
             <Box sx={{ display: "flex", flexDirection: "column" }}>
                 {_isLoggedIn ?
                     <Stack spacing={2}>
-                        { _loggedUserRole === SUPERADMIN_ROLE && <Box sx={panelOneCSS} alignItems="columns">
+                        { (_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE) && <Box sx={panelOneCSS} alignItems="columns">
                             <Typography>Filter by Operator Name:{" "}</Typography>
                             <Typography>(Use comman separation for multiple values):{" "}</Typography>
                             <TextField
@@ -93,7 +93,7 @@ const DeliverableReports = () => {
                                 onChange={(e) => setOperators(e.target.value)}
                             />
                         </Box> }
-                        { _loggedUserRole === SUPERADMIN_ROLE && <Box sx={panelOneCSS} alignItems="columns">
+                        { (_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE) && <Box sx={panelOneCSS} alignItems="columns">
                             <Typography>Filter by Centers :{" "}</Typography>
                             <Typography>(Use comman separation for multiple values):{" "}</Typography>
                             <TextField
