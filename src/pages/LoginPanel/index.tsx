@@ -15,9 +15,10 @@ import {
   useRecoilState,
 } from 'recoil';
 import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
-import { LoginProps } from "types/dailyyWorkReportTypes";
+import { LoginProps } from "types/dailyWorkReportTypes";
 import { Link } from "react-router-dom";
 import { BASIC_ROLE, panelOneCSS } from "pages/constants";
+import { CATALOG_PATH, DELIVERABLE_REPORTS_PATH, LANDING_PAGE_PATH } from "Routes";
 
 const LoginPanel: React.FC = () => {
   const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
@@ -55,8 +56,10 @@ const LoginPanel: React.FC = () => {
   return (
     <Stack spacing={2}>
       <Stack sx={{ display: "flex", flexDirection: "row" }} spacing="2">
-        <Box sx={panelOneCSS}><Link to="/">Home</Link></Box>
-        <Box sx={panelOneCSS}><Link to="/reports">Reports</Link></Box>
+        <Box sx={panelOneCSS}><Link to={LANDING_PAGE_PATH}>Home</Link></Box>
+        <Box sx={panelOneCSS}><Link to={DELIVERABLE_REPORTS_PATH}>Reports</Link></Box>
+        <Box sx={panelOneCSS}><Link to={CATALOG_PATH}>Catalog-Work</Link></Box>
+        
         <Box sx={logoutCss}><a href="#" onClick={() => logout()}>Logout</a></Box>
       </Stack>
       <Box>

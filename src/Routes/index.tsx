@@ -1,18 +1,22 @@
 import ProtectedRoute from 'ProtectedRoute';
+import CatalogReport from 'pages/CatalogReport';
 import DailyReport from 'pages/DailyReport';
 import DeliverableReports from 'pages/DeliverableReports';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-const LANDING_PAGE = "/"
-const DELIVERABLE_REPORTS = "/reports";
+export const LANDING_PAGE_PATH = "/"
+export const DELIVERABLE_REPORTS_PATH = "/reports";
+export const CATALOG_PATH = "/catalog";
 
 const DWRRoutes: React.FC = () => (
     <Routes>
         <Route path="/test" element={<>TestAreaWithoutLayout</>} />
         <Route element={<ProtectedRoute />}>
-            {<Route path={LANDING_PAGE} element={<DailyReport />} />}
-            {<Route path={DELIVERABLE_REPORTS} element={<DeliverableReports />} />}
+            {<Route path={LANDING_PAGE_PATH} element={<DailyReport />} />}
+            {<Route path={DELIVERABLE_REPORTS_PATH} element={<DeliverableReports />} />}
+            {<Route path={CATALOG_PATH} element={<CatalogReport />} />}
+            
         </Route>
     </Routes>
 );

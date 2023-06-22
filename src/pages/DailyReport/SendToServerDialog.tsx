@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { FaRegWindowClose } from 'react-icons/fa';
 import AllPdfStats from 'vo/AllPdfStats';
-import { DailyWorkReportType } from 'types/dailyyWorkReportTypes';
+import { DailyWorkReportType } from 'types/dailyWorkReportTypes';
 import { pushReportToServer } from "api/service/DailyReportService";
 import { AlertColor } from "@mui/material/Alert/Alert";
 

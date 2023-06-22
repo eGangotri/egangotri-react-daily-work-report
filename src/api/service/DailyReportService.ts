@@ -1,4 +1,4 @@
-import { AddDailyReportResponseType, DailyWorkReportType, LoginProps, LoginUser } from "types/dailyyWorkReportTypes"
+import { AddDailyReportResponseType, DailyWorkReportType, LoginProps, LoginUser } from "types/dailyWorkReportTypes"
 import {  callBackendGetApiForBlob, callBackendPostApi } from "./callApi";
 
 export async function sendFilteredFormToServerGetForBasicUser(operator: string, selectedStartDate: string | null, selectedEndDate: string | null) {

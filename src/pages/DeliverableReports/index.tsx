@@ -7,7 +7,6 @@ import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
 import LoginPanel from "pages/LoginPanel";
 import { ADMIN_ROLE, SUPERADMIN_ROLE, panelOneCSS } from "pages/constants";
 
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { FaRegTrashAlt } from "react-icons/fa";
 
 import dayjs, { Dayjs } from 'dayjs';
@@ -16,7 +15,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateRange } from '@mui/x-date-pickers-pro';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { sendFilteredFormToServerGet, sendFilteredFormToServerGetForBasicUser, sendFilteredFormToServerPost } from "api/service/DailyReportService";
+import { sendFilteredFormToServerGet, sendFilteredFormToServerGetForBasicUser } from "api/service/DailyReportService";
 import _ from "lodash";
 import moment from "moment";
 import { DD_MM_YYYY_FORMAT } from "utils/DailyReportUtil";

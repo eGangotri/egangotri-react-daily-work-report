@@ -1,6 +1,6 @@
 import { checkValidCredentials } from 'api/service/DailyReportService';
 import { PDFDocument } from 'pdf-lib';
-import { LoginProps } from 'types/dailyyWorkReportTypes';
+import { LoginProps } from 'types/dailyWorkReportTypes';
 import * as DailyReportUtil from 'utils/DailyReportUtil';
 import AllPdfStats from 'vo/AllPdfStats';
 import type PdfStat from 'vo/PdfStat';

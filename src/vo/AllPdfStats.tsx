@@ -7,7 +7,7 @@ import * as GeneralUtils from 'utils/GeneralUtils';
 import Decorator from 'vo/Decorator';
 
 import type PdfStat from './PdfStat';
-import { DailyWorkReportType } from 'types/dailyyWorkReportTypes';
+import { DailyWorkReportType } from 'types/dailyWorkReportTypes';
 import moment from 'moment';
 
 export default class AllPdfStats {

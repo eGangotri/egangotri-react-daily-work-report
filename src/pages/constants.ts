@@ -48,4 +48,8 @@ export const panelOneCSS = { bgcolor: "white", paddingRight: "10px" };
 
 export const BASIC_ROLE = "Basic";
 export const ADMIN_ROLE = "Admin";
+export const CATALOGER_ROLE = "Cataloger";
 export const SUPERADMIN_ROLE = "Superadmin";
+
+export const catalogProfiles = appendOthersItemToList(["Choose Profile", "Treasures-1", "Treasures-2", "Treasures-4", "Treasures-5", "Treasures-6"]);
+
