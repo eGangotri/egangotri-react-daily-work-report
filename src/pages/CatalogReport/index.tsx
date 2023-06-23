@@ -14,11 +14,7 @@ import {
 import _ from "lodash";
 import React, { useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { GoFileMedia } from "react-icons/go";
-import HelperService from "service/HelperService";
-import AllPdfStats from "vo/AllPdfStats";
-import { centers, panelOneCSS, catalogProfiles } from "pages/constants";
-import SendReportDialog, { SUCCESS_MSG } from "pages/DailyReport/SendToServerDialog";
+import { panelOneCSS, catalogProfiles } from "pages/constants";
 import LoginPanel from "pages/LoginPanel";
 import {
     useRecoilState,
@@ -27,6 +23,8 @@ import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
 import Spinner from "widgets/Spinner";
 import TextField from '@mui/material/TextField';
 import Typography from "@mui/material/Typography";
+import SentCatalogReportDialog from "./SentCatalogReportDialog";
+import AllCatalogReportStats from "vo/AllCatalogReportStats";
 
 const CatalogReport = () => {
 
@@ -35,14 +33,16 @@ const CatalogReport = () => {
     const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
     const [password, setPassword] = useState<string>("");
 
-    const [catalogStats, setCatalogStats] = useState<AllPdfStats>(new AllPdfStats());
+    const [catalogStats, setCatalogStats] = useState<AllCatalogReportStats>(new AllCatalogReportStats());
     const [snackBarMsg, setSnackBarMsg] = useState<string[]>(["", ""]);
     const [disabledState, setDisabledState] = useState<boolean>(false);
     const [catalogProfile, setCatalogProfile] = React.useState<string>(catalogProfiles[0]);
     const [entryFrom, setEntryFrom] = React.useState<number>(0);
     const [entryTo, setEntryTo] = React.useState<number>(0);
+    const [entryCount, setEntryCount] = React.useState<number>(0);
+    const [_link, setLink] = React.useState<string>("");
     const [_notes, setNotes] = React.useState<string>("");
-    
+
     const [totalEntries, setTotalEntries] = React.useState<number>(0);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -53,13 +53,15 @@ const CatalogReport = () => {
     const clearButton = useRef();
 
     const clearResults = () => {
-        setCatalogStats(new AllPdfStats());
+        setCatalogStats(new AllCatalogReportStats());
         setDisabledState(true);
         setEntryFrom(0)
         setEntryTo(0)
+        setTotalEntries(0)
         setSnackBarMsg(["", ""]);
         setCatalogProfile(catalogProfiles[0])
         setNotes("")
+        setLink("")
     };
 
     const handleProfileChange = (event: SelectChangeEvent) => {
@@ -67,6 +69,23 @@ const CatalogReport = () => {
         console.log(`val ${val}`);
         setCatalogProfile(val);
     };
+
+    const entryFromOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const _entryFrom = parseInt(event.target.value);
+        setEntryFrom(_entryFrom);
+        setEntryCount(entryTo - _entryFrom)
+        // setCatalogStats({
+
+        // })
+
+    }
+
+    const entryToOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEntryTo(parseInt(event.target.value));
+        const _entryTo = parseInt(event.target.value);
+        setEntryTo(_entryTo);
+        setEntryCount(_entryTo - entryFrom)
+    }
 
     return (
         <Stack spacing={2}>
@@ -98,50 +117,63 @@ const CatalogReport = () => {
                 </Box>
                 <Box><Typography>Enter Start and End Index you have cataloged</Typography></Box>
                 <Stack spacing={5} direction="row">
-                        <Typography>From</Typography>
-                        <TextField
-                            required
-                            id="entryFrom"
-                            type="number"
-                            label="Required"
-                            onChange={(event:React.ChangeEvent<HTMLInputElement>)=>setEntryFrom(parseInt(event.target.value))}
-                            //defaultValue="Entry From"
-                            value={entryFrom}
-                            sx={{ width: "120px" }}
-                            variant="filled"
-                        />
-                        <Typography>To</Typography>
-                        <TextField
-                            required
-                            id="entryTo"
-                            type="number"
-                            label="Required"
-                            onChange={(event:React.ChangeEvent<HTMLInputElement>)=>setEntryTo(parseInt(event.target.value))}
-                            defaultValue="Entry To"
-                            value={entryTo}
-                            sx={{ width: "120px" }}
-                            variant="filled"
-                        />
+                    <Typography>From</Typography>
+                    <TextField
+                        required
+                        id="entryFrom"
+                        type="number"
+                        label="Required"
+                        onChange={entryFromOnChange}
+                        //defaultValue="Entry From"
+                        value={entryFrom}
+                        sx={{ width: "120px" }}
+                        variant="filled"
+                    />
+                    <Typography>To</Typography>
+                    <TextField
+                        required
+                        id="entryTo"
+                        type="number"
+                        label="Required"
+                        onChange={entryToOnChange}
+                        value={entryTo}
+                        sx={{ width: "120px" }}
+                        variant="filled"
+                    />
                 </Stack>
                 <Box>
-                    {((entryTo-entryFrom)< 0) && 
-                    <Typography><span style={{ color: 'red' }}>Count cannot be negative</span></Typography>
+                    {(entryCount < 0) &&
+                        <Typography><span style={{ color: 'red' }}>Count cannot be negative</span></Typography>
                     }
-                    <Typography>Total Items Cataloged <span style={{ fontWeight: 'bold' }}>{entryTo-entryFrom}</span></Typography>
+                    <Typography>Total Items Cataloged <span style={{ fontWeight: 'bold' }}>{entryCount}</span></Typography>
                 </Box>
 
                 <Stack spacing={5} direction="row">
                     <Typography>Catalog Link </Typography>
-                    <TextField sx={{width:"400px"}} value={_notes} multiline={true} maxRows={3}>XXXX</TextField>
+                    <TextField
+                        required
+                        id="_link"
+                        type="text"
+                        label="Required"
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setLink(event.target.value) }}
+                        value={_link}
+                        sx={{ width: "400px" }} />
                 </Stack>
-                
+
                 <Stack spacing={5} direction="row">
-                    <Typography>Notes</Typography>
-                    <TextField sx={{width:"400px"}} value={_notes} multiline={true} maxRows={3}>XXXX</TextField>
+                    <Typography>Any Optional Notes</Typography>
+                    <TextField
+                        id="_notes"
+                        type="text"
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setNotes(event.target.value) }}
+                        sx={{ width: "400px" }}
+                        value={_notes}
+                        multiline={true}
+                        maxRows={3} />
                 </Stack>
 
                 <Stack spacing={2} direction="row">
-                    <SendReportDialog pdfData={catalogStats} setPdfData={setCatalogStats} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} password={password} />
+                    <SentCatalogReportDialog catReport={catalogStats} setCatReport={setCatalogStats} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} password={password} />
                     <Button
                         variant="contained"
                         endIcon={<FaRegTrashAlt style={{ color: "primary" }} />}
@@ -158,7 +190,7 @@ const CatalogReport = () => {
                         </Snackbar>
                     </Box>
                 </Stack>
-                <Box ref={dataHoldingElement}>{AllPdfStats.decorate(catalogStats)}</Box>
+                <Box ref={dataHoldingElement}>{AllCatalogReportStats.decorate(catalogStats)}</Box>
                 <Box sx={{ paddingTop: "30px" }}></Box>
 
             </>

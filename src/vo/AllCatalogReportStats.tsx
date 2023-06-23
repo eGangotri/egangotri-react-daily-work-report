@@ -80,7 +80,7 @@ Link: ${all.link}\n
 Notes: ${all.notes}\n`;
     };
 
-    static convertPdfStatsToDailyWorkReportTypeObject = (catRepStatus: AllCatalogReportStats) => {
+    static convertCatStatsToCatWorkReportTypeObject = (catRepStatus: AllCatalogReportStats) => {
         const catWorkReportType: CatalogWorkReportType =
         {
             "staffName": catRepStatus.staffName,
