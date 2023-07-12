@@ -51,5 +51,8 @@ export const ADMIN_ROLE = "Admin";
 export const CATALOGER_ROLE = "Cataloger";
 export const SUPERADMIN_ROLE = "Superadmin";
 
-export const catalogProfiles = appendOthersItemToList(["Choose Profile", "Treasures-1", "Treasures-2", "Treasures-4", "Treasures-5", "Treasures-6"]);
+const treasureIndices = [1,2,3,4,5,6,7,8,9,59]
+
+export const catalogProfiles = appendOthersItemToList(["Choose Profile", 
+...(treasureIndices.map(x=>`Treasures-${x}`))]);
 

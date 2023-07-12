@@ -8,7 +8,10 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { FaRegWindowClose } from 'react-icons/fa';
-import AllCatalogReportStats from 'vo/AllCatalogReportStats';
+import AllCatalogReportStats from 'utils/AllCatalogReportStats';
+import { AllCatalogReportStatsInterface } from 'types/catalogWorkReportTypes';
+import { pushReportToServer } from 'api/service/DailyReportService';
+import { pushCatReportToServer } from 'api/service/DailyCatalogReportService';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -29,8 +32,8 @@ export interface DialogTitleProps {
 }
 
 interface SentCatalogReportDialogProps {
-    catReport: AllCatalogReportStats;
-    setCatReport: React.Dispatch<React.SetStateAction<AllCatalogReportStats>>;
+    catReport: AllCatalogReportStatsInterface;
+    setCatReport: React.Dispatch<React.SetStateAction<AllCatalogReportStatsInterface>>;
     snackBarMsg: string[];
     setSnackBarMsg: React.Dispatch<React.SetStateAction<string[]>>;
     password: string;
@@ -60,7 +63,7 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
     );
 }
 
-const SentCatalogReportDialog: React.FC<SentCatalogReportDialogProps> = ({ catReport, setCatReport, snackBarMsg, setSnackBarMsg, password }) => {
+const SendCatalogReportDialog: React.FC<SentCatalogReportDialogProps> = ({ catReport, setCatReport, snackBarMsg, setSnackBarMsg, password }) => {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -76,24 +79,22 @@ const SentCatalogReportDialog: React.FC<SentCatalogReportDialogProps> = ({ catRe
 
 
     const prepareReportForPush = async () => {
-        // handleClose();
-        // const dailyReport: DailyWorkReportType =
-        //     AllCatalogReportStats.convertPdfStatsToDailyWorkReportTypeObject(catReport);
-        // console.log(`dailyReport ${JSON.stringify(dailyReport)}`);
-        // const jsonResp = await pushReportToServer(dailyReport, password);
-        // setSnackBarMsg([Object.keys(jsonResp)[0], Object.values(jsonResp)[0]]);
-        // if (jsonResp.success || jsonResp.warning) {
-        //     copyResults();
-        // }
-        // else {
-        //     copyResults("There was an error sending data to Server. So nothing copied. Pls. notify management");
-        // }
+        handleClose();
+        console.log(`dailyReport ${JSON.stringify(catReport)}`);
+        const jsonResp = await pushCatReportToServer(catReport, password);
+        setSnackBarMsg([Object.keys(jsonResp)[0], Object.values(jsonResp)[0]]);
+        if (jsonResp.success || jsonResp.warning) {
+            copyResults();
+        }
+        else {
+            copyResults("There was an error sending data to Server. So nothing copied. Pls. notify management");
+        }
     };
 
     return (
         <div>
             <Button variant="outlined" onClick={handleClickOpen} disabled={AllCatalogReportStats.isEmpty(catReport)}>
-                Copy and Send Report {AllCatalogReportStats.isEmpty(catReport)} {JSON.stringify(catReport)}
+                Copy and Send Report
             </Button>
             <BootstrapDialog
                 onClose={handleClose}
@@ -122,7 +123,8 @@ const SentCatalogReportDialog: React.FC<SentCatalogReportDialogProps> = ({ catRe
                     <Button
                         color="primary"
                         variant="contained"
-                        autoFocus onClick={prepareReportForPush}>
+                        autoFocus 
+                        onClick={prepareReportForPush}>
                         Send-Report-and-Copy
                     </Button>
                 </DialogActions>
@@ -131,4 +133,4 @@ const SentCatalogReportDialog: React.FC<SentCatalogReportDialogProps> = ({ catRe
     );
 }
 
-export default SentCatalogReportDialog
+export default SendCatalogReportDialog

@@ -23,8 +23,10 @@ import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
 import Spinner from "widgets/Spinner";
 import TextField from '@mui/material/TextField';
 import Typography from "@mui/material/Typography";
-import SentCatalogReportDialog from "./SentCatalogReportDialog";
-import AllCatalogReportStats from "vo/AllCatalogReportStats";
+import SendCatalogReportDialog from "./SentCatalogReportDialog";
+import AllCatalogReportStats from "utils/AllCatalogReportStats";
+import { FormProvider, useForm } from 'react-hook-form';
+import { AllCatalogReportStatsInterface } from "types/catalogWorkReportTypes";
 
 const CatalogReport = () => {
 
@@ -33,7 +35,18 @@ const CatalogReport = () => {
     const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
     const [password, setPassword] = useState<string>("");
 
-    const [catalogStats, setCatalogStats] = useState<AllCatalogReportStats>(new AllCatalogReportStats());
+    const [catalogStats, setCatalogStats] = useState<AllCatalogReportStatsInterface>({
+        title: 'eGangotri Daily Catalog Work Report',
+        staffName: _loggedUser,
+        catalogProfile: "",
+        entryFrom: 0,
+        entryTo: 0,
+        dateOfReport: new Date(),
+        entryCount: 0,
+        timeOfRequest: '',
+        link: '',
+        notes: '',
+    } as AllCatalogReportStatsInterface);
     const [snackBarMsg, setSnackBarMsg] = useState<string[]>(["", ""]);
     const [disabledState, setDisabledState] = useState<boolean>(false);
     const [catalogProfile, setCatalogProfile] = React.useState<string>(catalogProfiles[0]);
@@ -53,10 +66,11 @@ const CatalogReport = () => {
     const clearButton = useRef();
 
     const clearResults = () => {
-        setCatalogStats(new AllCatalogReportStats());
+        //setCatalogStats();
         setDisabledState(true);
         setEntryFrom(0)
         setEntryTo(0)
+        setEntryCount(0)
         setTotalEntries(0)
         setSnackBarMsg(["", ""]);
         setCatalogProfile(catalogProfiles[0])
@@ -68,23 +82,54 @@ const CatalogReport = () => {
         const val = event.target.value;
         console.log(`val ${val}`);
         setCatalogProfile(val);
+        setCatalogStats((prevState) => ({
+            ...prevState,
+            catalogProfile: val
+        }));
     };
 
     const entryFromOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const _entryFrom = parseInt(event.target.value);
+        const _entryCount = entryTo - _entryFrom
         setEntryFrom(_entryFrom);
-        setEntryCount(entryTo - _entryFrom)
-        // setCatalogStats({
-
-        // })
+        setEntryCount(_entryCount)
+        setCatalogStats((prevState) => ({
+            ...prevState,
+            entryCount: _entryCount,
+            entryFrom: _entryFrom,
+        }));
 
     }
 
     const entryToOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEntryTo(parseInt(event.target.value));
         const _entryTo = parseInt(event.target.value);
+        const _entryCount = _entryTo - entryFrom;
         setEntryTo(_entryTo);
-        setEntryCount(_entryTo - entryFrom)
+        setEntryCount(_entryCount);
+        setCatalogStats((prevState) => ({
+            ...prevState,
+            entryCount: _entryCount,
+            entryTo: _entryTo,
+        }));
+    }
+
+    const notesOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const _notes = event.target.value;
+        setNotes(event.target.value)
+        setCatalogStats((prevState) => ({
+            ...prevState,
+            notes: _notes,
+        }));
+    }
+
+    const linkOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const _link = event.target.value;
+        setLink(event.target.value)
+        setCatalogStats((prevState) => ({
+            ...prevState,
+            link: _link,
+        }));
     }
 
     return (
@@ -96,7 +141,7 @@ const CatalogReport = () => {
             <>
                 <Box sx={{ display: "flex", flexDirection: "row" }}>
                     <Box sx={panelOneCSS}>
-                        <InputLabel id="l1">Center</InputLabel>
+                        <InputLabel id="l1">Profile</InputLabel>
                     </Box>
                     <Box sx={panelOneCSS}>
                         <Select
@@ -124,7 +169,6 @@ const CatalogReport = () => {
                         type="number"
                         label="Required"
                         onChange={entryFromOnChange}
-                        //defaultValue="Entry From"
                         value={entryFrom}
                         sx={{ width: "120px" }}
                         variant="filled"
@@ -155,7 +199,7 @@ const CatalogReport = () => {
                         id="_link"
                         type="text"
                         label="Required"
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setLink(event.target.value) }}
+                        onChange={linkOnChange}
                         value={_link}
                         sx={{ width: "400px" }} />
                 </Stack>
@@ -165,7 +209,7 @@ const CatalogReport = () => {
                     <TextField
                         id="_notes"
                         type="text"
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setNotes(event.target.value) }}
+                        onChange={notesOnChange}
                         sx={{ width: "400px" }}
                         value={_notes}
                         multiline={true}
@@ -173,7 +217,12 @@ const CatalogReport = () => {
                 </Stack>
 
                 <Stack spacing={2} direction="row">
-                    <SentCatalogReportDialog catReport={catalogStats} setCatReport={setCatalogStats} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} password={password} />
+                    <SendCatalogReportDialog
+                        catReport={catalogStats}
+                        setCatReport={setCatalogStats}
+                        snackBarMsg={snackBarMsg}
+                        setSnackBarMsg={setSnackBarMsg}
+                        password={password} />
                     <Button
                         variant="contained"
                         endIcon={<FaRegTrashAlt style={{ color: "primary" }} />}

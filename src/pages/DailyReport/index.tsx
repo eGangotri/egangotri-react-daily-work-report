@@ -25,6 +25,8 @@ import {
 } from 'recoil'
 import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
 import Spinner from "widgets/Spinner";
+import { FormProvider, useForm } from 'react-hook-form';
+import { DailyWorkReportType } from "types/dailyWorkReportTypes";
 
 const DailyReport = () => {
 
@@ -98,105 +100,113 @@ const DailyReport = () => {
     }
   };
 
+  const methods = useForm<DailyWorkReportType>();
+  const { handleSubmit, watch } = methods;
+  const onFormSubmit = async (formData: DailyWorkReportType) => {
+    //createSnapshotLocation(formData);
+  };
+
   return (
     <Stack spacing={2}>
       {isLoading && <Spinner />}
       <>
         <LoginPanel />
       </>
-      <>
-        <Box sx={{ display: "flex", flexDirection: "row" }}>
-          <Box sx={panelOneCSS}>
-            <InputLabel id="l1">Center</InputLabel>
-          </Box>
-          <Box sx={panelOneCSS}>
-            <Select
-              labelId="l1"
-              id="demo-simple-select-standard"
-              value={center}
-              onChange={handleCenterChange}
-              sx={{ minWidth: '200px' }}
-              disabled={!_isLoggedIn}
-            >
-              {centers.map((option: string) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </Select>
-          </Box>
-          <Box sx={panelOneCSS}>
-            <InputLabel id="l2">Library</InputLabel>
-          </Box>
-          <Box sx={panelOneCSS}>
-            <Select
-              labelId="l2"
-              id="demo-simple-select-filled"
-              value={library}
-              onChange={handleLibChange}
-              label="Library"
-              sx={{ minWidth: '200px' }}
-              disabled={!_isLoggedIn}
-            >
-              {(libraries || []).map((option: string, index: number) => (
-                <MenuItem
-                  key={option}
-                  value={option}
-                  selected={option === library || index === 1}
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onFormSubmit)}>
+          <Stack spacing={2} direction="column">
+            <Box sx={{ display: "flex", flexDirection: "row" }}>
+              <Box sx={panelOneCSS}>
+                <InputLabel id="l1">Center</InputLabel>
+              </Box>
+              <Box sx={panelOneCSS}>
+                <Select
+                  labelId="l1"
+                  id="demo-simple-select-standard"
+                  value={center}
+                  onChange={handleCenterChange}
+                  sx={{ minWidth: '200px' }}
+                  disabled={!_isLoggedIn}
                 >
-                  {option}
-                </MenuItem>
-              ))}
-            </Select>
-          </Box>
-        </Box>
-        <label htmlFor="upload-pdf">
-          <input
-            style={{ display: "none" }}
-            id="upload-pdf"
-            name="upload-pdf"
-            type="file"
-            multiple
-            accept=".pdf"
-            disabled={!_isLoggedIn || center === centers[0]}
-            onChange={uploadPdf}
-          />
-          <Button
-            color="primary"
-            variant="contained"
-            component="span"
-            disabled={!_isLoggedIn || center === centers[0]}
-            endIcon={<GoFileMedia style={{ color: "primary" }} />}
-          >
-            Choose PDFs
-          </Button>
-        </label>
-        <Stack spacing={2} direction="row">
-          <SendReportDialog pdfData={pdfData} setPdfData={setPdfData} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} password={password} />
-          <Button
-            variant="contained"
-            endIcon={<FaRegTrashAlt style={{ color: "primary" }} />}
-            onClick={() => clearResults()}
-            //disabled={AllPdfStats.isEmpty(pdfData)}
-          >
-            Clear
-          </Button>
-          <Box>
-            <Snackbar open={snackBarMsg[0] !== ""} autoHideDuration={6000}>
-              <Alert severity={snackBarMsg[0] === "success" ? "success" : (snackBarMsg[0] === "warning" ? "warning" : "error")} sx={{ width: '100%' }}>
-                {snackBarMsg[1]}
-              </Alert>
-            </Snackbar>
-          </Box>
-        </Stack>
-        <Box ref={dataHoldingElement}>{AllPdfStats.decorate(pdfData)}</Box>
-        <Box sx={{paddingTop:"30px"}}></Box>
+                  {centers.map((option: string) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
+              <Box sx={panelOneCSS}>
+                <InputLabel id="l2">Library</InputLabel>
+              </Box>
+              <Box sx={panelOneCSS}>
+                <Select
+                  labelId="l2"
+                  id="demo-simple-select-filled"
+                  value={library}
+                  onChange={handleLibChange}
+                  label="Library"
+                  sx={{ minWidth: '200px' }}
+                  disabled={!_isLoggedIn}
+                >
+                  {(libraries || []).map((option: string, index: number) => (
+                    <MenuItem
+                      key={option}
+                      value={option}
+                      selected={option === library || index === 1}
+                    >
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
+            </Box>
+            <label htmlFor="upload-pdf">
+              <input
+                style={{ display: "none" }}
+                id="upload-pdf"
+                name="upload-pdf"
+                type="file"
+                multiple
+                accept=".pdf"
+                disabled={!_isLoggedIn || center === centers[0]}
+                onChange={uploadPdf}
+              />
+              <Button
+                color="primary"
+                variant="contained"
+                component="span"
+                disabled={!_isLoggedIn || center === centers[0]}
+                endIcon={<GoFileMedia style={{ color: "primary" }} />}
+              >
+                Choose PDFs
+              </Button>
+            </label>
+            <Stack spacing={2} direction="row">
+              <SendReportDialog pdfData={pdfData} setPdfData={setPdfData} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} password={password} />
+              <Button
+                variant="contained"
+                endIcon={<FaRegTrashAlt style={{ color: "primary" }} />}
+                onClick={() => clearResults()}
+              //disabled={AllPdfStats.isEmpty(pdfData)}
+              >
+                Clear
+              </Button>
+              <Box>
+                <Snackbar open={snackBarMsg[0] !== ""} autoHideDuration={6000}>
+                  <Alert severity={snackBarMsg[0] === "success" ? "success" : (snackBarMsg[0] === "warning" ? "warning" : "error")} sx={{ width: '100%' }}>
+                    {snackBarMsg[1]}
+                  </Alert>
+                </Snackbar>
+              </Box>
+            </Stack>
+            <Box ref={dataHoldingElement}>{AllPdfStats.decorate(pdfData)}</Box>
+            <Box sx={{ paddingTop: "30px" }}></Box>
+            </Stack>
+          </form>
+        </FormProvider>
+      </Stack>
 
-      </>
-
-    </Stack>
-
-  );
+      );
 };
 
-export default DailyReport;
+      export default DailyReport;
