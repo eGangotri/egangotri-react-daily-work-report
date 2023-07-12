@@ -60,7 +60,6 @@ const LoginPanel: React.FC = () => {
         <Box sx={panelOneCSS}><Link to={LANDING_PAGE_PATH}>Home</Link></Box>
         <Box sx={panelOneCSS}><Link to={DELIVERABLE_REPORTS_PATH}>Reports</Link></Box>
         <Box sx={panelOneCSS}><Link to={CATALOG_PATH}>Catalog-Work</Link></Box>
-        
         <Box sx={logoutCss}><a href="#" onClick={() => logout()}>Logout</a></Box>
       </Stack>
       <Box>
