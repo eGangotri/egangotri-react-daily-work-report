@@ -17,7 +17,8 @@ import {
 import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
 import { LoginProps } from "types/dailyWorkReportTypes";
 import { Link } from "react-router-dom";
-import { BASIC_ROLE, panelOneCSS } from "pages/constants";
+import { panelOneCSS } from "pages/constants";
+import { BASIC_ROLE } from 'mirror/FrontEndBackendCommonConsts'
 import { CATALOG_PATH, DELIVERABLE_REPORTS_PATH, LANDING_PAGE_PATH } from "Routes";
 
 const LoginPanel: React.FC = () => {

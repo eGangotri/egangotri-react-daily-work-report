@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography';
 import { FaRegWindowClose } from 'react-icons/fa';
 import AllCatalogReportStats from 'utils/AllCatalogReportStats';
 import { AllCatalogReportStatsInterface } from 'types/catalogWorkReportTypes';
-import { pushReportToServer } from 'api/service/DailyReportService';
 import { pushCatReportToServer } from 'api/service/DailyCatalogReportService';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -63,7 +62,7 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
     );
 }
 
-const SendCatalogReportDialog: React.FC<SentCatalogReportDialogProps> = ({ catReport, setCatReport, snackBarMsg, setSnackBarMsg, password }) => {
+const SendCatalogReportToServerDialog: React.FC<SentCatalogReportDialogProps> = ({ catReport, setCatReport, snackBarMsg, setSnackBarMsg, password }) => {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -78,9 +77,9 @@ const SendCatalogReportDialog: React.FC<SentCatalogReportDialogProps> = ({ catRe
     };
 
 
-    const prepareReportForPush = async () => {
+    const prepareCatReportForPush = async () => {
         handleClose();
-        console.log(`dailyReport ${JSON.stringify(catReport)}`);
+        console.log(`dailyCatReport ${JSON.stringify(catReport)}`);
         const jsonResp = await pushCatReportToServer(catReport, password);
         setSnackBarMsg([Object.keys(jsonResp)[0], Object.values(jsonResp)[0]]);
         if (jsonResp.success || jsonResp.warning) {
@@ -93,8 +92,8 @@ const SendCatalogReportDialog: React.FC<SentCatalogReportDialogProps> = ({ catRe
 
     return (
         <div>
-            <Button variant="outlined" onClick={handleClickOpen} disabled={AllCatalogReportStats.isEmpty(catReport)}>
-                Copy and Send Report
+            <Button variant="outlined" onClick={handleClickOpen} disabled={AllCatalogReportStats.hasAllRequiredFields(catReport)}>
+                Copy and Send Catalog Report
             </Button>
             <BootstrapDialog
                 onClose={handleClose}
@@ -124,7 +123,7 @@ const SendCatalogReportDialog: React.FC<SentCatalogReportDialogProps> = ({ catRe
                         color="primary"
                         variant="contained"
                         autoFocus 
-                        onClick={prepareReportForPush}>
+                        onClick={prepareCatReportForPush}>
                         Send-Report-and-Copy
                     </Button>
                 </DialogActions>
@@ -133,4 +132,4 @@ const SendCatalogReportDialog: React.FC<SentCatalogReportDialogProps> = ({ catRe
     );
 }
 
-export default SendCatalogReportDialog
+export default SendCatalogReportToServerDialog

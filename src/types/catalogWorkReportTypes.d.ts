@@ -1,13 +1,12 @@
 //repetition of code: use monorepo
 export interface AllCatalogReportStatsInterface {
   title: string;
-  staffName: string;
+  operatorName: string;
   catalogProfile: string;
   entryFrom: number;
   entryTo: number;
   entryCount: number;
-  dateOfReport: Date;
-  timeOfRequest: string;
+  timeOfRequest: Date;
   link: string;
   notes: string
 }

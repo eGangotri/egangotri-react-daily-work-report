@@ -9,22 +9,22 @@ import { DD_MM_YYYY_FORMAT } from './DailyReportUtil';
 
 export default class AllCatalogReportStats {
 
-    static isEmpty(all: AllCatalogReportStatsInterface) {
-        return all.entryCount === 0;
+    static hasAllRequiredFields(all: AllCatalogReportStatsInterface) {
+        return all.entryCount === 0 || all.entryCount <=0 || !all.link || !all.catalogProfile;
     }
 
     static decorate = (all: AllCatalogReportStatsInterface): JSX.Element => {
-        if (AllCatalogReportStats.isEmpty(all)) {
+        if (AllCatalogReportStats.hasAllRequiredFields(all)) {
             return <></>;
         }
         return (
             <Stack spacing={2}>
                 <Typography>
-                    Work Status for <span style={{ fontWeight: 'bold' }}>{GeneralUtils.capitalize(all.staffName)} ({all.catalogProfile})</span> :
+                    Work Status for <span style={{ fontWeight: 'bold' }}>{GeneralUtils.capitalize(all.operatorName)} ({all.catalogProfile})</span> :
                 </Typography>
                 <Typography>
                     {' '}
-                    On <span style={{ fontWeight: 'bold' }}>{moment(all.dateOfReport).format(DD_MM_YYYY_FORMAT)}</span>
+                    On <span style={{ fontWeight: 'bold' }}>{moment(all.timeOfRequest).format(DD_MM_YYYY_FORMAT)}</span>
                 </Typography>
                 <Typography>
                     {' '}
@@ -50,7 +50,7 @@ export default class AllCatalogReportStats {
     };
 
     static toString = (all: AllCatalogReportStatsInterface): string => {
-        return `Work Status for ${GeneralUtils.capitalize(all.staffName)} (${all.catalogProfile})
+        return `Work Status for ${GeneralUtils.capitalize(all.operatorName)} (${all.catalogProfile})
 On ${all.timeOfRequest}\n
 From Index: ${all.entryFrom} 
 To Index: ${all.entryTo}\n

@@ -23,7 +23,7 @@ import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
 import Spinner from "widgets/Spinner";
 import TextField from '@mui/material/TextField';
 import Typography from "@mui/material/Typography";
-import SendCatalogReportDialog from "./SentCatalogReportDialog";
+import SendCatalogReportToServerDialog from "./SentCatalogReportToServerDialog";
 import AllCatalogReportStats from "utils/AllCatalogReportStats";
 import { FormProvider, useForm } from 'react-hook-form';
 import { AllCatalogReportStatsInterface } from "types/catalogWorkReportTypes";
@@ -37,13 +37,12 @@ const CatalogReport = () => {
 
     const [catalogStats, setCatalogStats] = useState<AllCatalogReportStatsInterface>({
         title: 'eGangotri Daily Catalog Work Report',
-        staffName: _loggedUser,
+        operatorName: _loggedUser,
         catalogProfile: "",
         entryFrom: 0,
         entryTo: 0,
-        dateOfReport: new Date(),
+        timeOfRequest: new Date(),
         entryCount: 0,
-        timeOfRequest: '',
         link: '',
         notes: '',
     } as AllCatalogReportStatsInterface);
@@ -55,9 +54,6 @@ const CatalogReport = () => {
     const [entryCount, setEntryCount] = React.useState<number>(0);
     const [_link, setLink] = React.useState<string>("");
     const [_notes, setNotes] = React.useState<string>("");
-
-    const [totalEntries, setTotalEntries] = React.useState<number>(0);
-
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
 
@@ -71,7 +67,6 @@ const CatalogReport = () => {
         setEntryFrom(0)
         setEntryTo(0)
         setEntryCount(0)
-        setTotalEntries(0)
         setSnackBarMsg(["", ""]);
         setCatalogProfile(catalogProfiles[0])
         setNotes("")
@@ -97,6 +92,7 @@ const CatalogReport = () => {
             ...prevState,
             entryCount: _entryCount,
             entryFrom: _entryFrom,
+            operatorName: _loggedUser,
         }));
 
     }
@@ -217,7 +213,7 @@ const CatalogReport = () => {
                 </Stack>
 
                 <Stack spacing={2} direction="row">
-                    <SendCatalogReportDialog
+                    <SendCatalogReportToServerDialog
                         catReport={catalogStats}
                         setCatReport={setCatalogStats}
                         snackBarMsg={snackBarMsg}

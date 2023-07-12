@@ -46,11 +46,6 @@ export const libraryMenuOptions = [
 
 export const panelOneCSS = { bgcolor: "white", paddingRight: "10px" };
 
-export const BASIC_ROLE = "Basic";
-export const ADMIN_ROLE = "Admin";
-export const CATALOGER_ROLE = "Cataloger";
-export const SUPERADMIN_ROLE = "Superadmin";
-
 const treasureIndices = [1,2,3,4,5,6,7,8,9,59]
 
 export const catalogProfiles = appendOthersItemToList(["Choose Profile", 

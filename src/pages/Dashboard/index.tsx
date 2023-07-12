@@ -9,7 +9,7 @@ import {
   RecoilRoot,
   atom,
 } from 'recoil';
-import { BASIC_ROLE } from 'pages/constants';
+import { BASIC_ROLE } from 'mirror/FrontEndBackendCommonConsts';
 
 export const loggedInState = atom({
   key: 'loggedInState',

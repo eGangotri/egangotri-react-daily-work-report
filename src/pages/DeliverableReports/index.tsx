@@ -5,7 +5,8 @@ import {
 } from 'recoil';
 import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
 import LoginPanel from "pages/LoginPanel";
-import { ADMIN_ROLE, SUPERADMIN_ROLE, panelOneCSS } from "pages/constants";
+import { panelOneCSS } from "pages/constants";
+import { ADMIN_ROLE, SUPERADMIN_ROLE } from 'mirror/FrontEndBackendCommonConsts'
 
 import { FaRegTrashAlt } from "react-icons/fa";
 

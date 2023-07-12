@@ -18,7 +18,7 @@ import { GoFileMedia } from "react-icons/go";
 import HelperService from "service/HelperService";
 import AllPdfStats from "vo/AllPdfStats";
 import { libraryMenuOptions, centers, panelOneCSS } from "pages/constants";
-import SendReportDialog, { SUCCESS_MSG } from "pages/DailyReport/SendToServerDialog";
+import SendReportDialog, { SUCCESS_MSG } from "pages/DailyReport/SendDailyReportToServerDialog";
 import LoginPanel from "pages/LoginPanel";
 import {
   useRecoilState,
