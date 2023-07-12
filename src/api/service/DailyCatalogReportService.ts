@@ -1,8 +1,8 @@
-import { AllCatalogReportStatsInterface } from "types/catalogWorkReportTypes";
+import { CatalogWorkReportType } from "mirror/catalogWorkReportTypes";
 import { AddDailyReportResponseType } from "types/dailyWorkReportTypes";
 import { callBackendPostApi } from "./callApi";
 
-export async function pushCatReportToServer(dailyReport: AllCatalogReportStatsInterface, password: string): Promise<AddDailyReportResponseType> {
+export async function pushCatReportToServer(dailyReport: CatalogWorkReportType, password: string): Promise<AddDailyReportResponseType> {
     const _reportBody = {
         ...dailyReport,
         password

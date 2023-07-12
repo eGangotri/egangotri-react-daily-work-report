@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { FaRegWindowClose } from 'react-icons/fa';
 import AllCatalogReportStats from 'utils/AllCatalogReportStats';
-import { AllCatalogReportStatsInterface } from 'types/catalogWorkReportTypes';
+import { CatalogWorkReportType } from 'mirror/catalogWorkReportTypes';
 import { pushCatReportToServer } from 'api/service/DailyCatalogReportService';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -31,8 +31,8 @@ export interface DialogTitleProps {
 }
 
 interface SentCatalogReportDialogProps {
-    catReport: AllCatalogReportStatsInterface;
-    setCatReport: React.Dispatch<React.SetStateAction<AllCatalogReportStatsInterface>>;
+    catReport: CatalogWorkReportType;
+    setCatReport: React.Dispatch<React.SetStateAction<CatalogWorkReportType>>;
     snackBarMsg: string[];
     setSnackBarMsg: React.Dispatch<React.SetStateAction<string[]>>;
     password: string;

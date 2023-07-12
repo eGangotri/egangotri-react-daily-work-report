@@ -3,17 +3,17 @@ import { Box, Stack, Typography } from '@mui/material';
 
 import * as GeneralUtils from 'utils/GeneralUtils';
 
-import { AllCatalogReportStatsInterface } from 'types/catalogWorkReportTypes';
+import { CatalogWorkReportType } from 'mirror/catalogWorkReportTypes';
 import moment from 'moment';
 import { DD_MM_YYYY_FORMAT } from './DailyReportUtil';
 
 export default class AllCatalogReportStats {
 
-    static hasAllRequiredFields(all: AllCatalogReportStatsInterface) {
+    static hasAllRequiredFields(all: CatalogWorkReportType) {
         return all.entryCount === 0 || all.entryCount <=0 || !all.link || !all.catalogProfile;
     }
 
-    static decorate = (all: AllCatalogReportStatsInterface): JSX.Element => {
+    static decorate = (all: CatalogWorkReportType): JSX.Element => {
         if (AllCatalogReportStats.hasAllRequiredFields(all)) {
             return <></>;
         }
@@ -49,7 +49,7 @@ export default class AllCatalogReportStats {
         );
     };
 
-    static toString = (all: AllCatalogReportStatsInterface): string => {
+    static toString = (all: CatalogWorkReportType): string => {
         return `Work Status for ${GeneralUtils.capitalize(all.operatorName)} (${all.catalogProfile})
 On ${all.timeOfRequest}\n
 From Index: ${all.entryFrom} 

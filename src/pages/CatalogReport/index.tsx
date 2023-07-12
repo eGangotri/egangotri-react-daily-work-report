@@ -26,7 +26,7 @@ import Typography from "@mui/material/Typography";
 import SendCatalogReportToServerDialog from "./SentCatalogReportToServerDialog";
 import AllCatalogReportStats from "utils/AllCatalogReportStats";
 import { FormProvider, useForm } from 'react-hook-form';
-import { AllCatalogReportStatsInterface } from "types/catalogWorkReportTypes";
+import { CatalogWorkReportType } from "mirror/catalogWorkReportTypes";
 
 const CatalogReport = () => {
 
@@ -35,7 +35,7 @@ const CatalogReport = () => {
     const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
     const [password, setPassword] = useState<string>("");
 
-    const [catalogStats, setCatalogStats] = useState<AllCatalogReportStatsInterface>({
+    const [catalogStats, setCatalogStats] = useState<CatalogWorkReportType>({
         title: 'eGangotri Daily Catalog Work Report',
         operatorName: _loggedUser,
         catalogProfile: "",
@@ -45,7 +45,7 @@ const CatalogReport = () => {
         entryCount: 0,
         link: '',
         notes: '',
-    } as AllCatalogReportStatsInterface);
+    } as CatalogWorkReportType);
     const [snackBarMsg, setSnackBarMsg] = useState<string[]>(["", ""]);
     const [disabledState, setDisabledState] = useState<boolean>(false);
     const [catalogProfile, setCatalogProfile] = React.useState<string>(catalogProfiles[0]);

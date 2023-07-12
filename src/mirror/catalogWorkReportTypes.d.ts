@@ -1,5 +1,5 @@
 //repetition of code: use monorepo
-export interface AllCatalogReportStatsInterface {
+export interface CatalogWorkReportType {
   title: string;
   operatorName: string;
   catalogProfile: string;
