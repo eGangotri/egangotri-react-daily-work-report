@@ -28,8 +28,8 @@ export default class AllCatalogReportStats {
                 </Typography>
                 <Typography>
                     {' '}
-                    Total Items Catalog Count ( all.entryTo-(all.entryFrom-all.skipped)): {' '}
-                    <span style={{ fontWeight: 'bold' }}> {all.entryCount} </span>
+                    Total Items Catalog Count
+                    <span style={{ fontWeight: 'bold' }}>  ( {all.entryTo} - ({all.entryFrom}+{all.skipped}) ): {' '} {all.entryCount} </span>
                 </Typography>
                 <Typography>
                     From Index:{' '}
