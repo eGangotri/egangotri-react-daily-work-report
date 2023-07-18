@@ -35,7 +35,7 @@ export default class AllCatalogReportStats {
                     From Index:{' '}
                     <span style={{ fontWeight: 'bold' }}>{all.entryFrom}</span>{' '}
                 </Typography>
-                <Typography sx={{ paddingBottom: "30px" }}>
+                <Typography>
                     To Index:{' '}
                     <span style={{ fontWeight: 'bold' }}> {all.entryTo} </span>
                 </Typography>
@@ -44,10 +44,10 @@ export default class AllCatalogReportStats {
                     <span style={{ fontWeight: 'bold' }}> {all.skipped} </span>
                 </Typography>
                 <Typography component="span">
-                    <div><Typography>Link</Typography></div><span style={{ fontWeight: 'bold' }}> {all.link} </span>
+                    <div><Typography>Link:</Typography></div><span style={{ fontWeight: 'bold' }}> {all.link} </span>
                 </Typography>
                 <Typography component="span">
-                <Typography>Notes</Typography><span style={{ fontWeight: 'bold' }}> {all.notes || "N/A"} </span>
+                <Typography>Notes:</Typography><span style={{ fontWeight: 'bold' }}> {all.notes || "N/A"} </span>
                 </Typography>
             </Stack>
         );
