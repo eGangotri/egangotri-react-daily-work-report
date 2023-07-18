@@ -10,7 +10,7 @@ import { DD_MM_YYYY_FORMAT } from './DailyReportUtil';
 export default class AllCatalogReportStats {
 
     static hasAllRequiredFields(all: CatalogWorkReportType) {
-        return all.entryCount === 0 || all.entryCount <=0 || !all.link || !all.catalogProfile;
+        return all.entryCount === 0 || all.entryCount <= 0 || !all.link || !all.catalogProfile;
     }
 
     static decorate = (all: CatalogWorkReportType): JSX.Element => {
@@ -28,7 +28,7 @@ export default class AllCatalogReportStats {
                 </Typography>
                 <Typography>
                     {' '}
-                    Total Items Catalog Count{' '}
+                    Total Items Catalog Count ( all.entryTo-(all.entryFrom-all.skipped)): {' '}
                     <span style={{ fontWeight: 'bold' }}> {all.entryCount} </span>
                 </Typography>
                 <Typography>
@@ -39,11 +39,15 @@ export default class AllCatalogReportStats {
                     To Index:{' '}
                     <span style={{ fontWeight: 'bold' }}> {all.entryTo} </span>
                 </Typography>
-                <Typography component="span">
-                    <span style={{ fontWeight: 'bold' }}> {all.link} </span>
+                <Typography>
+                    Skipped:{' '}
+                    <span style={{ fontWeight: 'bold' }}> {all.skipped} </span>
                 </Typography>
                 <Typography component="span">
-                    <span style={{ fontWeight: 'bold' }}> {all.notes} </span>
+                    <div><Typography>Link</Typography></div><span style={{ fontWeight: 'bold' }}> {all.link} </span>
+                </Typography>
+                <Typography component="span">
+                <Typography>Notes</Typography><span style={{ fontWeight: 'bold' }}> {all.notes || "N/A"} </span>
                 </Typography>
             </Stack>
         );
@@ -54,6 +58,7 @@ export default class AllCatalogReportStats {
 On ${all.timeOfRequest}\n
 From Index: ${all.entryFrom} 
 To Index: ${all.entryTo}\n
+SKipped: ${all.skipped}\n
 Catalog Count: ${all.entryCount}\n
 Link: ${all.link}\n
 Notes: ${all.notes}\n`;

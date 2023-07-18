@@ -46,7 +46,7 @@ export const libraryMenuOptions = [
 
 export const panelOneCSS = { bgcolor: "white", paddingRight: "10px" };
 
-const treasureIndices = [1,2,3,4,5,6,7,8,9,59]
+const treasureIndices = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,55,56,57,58,59]
 
 export const catalogProfiles = appendOthersItemToList(["Choose Profile", 
 ...(treasureIndices.map(x=>`Treasures-${x}`))]);

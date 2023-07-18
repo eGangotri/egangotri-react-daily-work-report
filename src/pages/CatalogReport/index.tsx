@@ -41,6 +41,7 @@ const CatalogReport = () => {
         catalogProfile: "",
         entryFrom: 0,
         entryTo: 0,
+        skipped:0, 
         timeOfRequest: new Date(),
         entryCount: 0,
         link: '',
@@ -51,6 +52,7 @@ const CatalogReport = () => {
     const [catalogProfile, setCatalogProfile] = React.useState<string>(catalogProfiles[0]);
     const [entryFrom, setEntryFrom] = React.useState<number>(0);
     const [entryTo, setEntryTo] = React.useState<number>(0);
+    const [skipped, setSkipped] = React.useState<number>(0);
     const [entryCount, setEntryCount] = React.useState<number>(0);
     const [_link, setLink] = React.useState<string>("");
     const [_notes, setNotes] = React.useState<string>("");
@@ -66,6 +68,7 @@ const CatalogReport = () => {
         setDisabledState(true);
         setEntryFrom(0)
         setEntryTo(0)
+        setSkipped(0)
         setEntryCount(0)
         setSnackBarMsg(["", ""]);
         setCatalogProfile(catalogProfiles[0])
@@ -85,7 +88,7 @@ const CatalogReport = () => {
 
     const entryFromOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const _entryFrom = parseInt(event.target.value);
-        const _entryCount = entryTo - _entryFrom
+        const _entryCount = (entryTo||0) - (_entryFrom||0) - (skipped||0)
         setEntryFrom(_entryFrom);
         setEntryCount(_entryCount)
         setCatalogStats((prevState) => ({
@@ -98,15 +101,28 @@ const CatalogReport = () => {
     }
 
     const entryToOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setEntryTo(parseInt(event.target.value));
         const _entryTo = parseInt(event.target.value);
-        const _entryCount = _entryTo - entryFrom;
+        const _entryCount = (_entryTo||0) - (entryFrom||0) - (skipped||0);
         setEntryTo(_entryTo);
         setEntryCount(_entryCount);
         setCatalogStats((prevState) => ({
             ...prevState,
             entryCount: _entryCount,
             entryTo: _entryTo,
+        }));
+    }
+
+    const skippedOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const _skipped = parseInt(event.target.value);
+        const _entryCount = (entryTo||0) - (entryFrom||0) - (_skipped||0);
+        console.log(`_entryCount ${_entryCount} / ${ entryTo||0} ${entryFrom||0} - ${_skipped||0}`);
+
+        setSkipped(_skipped);
+        setEntryCount(_entryCount);
+        setCatalogStats((prevState) => ({
+            ...prevState,
+            entryCount: _entryCount,
+            skipped: _skipped,
         }));
     }
 
@@ -177,6 +193,17 @@ const CatalogReport = () => {
                         label="Required"
                         onChange={entryToOnChange}
                         value={entryTo}
+                        sx={{ width: "120px" }}
+                        variant="filled"
+                    />
+                    <Typography>Skipped</Typography>
+                    <TextField
+                        required
+                        id="skipped"
+                        type="number"
+                        label="Required"
+                        onChange={skippedOnChange}
+                        value={skipped}
                         sx={{ width: "120px" }}
                         variant="filled"
                     />
