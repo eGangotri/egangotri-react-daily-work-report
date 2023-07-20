@@ -6,6 +6,7 @@ import {
   Stack,
   TextField,
   Typography,
+  Grid
 } from "@mui/material";
 import _ from "lodash";
 import React, { useState } from "react";
@@ -70,42 +71,43 @@ const LoginPanel: React.FC = () => {
         {_isLoggedIn ?
           <Typography variant="h5">Hi {_.capitalize(_loggedUser)}</Typography> :
           <>
-            <Box sx={{ ...panelOneCSS }}>
-              <Typography component="span">Username:{" "}</Typography>
-              <TextField
-                variant="outlined"
-                label="Required"
-                error={_.isEmpty(_loggedUser)}
-                size="small"
-                onChange={(e) => setLoggedUser(e.target.value)}
-              />
-            </Box>
-            <Box sx={panelOneCSS}>
-              <Typography component="span">Password:{" "}</Typography>
-              <TextField
-                variant="outlined"
-                label="Required"
-                error={_.isEmpty(password)}
-                size="small"
-                type="password"
-                onSubmit={() => loginToPortal()}
-                placeholder="Will accept any password for now"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Box>
-
-            <Box sx={panelOneCSS}>
-              <Button
-                color="primary"
-                variant="contained"
-                component="span"
-                disabled={(_.isEmpty(_loggedUser) && _.isEmpty(password)) || _isLoggedIn}
-                onClick={() => loginToPortal()}
-                endIcon={<FiLogIn style={{ color: "primary" }} />}
-              >
-                Login
-              </Button>
-            </Box>
+            <Grid container columns={{ xs: 3, sm: 6, md: 9 }} direction="row">
+              <Grid item xs={1} sm={2} md={3} direction="row">
+                  Username:{" "}
+                  <TextField
+                    variant="outlined"
+                    label="Required"
+                    error={_.isEmpty(_loggedUser)}
+                    size="small"
+                    onChange={(e) => setLoggedUser(e.target.value)}
+                  />
+              </Grid>
+              <Grid item xs={1} sm={2} md={3} direction="row">
+                  Password:{" "}
+                  <TextField
+                    variant="outlined"
+                    label="Required"
+                    error={_.isEmpty(password)}
+                    size="small"
+                    type="password"
+                    onSubmit={() => loginToPortal()}
+                    placeholder="Will accept any password for now"
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+              </Grid>
+              <Grid item xs={1} sm={2} md={3} direction="row">
+                  {" "}
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    disabled={(_.isEmpty(_loggedUser) && _.isEmpty(password)) || _isLoggedIn}
+                    onClick={() => loginToPortal()}
+                    endIcon={<FiLogIn style={{ color: "primary" }} />}
+                  >
+                    Login
+                  </Button>
+              </Grid>
+            </Grid>
             {validationMsg && <Typography sx={{ color: "red" }}>Login Failure/Wrong UserId or Password</Typography>}
           </>
         }
