@@ -106,8 +106,8 @@ const SendCatalogReportToServerDialog: React.FC<SentCatalogReportDialogProps> = 
                 <DialogContent dividers>
                     <Typography sx={{ fontSize: "20px" }} gutterBottom>
                         Once you click the Send-Report-and-Copy Button below, your report will be sent to the Server.
-                        The Pdf Report will also be copied.
-                        Place this Pdf Report in your respective whatsapp group.
+                        The Pdf Report will be automatically be copied to your clipboard.
+                        just to Ctrl-V on your respective whatsapp group and it will be shared.
                     </Typography>
                     <Typography gutterBottom>
 
