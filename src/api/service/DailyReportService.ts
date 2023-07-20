@@ -1,18 +1,24 @@
 import { AddDailyReportResponseType, DailyWorkReportType, LoginProps, LoginUser } from "types/dailyWorkReportTypes"
 import {  callBackendGetApiForBlob, callBackendPostApi } from "./callApi";
 
-export async function sendFilteredFormToServerGetForBasicUser(operator: string, selectedStartDate: string | null, selectedEndDate: string | null) {
-    return sendFilteredFormToServerGet(operator,"",selectedStartDate,selectedEndDate)
+
+const backEndPathForMetadataScanners = "dailyWorkReport/csvAsFile";
+const backEndPathForMetadataCatalogers = "dailyCatWorkReport/csvAsFile";
+
+export async function sendFilteredFormToServerGetForBasicUser(operator: string, forCatalog:boolean = false, selectedStartDate: string | null, selectedEndDate: string | null) {
+    return sendFilteredFormToServerGet(operator,"",forCatalog,selectedStartDate,selectedEndDate)
 }
 
-export async function sendFilteredFormToServerGet(operators: string, centers: string, selectedStartDate: string | null, selectedEndDate: string | null) {
+export async function sendFilteredFormToServerGet(operators: string, 
+    centers: string, forCatalog:boolean = false, selectedStartDate: string | null, 
+    selectedEndDate: string | null) {
     const params = {
         operatorName: operators,
         centers,
         startDate: selectedStartDate,
         endDate: selectedEndDate
     }
-    const resp = await callBackendGetApiForBlob("dailyWorkReport/csvAsFile", params);
+    const resp = await callBackendGetApiForBlob(forCatalog?backEndPathForMetadataCatalogers:backEndPathForMetadataScanners, params);
     console.log(`res ${JSON.stringify(resp)}`);
     return resp;
 }

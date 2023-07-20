@@ -21,6 +21,7 @@ import _ from "lodash";
 import moment from "moment";
 import { DD_MM_YYYY_FORMAT } from "utils/DailyReportUtil";
 import Spinner from "widgets/Spinner";
+import { CATALOG_REPORTS_METADATA_PATH } from "Routes";
 
 
 const DeliverableReports = () => {
@@ -34,15 +35,17 @@ const DeliverableReports = () => {
 
     const [selectedStartDate, setSelectedStartDate] = React.useState<string | null>(null);
     const [selectedEndDate, setSelectedEndDate] = React.useState<string | null>(null);
+    console.log(`generateReport`, window.location.pathname);
 
     const generateReport = async () => {
-        console.log(`generateReport`);
+        const pathname = window.location.pathname
+        console.log(`generateReport`, window.location.pathname);
         setIsLoading(true);
         if(_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE){
-            await sendFilteredFormToServerGet(operators, centers, selectedStartDate, selectedEndDate);
+            await sendFilteredFormToServerGet(operators, centers, pathname === CATALOG_REPORTS_METADATA_PATH, selectedStartDate, selectedEndDate);
         } 
         else {
-            await sendFilteredFormToServerGetForBasicUser(_loggedUser, selectedStartDate, selectedEndDate);
+            await sendFilteredFormToServerGetForBasicUser(_loggedUser, pathname === CATALOG_REPORTS_METADATA_PATH, selectedStartDate, selectedEndDate);
         }
         setIsLoading(false);
     }

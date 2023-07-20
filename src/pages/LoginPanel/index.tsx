@@ -19,7 +19,7 @@ import { LoginProps } from "types/dailyWorkReportTypes";
 import { Link } from "react-router-dom";
 import { panelOneCSS } from "pages/constants";
 import { BASIC_ROLE } from 'mirror/FrontEndBackendCommonConsts'
-import { CATALOG_PATH, DELIVERABLE_REPORTS_PATH, LANDING_PAGE_PATH } from "Routes";
+import { CATALOG_PATH, CATALOG_REPORTS_METADATA_PATH, DELIVERABLE_REPORTS_PATH, LANDING_PAGE_PATH } from "Routes";
 
 const LoginPanel: React.FC = () => {
   const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
@@ -58,8 +58,9 @@ const LoginPanel: React.FC = () => {
     <Stack spacing={2}>
       <Stack sx={{ display: "flex", flexDirection: "row" }} spacing="2">
         <Box sx={panelOneCSS}><Link to={LANDING_PAGE_PATH}>Home</Link></Box>
-        <Box sx={panelOneCSS}><Link to={DELIVERABLE_REPORTS_PATH}>Reports</Link></Box>
+        <Box sx={panelOneCSS}><Link to={DELIVERABLE_REPORTS_PATH}>Scanning-Metadata</Link></Box>
         <Box sx={panelOneCSS}><Link to={CATALOG_PATH}>Catalog-Work</Link></Box>
+        <Box sx={panelOneCSS}><Link to={CATALOG_REPORTS_METADATA_PATH}>Catalog-Work-Metadata</Link></Box>
         <Box sx={logoutCss}><a href="#" onClick={() => logout()}>Logout</a></Box>
       </Stack>
       <Box>
