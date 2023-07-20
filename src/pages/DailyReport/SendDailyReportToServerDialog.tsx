@@ -8,10 +8,11 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { FaRegWindowClose } from 'react-icons/fa';
-import AllPdfStats from 'vo/AllPdfStats';
+import AllPdfStats from 'vo/AllScanReportStats';
 import { DailyWorkReportType } from 'types/dailyWorkReportTypes';
 import { pushReportToServer } from "api/service/DailyReportService";
 import { AlertColor } from "@mui/material/Alert/Alert";
+import { ScanWorkReportType } from 'mirror/scanWorkReportType';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -32,8 +33,8 @@ export interface DialogTitleProps {
 }
 
 interface SendReportDialogProps {
-    pdfData: AllPdfStats;
-    setPdfData: React.Dispatch<React.SetStateAction<AllPdfStats>>;
+    pdfData: ScanWorkReportType;
+    setPdfData: React.Dispatch<React.SetStateAction<ScanWorkReportType>>;
     snackBarMsg: [string, React.ReactNode];
     setSnackBarMsg:  React.Dispatch<React.SetStateAction<[string, React.ReactNode]>>;
     password: string;

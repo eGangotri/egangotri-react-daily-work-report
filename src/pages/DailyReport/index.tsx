@@ -16,7 +16,7 @@ import React, { ReactNode, useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { GoFileMedia } from "react-icons/go";
 import HelperService from "service/HelperService";
-import AllPdfStats from "vo/AllPdfStats";
+import AllPdfStats, { emptyPdfStats } from "vo/AllScanReportStats";
 import { libraryMenuOptions, centers, panelOneCSS } from "pages/constants";
 import SendReportDialog, { SUCCESS_MSG } from "pages/DailyReport/SendDailyReportToServerDialog";
 import LoginPanel from "pages/LoginPanel";
@@ -30,6 +30,7 @@ import Spinner from "widgets/Spinner";
 import { FormProvider, useForm } from 'react-hook-form';
 import { DailyWorkReportType } from "types/dailyWorkReportTypes";
 import Typography from "@mui/material/Typography";
+import { ScanWorkReportType } from "mirror/scanWorkReportType";
 
 const DailyReport = () => {
 
@@ -37,7 +38,7 @@ const DailyReport = () => {
   const [_loggedUser, setLoggedUser] = useRecoilState(loggedUser);
   const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
 
-  const [pdfData, setPdfData] = useState<AllPdfStats>(new AllPdfStats());
+  const [pdfData, setPdfData] = useState<ScanWorkReportType>(emptyPdfStats);
   const [snackBarMsg, setSnackBarMsg] = useState<[string, ReactNode]>(["", (<></>)]);
   const [password, setPassword] = useState<string>("");
   const [disabledState, setDisabledState] = useState<boolean>(false);
@@ -64,7 +65,7 @@ const DailyReport = () => {
 
 
   const clearResults = () => {
-    setPdfData(new AllPdfStats());
+    setPdfData(emptyPdfStats);
     setDisabledState(true);
     setSnackBarMsg(["", ""]);
     setNotes("")

@@ -4,57 +4,31 @@ import DenseTable from 'components/Table';
 
 import * as FrontEndBackendCommonCode from 'mirror/FrontEndBackendCommonCode';
 import * as GeneralUtils from 'utils/GeneralUtils';
-import Decorator from 'vo/Decorator';
 
 import type PdfStat from './PdfStat';
 import { DailyWorkReportType } from 'types/dailyWorkReportTypes';
 import moment from 'moment';
+import { ScanWorkReportType } from 'mirror/scanWorkReportType';
+
+export const emptyPdfStats = {
+  center: "",
+  lib: "",
+  globalCount:0,
+  totalSize:0,
+  pdfCount:0,
+  timeOfRequest: "",
+  dateOfReport:new Date(),
+  notes: "",
+  staffName: "",
+  pdfs:[],
+} as ScanWorkReportType
 
 export default class AllPdfStats {
-  title = 'eGangotri Daily Work Report';
-
-  center = "";
-
-  lib = "";
-
-  dateOfReport = new Date();
-
-  globalCount = 0;
-
-  totalSize = 0;
-
-  isWait = false;
-
-  stats: Decorator = new Decorator();
-
-  pdfCount = 0;
-
-  timeOfRequest = '';
-
-  notes = '';
-
-  staffName = '';
-
-  errorCount = 0;
-
-  pdfs: PdfStat[] = [];
-
-  resetToDefault() {
-    this.globalCount = 0;
-    this.stats.reset();
-    this.pdfCount = 0;
-    this.isWait = true;
-    this.timeOfRequest = '';
-    this.totalSize = 0;
-    this.errorCount = 0;
-    this.pdfs = [];
-  }
-
-  static isEmpty(all: AllPdfStats) {
+  static isEmpty(all: ScanWorkReportType) {
     return all.pdfCount === 0;
   }
 
-  static decorate = (all: AllPdfStats): JSX.Element => {
+  static decorate = (all: ScanWorkReportType): JSX.Element => {
     if (AllPdfStats.isEmpty(all)) {
       return <></>;
     }
@@ -106,7 +80,7 @@ export default class AllPdfStats {
     } pages \t ${FrontEndBackendCommonCode.sizeInfo(pdfStat.pdfSize)}\n\n`;
   };
   
-  static toString = (all: AllPdfStats): string => {
+  static toString = (all: ScanWorkReportType): string => {
     return `Work Status for ${GeneralUtils.capitalize(all.staffName)} (${all.center}/${all.lib})
 On ${all.timeOfRequest}\n
 Notes: ${all.notes} 
@@ -116,7 +90,7 @@ Total Size: ${FrontEndBackendCommonCode.sizeInfo(all.totalSize)}\n
 ${AllPdfStats.pdfDataArrayToString(all.pdfs)}`;
   };
 
-  static convertPdfStatsToDailyWorkReportTypeObject= (pdfData: AllPdfStats) => {
+  static convertPdfStatsToDailyWorkReportTypeObject= (pdfData: ScanWorkReportType) => {
     const dailyWorkReport:DailyWorkReportType =
       {
         "operatorName": pdfData.staffName,
