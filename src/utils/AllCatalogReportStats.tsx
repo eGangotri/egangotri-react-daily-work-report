@@ -10,7 +10,7 @@ import { DD_MM_YYYY_FORMAT } from './DailyReportUtil';
 export default class AllCatalogReportStats {
 
     static hasAllRequiredFields(all: CatalogWorkReportType) {
-        return all.entryCount === 0 || all.entryCount <= 0 || !all.link || !all.catalogProfile;
+        return all.entryCount <= 0 || !all.link || !all.catalogProfile;
     }
 
     static decorate = (all: CatalogWorkReportType): JSX.Element => {
