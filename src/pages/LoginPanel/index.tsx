@@ -110,7 +110,7 @@ const LoginPanel: React.FC = () => {
           </>
         }
       </Box>
-    </Stack>
+    </Stack >
 
   );
 };
