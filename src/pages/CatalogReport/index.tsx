@@ -47,7 +47,7 @@ const CatalogReport = () => {
         link: '',
         notes: '',
     } as CatalogWorkReportType);
-    const [snackBarMsg, setSnackBarMsg] = useState<string[]>(["", ""]);
+    const [snackBarMsg, setSnackBarMsg] = useState<[string, React.ReactNode]>(["", (<></>)]);
     const [disabledState, setDisabledState] = useState<boolean>(false);
     const [catalogProfile, setCatalogProfile] = React.useState<string>(catalogProfiles[0]);
     const [entryFrom, setEntryFrom] = React.useState<number>(0);

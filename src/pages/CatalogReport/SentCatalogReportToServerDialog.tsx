@@ -33,8 +33,8 @@ export interface DialogTitleProps {
 interface SentCatalogReportDialogProps {
     catReport: CatalogWorkReportType;
     setCatReport: React.Dispatch<React.SetStateAction<CatalogWorkReportType>>;
-    snackBarMsg: string[];
-    setSnackBarMsg: React.Dispatch<React.SetStateAction<string[]>>;
+    snackBarMsg: [string, React.ReactNode];
+    setSnackBarMsg:  React.Dispatch<React.SetStateAction<[string, React.ReactNode]>>;
     password: string;
 }
 
@@ -81,7 +81,9 @@ const SendCatalogReportToServerDialog: React.FC<SentCatalogReportDialogProps> = 
         handleClose();
         console.log(`dailyCatReport ${JSON.stringify(catReport)}`);
         const jsonResp = await pushCatReportToServer(catReport, password);
-        setSnackBarMsg([Object.keys(jsonResp)[0], Object.values(jsonResp)[0]]);
+        const respKey = Object.keys(jsonResp)[0];
+        const respVal = (<div>Report Copied to Clipboard<br></br>{Object.values(jsonResp)[0]}</div>);
+        setSnackBarMsg([respKey, respVal]);
         if (jsonResp.success || jsonResp.warning) {
             copyResults();
         }

@@ -64,7 +64,7 @@ export default class AllPdfStats {
           Work Status for <span style={{ fontWeight: 'bold' }}>{GeneralUtils.capitalize(all.staffName)} ({all.center}/{all.lib})</span> :
         </Typography>
         <Typography>
-          Notes: <span>{all.notes}</span> :
+          Notes: <span  style={{ fontWeight: 'bold' }}>{all.notes}</span>
         </Typography>
         <Typography>
           {' '}
@@ -109,6 +109,7 @@ export default class AllPdfStats {
   static toString = (all: AllPdfStats): string => {
     return `Work Status for ${GeneralUtils.capitalize(all.staffName)} (${all.center}/${all.lib})
 On ${all.timeOfRequest}\n
+Notes: ${all.notes} 
 Total Pdf Count: ${all.pdfCount} 
 Total Page Count: ${all.globalCount}\n
 Total Size: ${FrontEndBackendCommonCode.sizeInfo(all.totalSize)}\n

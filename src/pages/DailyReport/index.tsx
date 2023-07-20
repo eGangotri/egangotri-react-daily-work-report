@@ -12,7 +12,7 @@ import {
   Stack,
 } from "@mui/material";
 import _ from "lodash";
-import React, { useRef, useState } from "react";
+import React, { ReactNode, useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { GoFileMedia } from "react-icons/go";
 import HelperService from "service/HelperService";
@@ -38,7 +38,7 @@ const DailyReport = () => {
   const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
 
   const [pdfData, setPdfData] = useState<AllPdfStats>(new AllPdfStats());
-  const [snackBarMsg, setSnackBarMsg] = useState<string[]>(["", ""]);
+  const [snackBarMsg, setSnackBarMsg] = useState<[string, ReactNode]>(["", (<></>)]);
   const [password, setPassword] = useState<string>("");
   const [disabledState, setDisabledState] = useState<boolean>(false);
   const [center, setCenter] = React.useState<string>(centers[0]);
@@ -71,7 +71,6 @@ const DailyReport = () => {
   };
 
   const notesOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const _optionalNotes = event.target.value;
     setNotes(event.target.value);
 }
 

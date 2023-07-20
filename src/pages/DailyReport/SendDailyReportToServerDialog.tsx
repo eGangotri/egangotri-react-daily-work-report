@@ -34,8 +34,8 @@ export interface DialogTitleProps {
 interface SendReportDialogProps {
     pdfData: AllPdfStats;
     setPdfData: React.Dispatch<React.SetStateAction<AllPdfStats>>;
-    snackBarMsg: string[];
-    setSnackBarMsg: React.Dispatch<React.SetStateAction<string[]>>;
+    snackBarMsg: [string, React.ReactNode];
+    setSnackBarMsg:  React.Dispatch<React.SetStateAction<[string, React.ReactNode]>>;
     password: string;
 }
 
@@ -73,7 +73,7 @@ const SendReportDialog: React.FC<SendReportDialogProps> = ({ pdfData, setPdfData
         setOpen(false);
     };
 
-    const copyResults = (msg: string = "") => {
+    const copyResultsToClipboard = (msg: string = "") => {
         navigator.clipboard.writeText(msg || AllPdfStats.toString(pdfData));
     };
 
@@ -84,12 +84,14 @@ const SendReportDialog: React.FC<SendReportDialogProps> = ({ pdfData, setPdfData
             AllPdfStats.convertPdfStatsToDailyWorkReportTypeObject(pdfData);
         console.log(`dailyReport ${JSON.stringify(dailyReport)}`);
         const jsonResp = await pushReportToServer(dailyReport, password);
-        setSnackBarMsg([Object.keys(jsonResp)[0], Object.values(jsonResp)[0]]);
+        const respKey = Object.keys(jsonResp)[0];
+        const respVal = (<div>Report Copied to Clipboard<br></br>{Object.values(jsonResp)[0]}</div>);
+        setSnackBarMsg([respKey, respVal]);
         if (jsonResp.success || jsonResp.warning) {
-            copyResults();
+            copyResultsToClipboard();
         }
         else {
-            copyResults("There was an error sending data to Server. So nothing copied. Pls. notify management");
+            copyResultsToClipboard("There was an error sending data to Server. So nothing copied. Pls. notify management");
         }
     };
 
