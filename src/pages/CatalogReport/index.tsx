@@ -26,7 +26,6 @@ import TextField from '@mui/material/TextField';
 import Typography from "@mui/material/Typography";
 import SendCatalogReportToServerDialog from "./SentCatalogReportToServerDialog";
 import AllCatalogReportStats, { DecorateCatWorkReport } from "utils/AllCatalogReportStats";
-import { FormProvider, useForm } from 'react-hook-form';
 import { CatalogWorkReportType } from "mirror/catalogWorkReportTypes";
 
 const CatalogReport = () => {
