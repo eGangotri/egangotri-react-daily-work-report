@@ -8,7 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { FaRegWindowClose } from 'react-icons/fa';
-import AllPdfStats from 'vo/AllScanReportStats';
+import AllPdfStats from 'utils/AllScanReportStats';
 import { DailyWorkReportType } from 'types/dailyWorkReportTypes';
 import { pushReportToServer } from "api/service/DailyReportService";
 import { AlertColor } from "@mui/material/Alert/Alert";

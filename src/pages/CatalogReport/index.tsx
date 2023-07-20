@@ -36,18 +36,7 @@ const CatalogReport = () => {
     const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
     const [password, setPassword] = useState<string>("");
 
-    const [catalogStats, setCatalogStats] = useState<CatalogWorkReportType>({
-        title: 'eGangotri Daily Catalog Work Report',
-        operatorName: _loggedUser,
-        catalogProfile: "",
-        entryFrom: 0,
-        entryTo: 0,
-        skipped: 0,
-        timeOfRequest: new Date(),
-        entryCount: 0,
-        link: '',
-        notes: '',
-    } as CatalogWorkReportType);
+    const [catalogStats, setCatalogStats] = useState<CatalogWorkReportType>(AllCatalogReportStats.createEmptyCatalogWorkReportType);
     const [snackBarMsg, setSnackBarMsg] = useState<[string, React.ReactNode]>(["", (<></>)]);
     const [disabledState, setDisabledState] = useState<boolean>(false);
     const [catalogProfile, setCatalogProfile] = React.useState<string>(catalogProfiles[0]);

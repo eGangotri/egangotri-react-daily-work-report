@@ -19,7 +19,7 @@ import React, { ReactNode, useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { GoFileMedia } from "react-icons/go";
 import HelperService from "service/HelperService";
-import AllPdfStats, { DecorateWorkReport, emptyPdfStats } from "vo/AllScanReportStats";
+import AllPdfStats, { DecorateWorkReport, emptyPdfStats } from "utils/AllScanReportStats";
 import { libraryMenuOptions, centers, panelOneCSS } from "pages/constants";
 import SendReportDialog, { SUCCESS_MSG } from "pages/DailyReport/SendDailyReportToServerDialog";
 import LoginPanel from "pages/LoginPanel";

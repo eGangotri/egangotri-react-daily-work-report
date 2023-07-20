@@ -102,6 +102,7 @@ const LoginPanel: React.FC = () => {
                     variant="contained"
                     disabled={(_.isEmpty(_loggedUser) && _.isEmpty(password)) || _isLoggedIn}
                     onClick={() => loginToPortal()}
+                    sx={{cursor:"pointer"}}
                     endIcon={<FiLogIn style={{ color: "primary" }} />}
                   >
                     Login

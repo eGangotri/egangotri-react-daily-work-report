@@ -9,6 +9,18 @@ import { DD_MM_YYYY_FORMAT } from './DailyReportUtil';
 
 export default class AllCatalogReportStats {
 
+     static createEmptyCatalogWorkReportType = {
+        title: 'eGangotri Daily Catalog Work Report',
+        operatorName: "",
+        catalogProfile: "",
+        entryFrom: 0,
+        entryTo: 0,
+        skipped: 0,
+        timeOfRequest: new Date(),
+        entryCount: 0,
+        link: '',
+        notes: '',
+    } as CatalogWorkReportType;
     static hasAllRequiredFields(all: CatalogWorkReportType) {
         return all.entryCount <= 0 || !all.link || !all.catalogProfile;
     }
