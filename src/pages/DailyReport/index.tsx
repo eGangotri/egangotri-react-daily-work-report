@@ -22,11 +22,14 @@ import SendReportDialog, { SUCCESS_MSG } from "pages/DailyReport/SendDailyReport
 import LoginPanel from "pages/LoginPanel";
 import {
   useRecoilState,
-} from 'recoil'
+} from 'recoil';
+import TextField from '@mui/material/TextField';
+
 import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
 import Spinner from "widgets/Spinner";
 import { FormProvider, useForm } from 'react-hook-form';
 import { DailyWorkReportType } from "types/dailyWorkReportTypes";
+import Typography from "@mui/material/Typography";
 
 const DailyReport = () => {
 
@@ -39,6 +42,7 @@ const DailyReport = () => {
   const [password, setPassword] = useState<string>("");
   const [disabledState, setDisabledState] = useState<boolean>(false);
   const [center, setCenter] = React.useState<string>(centers[0]);
+  const [_notes, setNotes] = React.useState<string>("");
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -63,7 +67,13 @@ const DailyReport = () => {
     setPdfData(new AllPdfStats());
     setDisabledState(true);
     setSnackBarMsg(["", ""]);
+    setNotes("")
   };
+
+  const notesOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const _optionalNotes = event.target.value;
+    setNotes(event.target.value);
+}
 
   const handleCenterChange = (event: SelectChangeEvent) => {
     const val = event.target.value;
@@ -89,7 +99,8 @@ const DailyReport = () => {
           Array.from(files!),
           _loggedUser,
           center,
-          library
+          library,
+          _notes
         );
         setPdfData(data);
         setIsLoading(false);
@@ -112,8 +123,8 @@ const DailyReport = () => {
       <>
         <LoginPanel />
       </>
-        <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onFormSubmit)}>
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onFormSubmit)}>
           <Stack spacing={2} direction="column">
             <Box sx={{ display: "flex", flexDirection: "row" }}>
               <Box sx={panelOneCSS}>
@@ -160,6 +171,17 @@ const DailyReport = () => {
                 </Select>
               </Box>
             </Box>
+            <Stack spacing={5} direction="row">
+              <Typography>Any Optional Notes</Typography>
+              <TextField
+                id="_notes"
+                type="text"
+                onChange={notesOnChange}
+                sx={{ width: "400px" }}
+                value={_notes}
+                multiline={true}
+                maxRows={3} />
+            </Stack>
             <label htmlFor="upload-pdf">
               <input
                 style={{ display: "none" }}
@@ -201,12 +223,12 @@ const DailyReport = () => {
             </Stack>
             <Box ref={dataHoldingElement}>{AllPdfStats.decorate(pdfData)}</Box>
             <Box sx={{ paddingTop: "30px" }}></Box>
-            </Stack>
-          </form>
-        </FormProvider>
-      </Stack>
+          </Stack>
+        </form>
+      </FormProvider>
+    </Stack>
 
-      );
+  );
 };
 
-      export default DailyReport;
+export default DailyReport;

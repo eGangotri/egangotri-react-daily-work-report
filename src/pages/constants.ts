@@ -34,8 +34,7 @@ export const libraryMenuOptions = [
             "Vasishth Tripathi",
             "Jangam",
             "Kamalakarji",
-            "Mumukshu",
-            "Ved Nidhi",
+            "Panini",
         ]),
     },
     {

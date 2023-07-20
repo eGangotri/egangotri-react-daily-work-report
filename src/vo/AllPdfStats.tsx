@@ -31,6 +31,8 @@ export default class AllPdfStats {
 
   timeOfRequest = '';
 
+  notes = '';
+
   staffName = '';
 
   errorCount = 0;
@@ -60,6 +62,9 @@ export default class AllPdfStats {
       <Box>
         <Typography>
           Work Status for <span style={{ fontWeight: 'bold' }}>{GeneralUtils.capitalize(all.staffName)} ({all.center}/{all.lib})</span> :
+        </Typography>
+        <Typography>
+          Notes: <span>{all.notes}</span> :
         </Typography>
         <Typography>
           {' '}
@@ -121,6 +126,7 @@ ${AllPdfStats.pdfDataArrayToString(all.pdfs)}`;
         "totalSize": FrontEndBackendCommonCode.sizeInfo(pdfData.totalSize),
         "totalSizeRaw": pdfData.totalSize,
         "dateOfReport":  pdfData.dateOfReport,
+        "notes":  pdfData.notes,
         pageCountStats:[]
       }
 
