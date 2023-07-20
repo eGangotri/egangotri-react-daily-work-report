@@ -10,7 +10,6 @@ import { DD_MM_YYYY_FORMAT } from './DailyReportUtil';
 export default class AllCatalogReportStats {
 
      static createEmptyCatalogWorkReportType = {
-        title: 'eGangotri Daily Catalog Work Report',
         operatorName: "",
         catalogProfile: "",
         entryFrom: 0,
