@@ -10,6 +10,7 @@ import {
     SelectChangeEvent,
     Snackbar,
     Stack,
+    Grid
 } from "@mui/material";
 import _ from "lodash";
 import React, { useRef, useState } from "react";
@@ -41,7 +42,7 @@ const CatalogReport = () => {
         catalogProfile: "",
         entryFrom: 0,
         entryTo: 0,
-        skipped:0, 
+        skipped: 0,
         timeOfRequest: new Date(),
         entryCount: 0,
         link: '',
@@ -88,7 +89,7 @@ const CatalogReport = () => {
 
     const entryFromOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const _entryFrom = parseInt(event.target.value);
-        const _entryCount = (entryTo||0) - (_entryFrom||0) - (skipped||0)
+        const _entryCount = (entryTo || 0) - (_entryFrom || 0) - (skipped || 0)
         setEntryFrom(_entryFrom);
         setEntryCount(_entryCount)
         setCatalogStats((prevState) => ({
@@ -102,7 +103,7 @@ const CatalogReport = () => {
 
     const entryToOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const _entryTo = parseInt(event.target.value);
-        const _entryCount = (_entryTo||0) - (entryFrom||0) - (skipped||0);
+        const _entryCount = (_entryTo || 0) - (entryFrom || 0) - (skipped || 0);
         setEntryTo(_entryTo);
         setEntryCount(_entryCount);
         setCatalogStats((prevState) => ({
@@ -114,8 +115,8 @@ const CatalogReport = () => {
 
     const skippedOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const _skipped = parseInt(event.target.value);
-        const _entryCount = (entryTo||0) - (entryFrom||0) - (_skipped||0);
-        console.log(`_entryCount ${_entryCount} / ${ entryTo||0} ${entryFrom||0} - ${_skipped||0}`);
+        const _entryCount = (entryTo || 0) - (entryFrom || 0) - (_skipped || 0);
+        console.log(`_entryCount ${_entryCount} / ${entryTo || 0} ${entryFrom || 0} - ${_skipped || 0}`);
 
         setSkipped(_skipped);
         setEntryCount(_entryCount);
@@ -143,6 +144,8 @@ const CatalogReport = () => {
             link: _link,
         }));
     }
+
+    const cssForInputBox = { width: { xs: "80px", sm: "100px", md: "120px" } }
 
     return (
         <Stack spacing={2}>
@@ -173,41 +176,47 @@ const CatalogReport = () => {
                     </Box>
                 </Box>
                 <Box><Typography>Enter Start and End Index you have cataloged</Typography></Box>
-                <Stack spacing={5} direction="row">
-                    <Typography>From</Typography>
-                    <TextField
-                        required
-                        id="entryFrom"
-                        type="number"
-                        label="Required"
-                        onChange={entryFromOnChange}
-                        value={entryFrom}
-                        sx={{ width: "120px" }}
-                        variant="filled"
-                    />
-                    <Typography>To</Typography>
-                    <TextField
-                        required
-                        id="entryTo"
-                        type="number"
-                        label="Required"
-                        onChange={entryToOnChange}
-                        value={entryTo}
-                        sx={{ width: "120px" }}
-                        variant="filled"
-                    />
-                    <Typography>Skipped</Typography>
-                    <TextField
-                        required
-                        id="skipped"
-                        type="number"
-                        label="Required"
-                        onChange={skippedOnChange}
-                        value={skipped}
-                        sx={{ width: "120px" }}
-                        variant="filled"
-                    />
-                </Stack>
+                <Grid container columns={{ xs: 3, sm: 6, md: 12 }} direction="row">
+                    <Grid item xs={1} sm={2} md={3} direction="row">
+                        <Typography>From</Typography>
+                        <TextField
+                            required
+                            id="entryFrom"
+                            type="number"
+                            label="Required"
+                            onChange={entryFromOnChange}
+                            value={entryFrom}
+                            sx={cssForInputBox}
+                            variant="filled"
+                        />
+                    </Grid>
+                    <Grid item xs={1} sm={2} md={3} direction="row">
+                        <Typography>To</Typography>
+                        <TextField
+                            required
+                            id="entryTo"
+                            type="number"
+                            label="Required"
+                            onChange={entryToOnChange}
+                            value={entryTo}
+                            sx={cssForInputBox}
+                            variant="filled"
+                        />
+                    </Grid>
+                    <Grid item xs={1} sm={2} md={3} direction="row">
+                        <Typography>Skipped</Typography>
+                        <TextField
+                            required
+                            id="skipped"
+                            type="number"
+                            label="Required"
+                            onChange={skippedOnChange}
+                            value={skipped}
+                            sx={cssForInputBox}
+                            variant="filled"
+                        />
+                    </Grid>
+                </Grid>
                 <Box>
                     {(entryCount < 0) &&
                         <Typography><span style={{ color: 'red' }}>Count cannot be negative</span></Typography>
