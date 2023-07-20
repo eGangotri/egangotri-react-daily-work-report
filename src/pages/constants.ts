@@ -14,7 +14,7 @@ export const libraryMenuOptions = [
     },
     {
         name: centers[1],
-        centers: appendOthersItemToList(["CSU", "Sarai"]),
+        centers: appendOthersItemToList(["SV Shastri","CSU", "Sarai"]),
     },
     {
         name: centers[2],
@@ -26,7 +26,7 @@ export const libraryMenuOptions = [
     },
     {
         name: centers[4],
-        centers: appendOthersItemToList(["SPS", "JKACADEMY"]),
+        centers: appendOthersItemToList(["SPS", "JKACADEMY", "Lucknow"]),
     },
     {
         name: centers[5],

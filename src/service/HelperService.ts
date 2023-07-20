@@ -7,9 +7,12 @@ import AllPdfStats from 'vo/AllScanReportStats';
 import type PdfStat from 'vo/PdfStat';
 
 export class HelperService {
-  static processFiles = async (files: File[], staffName: string, center: string, lib: string, notes: string) => {
+  static processFiles = async (files: File[], staffName: string, 
+    center: string, lib: string, 
+    notes: string,
+    workFromHome:boolean) => {
     const pdfStats = await this.createData(files);
-    return this.processData(pdfStats, staffName, center, lib, notes);
+    return this.processData(pdfStats, staffName, center, lib, notes,workFromHome);
   };
 
   static createData = async (files: File[]) => {
@@ -22,7 +25,9 @@ export class HelperService {
     return data;
   };
 
-  static processData(pdfStats: PdfStat[], staffName: string, center: string, lib: string, notes: string) {
+  static processData(pdfStats: PdfStat[], staffName: string, center: string, lib: string,
+     notes: string,
+     workFromHome:boolean) {
     const allPdfStats: ScanWorkReportType = {
       pdfCount: pdfStats.length,
       center: center,
@@ -37,29 +42,11 @@ export class HelperService {
         pdfStats.map((x) => x.pdfSize)
       ),
       staffName: staffName,
-      pdfs: pdfStats
+      pdfs: pdfStats,
+      workFromHome:workFromHome
     }
     return allPdfStats;
   }
-
-  static clipboardResult(allPdfStats: AllPdfStats) { }
-  // static clipboardResult = (pdfInfo: PdfInfo) => {
-  //   let clipBoardData = `${pdfInfo.stats.header}\n`;
-  //   if (pdfInfo.stats.errorMsgs) {
-  //     clipBoardData += `${pdfInfo.stats.errorMsgs}\n`;
-  //   }
-  //   for (let i = 0; i <= pdfInfo.stats.result.length; i++) {
-  //     const res = pdfInfo.stats.result[i];
-  //     if (res) {
-  //       clipBoardData += `${res?.counter} ${res?.name} ${res?.pageCount} ${res?.pdfSize}\n\n`;
-  //     }
-  //   }
-  //   clipBoardData += `Total Page Count: ${pdfInfo.globalCount}`;
-  //   clipBoardData += `\nTotal Size: ${FrontEndBackendCommonCode.sizeInfo(
-  //     pdfInfo.totalSize
-  //   )}`;
-  //   return clipBoardData;
-  // };
 
   static fetchPdfStats = async (file: File): Promise<PdfStat> => {
     const buffer = await file.arrayBuffer();

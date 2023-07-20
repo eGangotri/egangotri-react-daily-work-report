@@ -21,6 +21,7 @@ export const emptyPdfStats = {
   notes: "",
   staffName: "",
   pdfs:[],
+  workFromHome:false
 } as ScanWorkReportType
 
 export default class AllPdfStats {
@@ -36,6 +37,9 @@ export default class AllPdfStats {
       <Box>
         <Typography>
           Work Status for <span style={{ fontWeight: 'bold' }}>{GeneralUtils.capitalize(all.staffName)} ({all.center}/{all.lib})</span> :
+        </Typography>
+        <Typography>
+          Work From Home: <span  style={{ fontWeight: 'bold' }}>{all.workFromHome}</span>
         </Typography>
         <Typography>
           Notes: <span  style={{ fontWeight: 'bold' }}>{all.notes}</span>
@@ -83,6 +87,7 @@ export default class AllPdfStats {
   static toString = (all: ScanWorkReportType): string => {
     return `Work Status for ${GeneralUtils.capitalize(all.staffName)} (${all.center}/${all.lib})
 On ${all.timeOfRequest}\n
+Work From Home: ${all.workFromHome?"Yes":"No"}
 Notes: ${all.notes} 
 Total Pdf Count: ${all.pdfCount} 
 Total Page Count: ${all.globalCount}\n
@@ -102,6 +107,7 @@ ${AllPdfStats.pdfDataArrayToString(all.pdfs)}`;
         "totalSizeRaw": pdfData.totalSize,
         "dateOfReport":  pdfData.dateOfReport,
         "notes":  pdfData.notes,
+        "workFromHome":  pdfData.workFromHome,
         pageCountStats:[]
       }
 

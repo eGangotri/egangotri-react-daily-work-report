@@ -9,4 +9,5 @@ export interface ScanWorkReportType {
     notes: string;
     staffName: string;
     pdfs: PdfStat[];
+    workFromHome:boollean
 }

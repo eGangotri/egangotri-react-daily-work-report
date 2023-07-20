@@ -4,12 +4,15 @@ import {
   Alert,
   Box,
   Button,
+  Checkbox,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
   Snackbar,
   Stack,
+  Grid,
+  FormControlLabel
 } from "@mui/material";
 import _ from "lodash";
 import React, { ReactNode, useRef, useState } from "react";
@@ -42,6 +45,8 @@ const DailyReport = () => {
   const [snackBarMsg, setSnackBarMsg] = useState<[string, ReactNode]>(["", (<></>)]);
   const [password, setPassword] = useState<string>("");
   const [disabledState, setDisabledState] = useState<boolean>(false);
+  const [workFromHome, setWorkFromHome] = useState<boolean>(false);
+
   const [center, setCenter] = React.useState<string>(centers[0]);
   const [_notes, setNotes] = React.useState<string>("");
 
@@ -73,7 +78,7 @@ const DailyReport = () => {
 
   const notesOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNotes(event.target.value);
-}
+  }
 
   const handleCenterChange = (event: SelectChangeEvent) => {
     const val = event.target.value;
@@ -90,6 +95,13 @@ const DailyReport = () => {
     setLibrary(val);
   };
 
+  const handleWorkFromHome = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const val = event.target.checked;
+    console.log(`val ${val}`);
+    setWorkFromHome(val);
+
+  };
+
   const uploadPdf = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     if (files) {
@@ -100,7 +112,8 @@ const DailyReport = () => {
           _loggedUser,
           center,
           library,
-          _notes
+          _notes,
+          workFromHome
         );
         setPdfData(data);
         setIsLoading(false);
@@ -126,51 +139,66 @@ const DailyReport = () => {
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onFormSubmit)}>
           <Stack spacing={2} direction="column">
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Box sx={panelOneCSS}>
-                <InputLabel id="l1">Center</InputLabel>
-              </Box>
-              <Box sx={panelOneCSS}>
-                <Select
-                  labelId="l1"
-                  id="demo-simple-select-standard"
-                  value={center}
-                  onChange={handleCenterChange}
-                  sx={{ minWidth: '200px' }}
-                  disabled={!_isLoggedIn}
-                >
-                  {centers.map((option: string) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </Box>
-              <Box sx={panelOneCSS}>
-                <InputLabel id="l2">Library</InputLabel>
-              </Box>
-              <Box sx={panelOneCSS}>
-                <Select
-                  labelId="l2"
-                  id="demo-simple-select-filled"
-                  value={library}
-                  onChange={handleLibChange}
-                  label="Library"
-                  sx={{ minWidth: '200px' }}
-                  disabled={!_isLoggedIn}
-                >
-                  {(libraries || []).map((option: string, index: number) => (
-                    <MenuItem
-                      key={option}
-                      value={option}
-                      selected={option === library || index === 1}
-                    >
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </Box>
-            </Box>
+            <Grid container spacing={{ xs: 1, md: 4 }} columns={{ xs: 2, sm: 4, md: 12 }} direction="row">
+              <Grid item xs={2} sm={3} md={4} direction="row">
+                <Box sx={panelOneCSS}>
+                  <InputLabel id="l1">Center</InputLabel>
+                </Box>
+                <Box sx={panelOneCSS}>
+                  <Select
+                    labelId="l1"
+                    id="demo-simple-select-standard"
+                    value={center}
+                    onChange={handleCenterChange}
+                    sx={{ minWidth: '200px' }}
+                    disabled={!_isLoggedIn}
+                  >
+                    {centers.map((option: string) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Box>
+              </Grid>
+              <Grid item xs={2} sm={3} md={4} direction="row">
+                <Box sx={panelOneCSS}>
+                  <InputLabel id="l2">Library</InputLabel>
+                </Box>
+                <Box sx={panelOneCSS}>
+                  <Select
+                    labelId="l2"
+                    id="demo-simple-select-filled"
+                    value={library}
+                    onChange={handleLibChange}
+                    label="Library"
+                    sx={{ minWidth: '200px' }}
+                    disabled={!_isLoggedIn}
+                  >
+                    {(libraries || []).map((option: string, index: number) => (
+                      <MenuItem
+                        key={option}
+                        value={option}
+                        selected={option === library || index === 1}
+                      >
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Box>
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item sx={{paddingLeft:0,paddingTop:0}}>
+                <FormControlLabel sx={{marginLeft:0}}
+                  control={<Checkbox
+                    checked={workFromHome}
+                    onChange={handleWorkFromHome} />}
+                  label="Work From Home"
+                  labelPlacement="start"
+                />
+              </Grid>
+            </Grid>
             <Stack spacing={5} direction="row">
               <Typography>Any Optional Notes</Typography>
               <TextField
