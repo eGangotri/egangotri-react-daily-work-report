@@ -19,7 +19,7 @@ import React, { ReactNode, useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { GoFileMedia } from "react-icons/go";
 import HelperService from "service/HelperService";
-import AllPdfStats, { emptyPdfStats } from "vo/AllScanReportStats";
+import AllPdfStats, { DecorateWorkReport, emptyPdfStats } from "vo/AllScanReportStats";
 import { libraryMenuOptions, centers, panelOneCSS } from "pages/constants";
 import SendReportDialog, { SUCCESS_MSG } from "pages/DailyReport/SendDailyReportToServerDialog";
 import LoginPanel from "pages/LoginPanel";
@@ -77,7 +77,13 @@ const DailyReport = () => {
   };
 
   const notesOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNotes(event.target.value);
+    const val = event.target.value;
+    setNotes(val);
+    const updatedPdfData = {
+      ...pdfData,
+      notes:val,
+    }
+    setPdfData(updatedPdfData);
   }
 
   const handleCenterChange = (event: SelectChangeEvent) => {
@@ -87,18 +93,34 @@ const DailyReport = () => {
     const _libraries = getLibrariesInCenter(val);
     setLibrary(_libraries[0]);
     setLibraries(_libraries);
+    const updatedPdfData = {
+      ...pdfData,
+      lib:_libraries[0],
+      center:val,
+    }
+    setPdfData(updatedPdfData);
   };
 
   const handleLibChange = (event: SelectChangeEvent) => {
     const val = event.target.value;
     console.log(`val ${val}`);
     setLibrary(val);
+    const updatedPdfData = {
+      ...pdfData,
+      library:val,
+    }
+    setPdfData(updatedPdfData);
   };
 
   const handleWorkFromHome = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const val = event.target.checked;
-    console.log(`val ${val}`);
-    setWorkFromHome(val);
+    const _workFromHome = event.target.checked;
+    console.log(`val ${_workFromHome}`);
+    setWorkFromHome(_workFromHome);
+    const updatedPdfData = {
+      ...pdfData,
+      workFromHome:_workFromHome,
+    }
+    setPdfData(updatedPdfData);
 
   };
 
@@ -249,7 +271,7 @@ const DailyReport = () => {
                 </Snackbar>
               </Box>
             </Stack>
-            <Box ref={dataHoldingElement}>{AllPdfStats.decorate(pdfData)}</Box>
+            <Box ref={dataHoldingElement}><DecorateWorkReport all={pdfData}/></Box>
             <Box sx={{ paddingTop: "30px" }}></Box>
           </Stack>
         </form>

@@ -71,8 +71,8 @@ const LoginPanel: React.FC = () => {
         {_isLoggedIn ?
           <Typography variant="h5">Hi {_.capitalize(_loggedUser)}</Typography> :
           <>
-            <Grid container columns={{ xs: 3, sm: 6, md: 9 }} direction="row">
-              <Grid item xs={1} sm={2} md={3} direction="row">
+            <Grid container columns={{ xs: 3, sm: 6, md: 12 }} direction="row">
+              <Grid item xs={1} sm={2} md={2} direction="row">
                   Username:{" "}
                   <TextField
                     variant="outlined"
@@ -82,7 +82,7 @@ const LoginPanel: React.FC = () => {
                     onChange={(e) => setLoggedUser(e.target.value)}
                   />
               </Grid>
-              <Grid item xs={1} sm={2} md={3} direction="row">
+              <Grid item xs={1} sm={2} md={2} direction="row">
                   Password:{" "}
                   <TextField
                     variant="outlined"
@@ -95,7 +95,7 @@ const LoginPanel: React.FC = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
               </Grid>
-              <Grid item xs={1} sm={2} md={3} direction="row">
+              <Grid item xs={1} sm={2} md={2} direction="row" sx={{paddingTop:"21px"}}>
                   {" "}
                   <Button
                     color="primary"

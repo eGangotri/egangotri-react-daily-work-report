@@ -25,7 +25,7 @@ import Spinner from "widgets/Spinner";
 import TextField from '@mui/material/TextField';
 import Typography from "@mui/material/Typography";
 import SendCatalogReportToServerDialog from "./SentCatalogReportToServerDialog";
-import AllCatalogReportStats from "utils/AllCatalogReportStats";
+import AllCatalogReportStats, { DecorateCatWorkReport } from "utils/AllCatalogReportStats";
 import { FormProvider, useForm } from 'react-hook-form';
 import { CatalogWorkReportType } from "mirror/catalogWorkReportTypes";
 
@@ -271,7 +271,8 @@ const CatalogReport = () => {
                         </Snackbar>
                     </Box>
                 </Stack>
-                <Box ref={dataHoldingElement}>{AllCatalogReportStats.decorate(catalogStats)}</Box>
+                <Box ref={dataHoldingElement}><DecorateCatWorkReport all={catalogStats} /></Box>
+                
                 <Box sx={{ paddingTop: "30px" }}></Box>
 
             </>
