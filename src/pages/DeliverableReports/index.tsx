@@ -37,19 +37,33 @@ const DeliverableReports = () => {
     const [selectedEndDate, setSelectedEndDate] = React.useState<string | null>(null);
     console.log(`generateReport`, window.location.pathname);
 
-    const generateReport = async () => {
+    const generateReport = async (aggregations: boolean = false) => {
         const pathname = window.location.pathname
         console.log(`generateReport`, window.location.pathname);
         setIsLoading(true);
-        if(_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE){
-            await sendFilteredFormToServerGet(operators, centers, pathname === CATALOG_REPORTS_METADATA_PATH, selectedStartDate, selectedEndDate);
-        } 
+        if (_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE) {
+            await sendFilteredFormToServerGet(operators,
+                centers,
+                selectedStartDate,
+                selectedEndDate,
+                aggregations,
+                pathname === CATALOG_REPORTS_METADATA_PATH,
+            );
+        }
         else {
-            await sendFilteredFormToServerGetForBasicUser(_loggedUser, pathname === CATALOG_REPORTS_METADATA_PATH, selectedStartDate, selectedEndDate);
+            await sendFilteredFormToServerGetForBasicUser(_loggedUser,
+                selectedStartDate,
+                selectedEndDate,
+                aggregations,
+                pathname === CATALOG_REPORTS_METADATA_PATH
+            );
         }
         setIsLoading(false);
     }
 
+    const generateAggregatedReport = async () => {
+        generateReport(true);
+    }
     const [dayRangeValue, setDayRangeValue] = React.useState<DateRange<Dayjs | null>>([
         dayjs(null),
         dayjs(null),
@@ -85,7 +99,7 @@ const DeliverableReports = () => {
             <Box sx={{ display: "flex", flexDirection: "column" }}>
                 {_isLoggedIn ?
                     <Stack spacing={2}>
-                        { (_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE) && <Box sx={panelOneCSS} alignItems="columns">
+                        {(_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE) && <Box sx={panelOneCSS} alignItems="columns">
                             <Typography>Filter by Operator Name:{" "}</Typography>
                             <Typography>(Use comman separation for multiple values):{" "}</Typography>
                             <TextField
@@ -95,8 +109,8 @@ const DeliverableReports = () => {
                                 value={operators}
                                 onChange={(e) => setOperators(e.target.value)}
                             />
-                        </Box> }
-                        { (_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE) && <Box sx={panelOneCSS} alignItems="columns">
+                        </Box>}
+                        {(_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE) && <Box sx={panelOneCSS} alignItems="columns">
                             <Typography>Filter by Centers :{" "}</Typography>
                             <Typography>(Use comman separation for multiple values):{" "}</Typography>
                             <TextField
@@ -112,22 +126,35 @@ const DeliverableReports = () => {
                             <DemoContainer components={['DateRangePicker', 'DateRangePicker']}>
                                 <DemoItem label="Filter by Time: " component="DateRangePicker">
                                     <DateRangePicker
-                                        sx={{width:"500px"}}
+                                        sx={{ width: "500px" }}
                                         value={dayRangeValue}
                                         onChange={(newValue: DateRange<Dayjs>) => onDatePickerChange(newValue)}
                                     />
                                 </DemoItem>
                             </DemoContainer>
                         </LocalizationProvider>
-                        <Button
-                            color="primary"
-                            variant="contained"
-                            component="span"
-                            onClick={() => generateReport()}
-                            sx={{ width: "180px" }}
-                        >
-                            Generate Report
-                        </Button>
+                        <Stack spacing="2" direction="row">
+                            <Box sx={{margin:'0 20px 0 0'}}>
+                                <Button
+                                color="primary"
+                                variant="contained"
+                                component="span"
+                                onClick={() => generateReport()}
+                                sx={{ width: "180px" }}
+                            >
+                                Generate Report
+                            </Button>
+                            </Box>
+                            <Button
+                                color="primary"
+                                variant="contained"
+                                component="span"
+                                onClick={() => generateAggregatedReport()}
+                                sx={{ width: "300px" }}
+                            >
+                                Generate Aggregated Report
+                            </Button>
+                        </Stack>
                         <Button
                             variant="contained"
                             endIcon={<FaRegTrashAlt style={{ color: "primary" }} />}

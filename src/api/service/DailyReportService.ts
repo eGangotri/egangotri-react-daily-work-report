@@ -1,24 +1,37 @@
 import { AddDailyReportResponseType, DailyWorkReportType, LoginProps, LoginUser } from "types/dailyWorkReportTypes"
-import {  callBackendGetApiForBlob, callBackendPostApi } from "./callApi";
+import { callBackendGetApiForBlob, callBackendPostApi } from "./callApi";
 
 
 const backEndPathForMetadataScanners = "dailyWorkReport/csvAsFile";
 const backEndPathForMetadataCatalogers = "dailyCatWorkReport/csvAsFile";
 
-export async function sendFilteredFormToServerGetForBasicUser(operator: string, forCatalog:boolean = false, selectedStartDate: string | null, selectedEndDate: string | null) {
-    return sendFilteredFormToServerGet(operator,"",forCatalog,selectedStartDate,selectedEndDate)
+export async function sendFilteredFormToServerGetForBasicUser(operator: string,
+    selectedStartDate: string | null,
+    selectedEndDate: string | null,
+    aggregations: boolean = false,
+    forCatalog: boolean = false,
+) {
+    return sendFilteredFormToServerGet(operator, "", selectedStartDate, selectedEndDate, aggregations, forCatalog)
 }
 
-export async function sendFilteredFormToServerGet(operators: string, 
-    centers: string, forCatalog:boolean = false, selectedStartDate: string | null, 
-    selectedEndDate: string | null) {
+export async function sendFilteredFormToServerGet(operators: string,
+    centers: string,
+    selectedStartDate: string | null,
+    selectedEndDate: string | null,
+    aggregations: boolean = false,
+    forCatalog: boolean = false
+) {
     const params = {
         operatorName: operators,
         centers,
         startDate: selectedStartDate,
         endDate: selectedEndDate
     }
-    const resp = await callBackendGetApiForBlob(forCatalog?backEndPathForMetadataCatalogers:backEndPathForMetadataScanners, params);
+    const resp = await callBackendGetApiForBlob(forCatalog ? 
+        `${backEndPathForMetadataCatalogers}?aggregations=${aggregations}` : 
+        `${backEndPathForMetadataScanners}?aggregations=${aggregations}`
+        ,
+         params);
     console.log(`res ${JSON.stringify(resp)}`);
     return resp;
 }
