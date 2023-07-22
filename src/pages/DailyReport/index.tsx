@@ -162,7 +162,7 @@ const DailyReport = () => {
         <form onSubmit={handleSubmit(onFormSubmit)}>
           <Stack spacing={2} direction="column">
             <Grid container spacing={{ xs: 1, md: 4 }} columns={{ xs: 2, sm: 6, md: 12 }} direction="row">
-              <Grid item xs={2} sm={3} md={3} direction="row">
+              <Grid item xs={2} sm={3} md={3}>
                 <Box sx={panelOneCSS}>
                   <InputLabel id="l1">Center</InputLabel>
                 </Box>
@@ -183,7 +183,7 @@ const DailyReport = () => {
                   </Select>
                 </Box>
               </Grid>
-              <Grid item xs={2} sm={3} md={3} direction="row">
+              <Grid item xs={2} sm={3} md={3}>
                 <Box sx={panelOneCSS}>
                   <InputLabel id="l2">Library</InputLabel>
                 </Box>

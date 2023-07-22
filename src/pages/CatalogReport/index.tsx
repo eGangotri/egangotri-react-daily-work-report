@@ -165,7 +165,7 @@ const CatalogReport = () => {
                 </Box>
                 <Box><Typography>Enter Start and End Index you have cataloged</Typography></Box>
                 <Grid container columns={{ xs: 3, sm: 6, md: 12 }} direction="row">
-                    <Grid item xs={1} sm={2} md={3} direction="row">
+                    <Grid item xs={1} sm={2} md={3}>
                         <Typography>From</Typography>
                         <TextField
                             required
@@ -178,7 +178,7 @@ const CatalogReport = () => {
                             variant="filled"
                         />
                     </Grid>
-                    <Grid item xs={1} sm={2} md={3} direction="row">
+                    <Grid item xs={1} sm={2} md={3}>
                         <Typography>To</Typography>
                         <TextField
                             required
@@ -191,7 +191,7 @@ const CatalogReport = () => {
                             variant="filled"
                         />
                     </Grid>
-                    <Grid item xs={1} sm={2} md={3} direction="row">
+                    <Grid item xs={1} sm={2} md={3}>
                         <Typography>Skipped</Typography>
                         <TextField
                             required
