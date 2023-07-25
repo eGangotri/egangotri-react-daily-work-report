@@ -6,6 +6,8 @@ export async function pushCatReportToServer(dailyReport: CatalogWorkReportType, 
     const _reportBody = {
         ...dailyReport,
         password
+        //remove this line later
+        ,title:"..."
     }
     const resp = await callBackendPostApi("dailyCatWorkReport/add", _reportBody);
     console.log(`res ${JSON.stringify(resp)}`)

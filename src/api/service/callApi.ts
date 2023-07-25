@@ -1,4 +1,5 @@
 import { backendServer } from "api/constants"
+import { fetchWithMiddleware } from "./fetchWithMiddleware";
 
 export const callBackendGetApiForBlob = async (route: string, params: any): Promise<void> => {
   try {
@@ -45,7 +46,7 @@ export const callBackendPostApi = async (route: string, _jsonBody: {}) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(_jsonBody)
   }
-  const resp = await fetch(_url, options)
+  const resp = await fetchWithMiddleware(_url, options)
 
   return resp;
 }
