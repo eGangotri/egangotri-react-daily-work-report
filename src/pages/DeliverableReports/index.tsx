@@ -3,7 +3,7 @@ import { Box, Stack, TextField, Button, Typography } from "@mui/material";
 import {
     useRecoilState,
 } from 'recoil';
-import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
+import { loggedInState, loggedUser, loggedUserPassword, loggedUserRole } from "pages/Dashboard";
 import LoginPanel from "pages/LoginPanel";
 import { panelOneCSS } from "pages/constants";
 import { ADMIN_ROLE, SUPERADMIN_ROLE } from 'mirror/FrontEndBackendCommonConsts'
@@ -28,6 +28,8 @@ const DeliverableReports = () => {
     const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
     const [_loggedUser, setLoggedUser] = useRecoilState(loggedUser);
     const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
+    const [_loggedUserPassword, setLoggedUserPassword] = useRecoilState(loggedUserPassword);
+
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [operators, setOperators] = useState("");
@@ -47,6 +49,7 @@ const DeliverableReports = () => {
                 selectedStartDate,
                 selectedEndDate,
                 aggregations,
+                _loggedUserPassword,
                 pathname === CATALOG_REPORTS_METADATA_PATH,
             );
         }
@@ -55,6 +58,7 @@ const DeliverableReports = () => {
                 selectedStartDate,
                 selectedEndDate,
                 aggregations,
+                _loggedUserPassword,
                 pathname === CATALOG_REPORTS_METADATA_PATH
             );
         }

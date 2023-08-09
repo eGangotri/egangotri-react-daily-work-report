@@ -15,17 +15,18 @@ import HelperService from "service/HelperService";
 import {
   useRecoilState,
 } from 'recoil';
-import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
+import { loggedInState, loggedUser, loggedUserRole,loggedUserPassword } from "pages/Dashboard";
 import { LoginProps } from "types/dailyWorkReportTypes";
 import { Link } from "react-router-dom";
 import { panelOneCSS } from "pages/constants";
-import { BASIC_ROLE } from 'mirror/FrontEndBackendCommonConsts'
-import { CATALOG_PATH, CATALOG_REPORTS_METADATA_PATH, DELIVERABLE_REPORTS_PATH, LANDING_PAGE_PATH } from "Routes";
+import { BASIC_ROLE, SUPERADMIN_ROLE } from 'mirror/FrontEndBackendCommonConsts'
+import { CATALOG_PATH, CATALOG_REPORTS_METADATA_PATH, DELIVERABLE_REPORTS_PATH, LANDING_PAGE_PATH, USERS } from "Routes";
 
 const LoginPanel: React.FC = () => {
   const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
   const [_loggedUser, setLoggedUser] = useRecoilState(loggedUser);
-  const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
+  const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);  
+  const [_loggedUserPassword, setLoggedUserPassword] = useRecoilState(loggedUserPassword);  
 
   const [validationMsg, setValidationMsg] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
@@ -39,6 +40,7 @@ const LoginPanel: React.FC = () => {
     setIsLoggedIn(false);
     setLoggedUser("");
     setLoggedUserRole("");
+    setLoggedUserPassword("");
   };
 
   const loginToPortal = async () => {
@@ -51,7 +53,9 @@ const LoginPanel: React.FC = () => {
       console.log(`logIn.success  ${logIn.success} ${typeof logIn.success}`)
       setIsLoggedIn(logIn.success === true);
       setValidationMsg(!logIn.success);
+      setLoggedUser(logIn.username)
       setLoggedUserRole(logIn.role);
+      setLoggedUserPassword(logIn.password);
     }
   };
 
@@ -62,6 +66,7 @@ const LoginPanel: React.FC = () => {
         <Box sx={panelOneCSS}><Link to={DELIVERABLE_REPORTS_PATH}>Scanning-Metadata</Link></Box>
         <Box sx={panelOneCSS}><Link to={CATALOG_PATH}>Catalog-Work</Link></Box>
         <Box sx={panelOneCSS}><Link to={CATALOG_REPORTS_METADATA_PATH}>Catalog-Work-Metadata</Link></Box>
+        {(_isLoggedIn && _loggedUserRole === SUPERADMIN_ROLE)?<Box sx={panelOneCSS}><Link to={USERS}>Users</Link></Box>: <>XSS</>}
         <Box sx={logoutCss}><a href="#" onClick={() => logout()}>Logout</a></Box>
       </Stack>
       <Box>

@@ -26,6 +26,11 @@ export const loggedUserRole = atom({
   default: BASIC_ROLE,
 });
 
+export const loggedUserPassword = atom({
+  key: 'loggedUserPassword',
+  default: "",
+});
+
 const Dashboard: React.FC = () => {
 
   return (

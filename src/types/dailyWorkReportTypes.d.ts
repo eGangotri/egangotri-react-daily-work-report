@@ -26,6 +26,7 @@ export type LoginUser = {
   password: string
 }
 
+
 export type AddDailyReportResponseType = {
   success?: string;
   error?: string;
@@ -34,6 +35,8 @@ export type AddDailyReportResponseType = {
 };
 
 export type LoginProps = {
+  username: string,
+  password: string
   success: boolean;
   role: string;
 };

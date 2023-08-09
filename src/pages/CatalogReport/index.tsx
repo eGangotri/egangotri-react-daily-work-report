@@ -20,7 +20,7 @@ import LoginPanel from "pages/LoginPanel";
 import {
     useRecoilState,
 } from 'recoil'
-import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
+import { loggedInState, loggedUser, loggedUserPassword, loggedUserRole } from "pages/Dashboard";
 import Spinner from "widgets/Spinner";
 import TextField from '@mui/material/TextField';
 import Typography from "@mui/material/Typography";
@@ -33,7 +33,7 @@ const CatalogReport = () => {
     const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
     const [_loggedUser, setLoggedUser] = useRecoilState(loggedUser);
     const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
-    const [password, setPassword] = useState<string>("");
+    const [_loggedUserPassword, setLoggedUserPassword] = useRecoilState(loggedUserPassword);
 
     const [catalogStats, setCatalogStats] = useState<CatalogWorkReportType>(AllCatalogReportStats.createEmptyCatalogWorkReportType);
     const [snackBarMsg, setSnackBarMsg] = useState<[string, React.ReactNode]>(["", (<></>)]);
@@ -242,7 +242,7 @@ const CatalogReport = () => {
                         setCatReport={setCatalogStats}
                         snackBarMsg={snackBarMsg}
                         setSnackBarMsg={setSnackBarMsg}
-                        password={password} />
+                        password={_loggedUserPassword} />
                     <Button
                         variant="contained"
                         endIcon={<FaRegTrashAlt style={{ color: "primary" }} />}

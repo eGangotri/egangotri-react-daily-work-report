@@ -28,7 +28,7 @@ import {
 } from 'recoil';
 import TextField from '@mui/material/TextField';
 
-import { loggedInState, loggedUser, loggedUserRole } from "pages/Dashboard";
+import { loggedInState, loggedUser, loggedUserPassword, loggedUserRole } from "pages/Dashboard";
 import Spinner from "widgets/Spinner";
 import { FormProvider, useForm } from 'react-hook-form';
 import { DailyWorkReportType } from "types/dailyWorkReportTypes";
@@ -40,10 +40,10 @@ const DailyReport = () => {
   const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
   const [_loggedUser, setLoggedUser] = useRecoilState(loggedUser);
   const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
+  const [_loggedUserPassword, setLoggedUserPassword] = useRecoilState(loggedUserPassword);
 
   const [pdfData, setPdfData] = useState<ScanWorkReportType>(emptyPdfStats);
   const [snackBarMsg, setSnackBarMsg] = useState<[string, ReactNode]>(["", (<></>)]);
-  const [password, setPassword] = useState<string>("");
   const [disabledState, setDisabledState] = useState<boolean>(false);
   const [workFromHome, setWorkFromHome] = useState<boolean>(false);
 
@@ -254,7 +254,7 @@ const DailyReport = () => {
               </Button>
             </label>
             <Stack spacing={2} direction="row">
-              <SendReportDialog pdfData={pdfData} setPdfData={setPdfData} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} password={password} />
+              <SendReportDialog pdfData={pdfData} setPdfData={setPdfData} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} password={_loggedUserPassword} />
               <Button
                 variant="contained"
                 endIcon={<FaRegTrashAlt style={{ color: "primary" }} />}
