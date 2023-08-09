@@ -31,7 +31,7 @@ const Users = () => {
     const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
     const [_loggedUserPassword, setLoggedUserPassword] = useRecoilState(loggedUserPassword);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [addUserBackendResponse, setAddUserBackendResponse] = useState<React.ReactNode>(<>XX</>);
+    const [addUserBackendResponse, setAddUserBackendResponse] = useState<React.ReactNode>(<></>);
 
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
@@ -81,10 +81,10 @@ const Users = () => {
                 <LoginPanel />
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
-                {_isLoggedIn ?
+                {(_loggedUserRole === SUPERADMIN_ROLE) ?
                     <Stack spacing={2}>
                         <Box>{addUserBackendResponse}</Box>
-                        {(_loggedUserRole === SUPERADMIN_ROLE) && <Box sx={panelOneCSS} alignItems="columns">
+                        {<Box sx={panelOneCSS} alignItems="columns">
                             <Typography>Username:{" "}</Typography>
                             <TextField
                                 variant="outlined"
