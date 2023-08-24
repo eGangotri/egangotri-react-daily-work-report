@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 export const OTHERS = "Other";
 
 export const appendOthersItemToList = (list:string[]) => {
@@ -45,8 +46,8 @@ export const libraryMenuOptions = [
 
 export const panelOneCSS = { bgcolor: "white", paddingRight: "10px" };
 
-const treasureIndices = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,55,56,57,58,59]
+const range = _.range(1, 63);
 
 export const catalogProfiles = appendOthersItemToList(["Choose Profile", 
-...(treasureIndices.map(x=>`Treasures-${x}`))]);
+...(range.map(x=>`Treasures-${x}`))]);
 
