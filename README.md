@@ -44,7 +44,8 @@ https://www.geeksforgeeks.org/how-to-deploy-react-project-on-firebase/
 
 First time
  npm install -g firebase-tools
-    firebase login
+    firebase login 
+    A Chrome browswe will open - use e***tr*@gmail acct.
     firebase init 
         Are you ready to proceed? Yes
         ? Which Firebase features do you want to set up for this directory? Press Space to select features, then Enter to confirm your choices. (Press <space> to select, <a>
