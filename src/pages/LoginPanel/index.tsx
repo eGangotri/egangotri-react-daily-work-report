@@ -15,7 +15,8 @@ import HelperService from "service/HelperService";
 import {
   useRecoilState,
 } from 'recoil';
-import { loggedInState, loggedUser, loggedUserRole,loggedUserPassword } from "pages/Dashboard";
+import { loggedInState, loggedUser, loggedUserRole, loggedUserPassword } from "../../index";
+
 import { LoginProps } from "types/dailyWorkReportTypes";
 import { Link } from "react-router-dom";
 import { panelOneCSS } from "pages/constants";

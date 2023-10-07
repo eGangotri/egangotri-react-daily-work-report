@@ -28,7 +28,7 @@ import {
 } from 'recoil';
 import TextField from '@mui/material/TextField';
 
-import { loggedInState, loggedUser, loggedUserPassword, loggedUserRole } from "pages/Dashboard";
+import { loggedInState, loggedUser, loggedUserRole, loggedUserPassword } from "../../index";
 import Spinner from "widgets/Spinner";
 import { FormProvider, useForm } from 'react-hook-form';
 import { DailyWorkReportType } from "types/dailyWorkReportTypes";

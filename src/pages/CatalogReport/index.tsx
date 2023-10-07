@@ -20,7 +20,7 @@ import LoginPanel from "pages/LoginPanel";
 import {
     useRecoilState,
 } from 'recoil'
-import { loggedInState, loggedUser, loggedUserPassword, loggedUserRole } from "pages/Dashboard";
+import { loggedInState, loggedUser, loggedUserRole, loggedUserPassword } from "../../index";
 import Spinner from "widgets/Spinner";
 import TextField from '@mui/material/TextField';
 import Typography from "@mui/material/Typography";
