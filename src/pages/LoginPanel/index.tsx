@@ -107,7 +107,7 @@ const LoginPanel: React.FC = () => {
                     size="small"
                     {...register("username", { required: true })}
                     placeholder="Username"
-                    sx={{ paddingRight: "10px",alignItems:"flex-end" }}
+                    sx={{ paddingRight: "10px" }}
                   />
                 </Grid>
                 <Grid item xs={1} sm={2} md={3}>
@@ -118,7 +118,7 @@ const LoginPanel: React.FC = () => {
                     type="password"
                     placeholder="Password"
                     {...register("password", { required: true })}
-                    sx={{ paddingRight: "10px",alignItems:"flex-end" }}
+                    sx={{ paddingRight: "10px" }}
                   />
                 </Grid>
                 <Grid item xs={1} sm={2} md={3}>
@@ -129,7 +129,7 @@ const LoginPanel: React.FC = () => {
                     variant="contained"
                    // sx={{  }}
                     type="submit"
-                    sx={{ cursor: "pointer", paddingRight: "10px",alignItems:"flex-end" }}
+                    sx={{ cursor: "pointer", paddingRight: "10px"}}
                     endIcon={<FiLogIn style={{ color: "primary" }} />}
                   >
                     Login
