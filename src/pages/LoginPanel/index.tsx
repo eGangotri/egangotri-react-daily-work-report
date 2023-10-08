@@ -6,7 +6,8 @@ import {
   Stack,
   TextField,
   Typography,
-  Grid
+  Grid,
+  FormLabel
 } from "@mui/material";
 import _ from "lodash";
 import React, { useState } from "react";
@@ -22,20 +23,53 @@ import { Link } from "react-router-dom";
 import { panelOneCSS } from "pages/constants";
 import { BASIC_ROLE, SUPERADMIN_ROLE } from 'mirror/FrontEndBackendCommonConsts'
 import { CATALOG_PATH, CATALOG_REPORTS_METADATA_PATH, DELIVERABLE_REPORTS_PATH, LANDING_PAGE_PATH, USERS } from "Routes";
+import { FormProvider, useForm } from 'react-hook-form';
+import Spinner from "widgets/Spinner";
+
+type LoginFormPropsType = {
+  username: string;
+  password: string;
+};
 
 const LoginPanel: React.FC = () => {
   const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
   const [_loggedUser, setLoggedUser] = useRecoilState(loggedUser);
-  const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);  
-  const [_loggedUserPassword, setLoggedUserPassword] = useRecoilState(loggedUserPassword);  
+  const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
+  const [_loggedUserPassword, setLoggedUserPassword] = useRecoilState(loggedUserPassword);
 
   const [validationMsg, setValidationMsg] = useState<boolean>(false);
-  const [password, setPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const methods = useForm<LoginFormPropsType>();
+  const { handleSubmit,
+    register,
+    formState: { errors },
+  } = methods;
+
 
   const logoutCss = {
     ...panelOneCSS,
     display: `${(JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN) === true || _isLoggedIn === false) ? "none" : "block"}`
   }
+
+  const onFormSubmit = async (formData: LoginFormPropsType) => {
+    console.log(`formData ${JSON.stringify(formData)}`);
+    if (JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN)) {
+      setIsLoggedIn(true);
+      setLoggedUserRole(BASIC_ROLE);
+    }
+    else {
+      setIsLoading(true);
+      const logIn: LoginProps = await HelperService.logIn(formData.username, formData.password);
+      console.log(`logIn.success  ${logIn.success} ${typeof logIn.success}`)
+      setIsLoggedIn(logIn.success === true);
+      setValidationMsg(!logIn.success);
+      setLoggedUser(logIn.username)
+      setLoggedUserRole(logIn.role);
+      setLoggedUserPassword(logIn.password);
+      setIsLoading(false);
+    }
+  };
 
   const logout = async () => {
     setIsLoggedIn(false);
@@ -44,30 +78,17 @@ const LoginPanel: React.FC = () => {
     setLoggedUserPassword("");
   };
 
-  const loginToPortal = async () => {
-    if (JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN)) {
-      setIsLoggedIn(true);
-      setLoggedUserRole(BASIC_ROLE);
-    }
-    else {
-      const logIn: LoginProps = await HelperService.logIn(_loggedUser, password);
-      console.log(`logIn.success  ${logIn.success} ${typeof logIn.success}`)
-      setIsLoggedIn(logIn.success === true);
-      setValidationMsg(!logIn.success);
-      setLoggedUser(logIn.username)
-      setLoggedUserRole(logIn.role);
-      setLoggedUserPassword(logIn.password);
-    }
-  };
 
   return (
     <Stack spacing={2}>
+      {isLoading && <Spinner text={"Wait atleast 30 seconds"} />}
+
       <Stack sx={{ display: "flex", flexDirection: "row" }} spacing="2">
         <Box sx={panelOneCSS}><Link to={LANDING_PAGE_PATH}>Home</Link></Box>
         <Box sx={panelOneCSS}><Link to={DELIVERABLE_REPORTS_PATH}>Scanning-Metadata</Link></Box>
         {/* <Box sx={panelOneCSS}><Link to={CATALOG_PATH}>Catalog-Work</Link></Box>
         <Box sx={panelOneCSS}><Link to={CATALOG_REPORTS_METADATA_PATH}>Catalog-Work-Metadata</Link></Box> */}
-        {(_isLoggedIn && _loggedUserRole === SUPERADMIN_ROLE)?<Box sx={panelOneCSS}><Link to={USERS}>Users</Link></Box>: <></>}
+        {(_isLoggedIn && _loggedUserRole === SUPERADMIN_ROLE) ? <Box sx={panelOneCSS}><Link to={USERS}>Users</Link></Box> : <></>}
         <Box sx={logoutCss}><a href="#" onClick={() => logout()}>Logout</a></Box>
       </Stack>
       <Box>
@@ -76,51 +97,51 @@ const LoginPanel: React.FC = () => {
       <Box sx={{ display: "flex", flexDirection: "row" }}>
         {_isLoggedIn ?
           <Typography variant="h5">Hi {_.capitalize(_loggedUser)}</Typography> :
-          <>
-            <Grid container columns={{ xs: 3, sm: 6, md: 12 }} direction="row">
-              <Grid item xs={1} sm={2} md={2}>
-                  Username:{" "}
+          <FormProvider {...methods}>
+            <form onSubmit={handleSubmit(onFormSubmit)}>
+              <Grid container columns={{ xs: 3, sm: 6, md: 12 }} direction="row" spacing={2}>
+                <Grid item xs={1} sm={2} md={3}>
                   <TextField
                     variant="outlined"
-                    label="Required"
-                    error={_.isEmpty(_loggedUser)}
+                    label="Username"
                     size="small"
-                    onChange={(e) => setLoggedUser(e.target.value)}
+                    {...register("username", { required: true })}
+                    placeholder="Username"
+                    sx={{ paddingRight: "10px",alignItems:"flex-end" }}
                   />
-              </Grid>
-              <Grid item xs={1} sm={2} md={2}>
-                  Password:{" "}
+                </Grid>
+                <Grid item xs={1} sm={2} md={3}>
                   <TextField
                     variant="outlined"
-                    label="Required"
-                    error={_.isEmpty(password)}
+                    label="Password"
                     size="small"
                     type="password"
-                    onSubmit={() => loginToPortal()}
-                    placeholder="Will accept any password for now"
-                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                    {...register("password", { required: true })}
+                    sx={{ paddingRight: "10px",alignItems:"flex-end" }}
                   />
-              </Grid>
-              <Grid item xs={1} sm={2} md={2} sx={{paddingTop:"21px"}}>
+                </Grid>
+                <Grid item xs={1} sm={2} md={3}>
                   {" "}
+                  <FormLabel></FormLabel>
                   <Button
                     color="primary"
                     variant="contained"
-                    disabled={(_.isEmpty(_loggedUser) && _.isEmpty(password)) || _isLoggedIn}
-                    onClick={() => loginToPortal()}
-                    sx={{cursor:"pointer"}}
+                   // sx={{  }}
+                    type="submit"
+                    sx={{ cursor: "pointer", paddingRight: "10px",alignItems:"flex-end" }}
                     endIcon={<FiLogIn style={{ color: "primary" }} />}
                   >
                     Login
                   </Button>
+                </Grid>
               </Grid>
-            </Grid>
-            {validationMsg && <Typography sx={{ color: "red" }}>Login Failure/Wrong UserId or Password</Typography>}
-          </>
+              {validationMsg && <Typography sx={{ color: "red" }}>Login Failure/Wrong UserId or Password</Typography>}
+            </form>
+          </FormProvider>
         }
       </Box>
     </Stack >
-
   );
 };
 

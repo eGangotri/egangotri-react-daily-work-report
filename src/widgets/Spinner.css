@@ -11,6 +11,11 @@
     border-top: 5px solid #3498db;
     border-radius: 50%;
     animation: spin 1s linear infinite;
+    align-items: center;
+  }
+  
+  .spinner-text {
+    padding: 0 0 0 8px;
   }
   
   @keyframes spin {

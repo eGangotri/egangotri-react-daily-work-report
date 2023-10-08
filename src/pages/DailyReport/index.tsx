@@ -147,9 +147,9 @@ const DailyReport = () => {
   };
 
   const methods = useForm<DailyWorkReportType>();
-  const { handleSubmit, watch } = methods;
+  const { handleSubmit } = methods;
   const onFormSubmit = async (formData: DailyWorkReportType) => {
-    //createSnapshotLocation(formData);
+    console.log(`formData ${JSON.stringify(formData)}`);
   };
 
   return (
