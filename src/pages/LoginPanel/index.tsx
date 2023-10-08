@@ -83,7 +83,7 @@ const LoginPanel: React.FC = () => {
     <Stack spacing={2}>
       {isLoading && <Spinner text={"Wait atleast 30 seconds"} />}
 
-      <Stack sx={{ display: "flex", flexDirection: "row" }} spacing="2">
+      <Stack sx={{ display: "flex", flexDirection: "row", fontSize: "30px" }} spacing="2">
         <Box sx={panelOneCSS}><Link to={LANDING_PAGE_PATH}>Home</Link></Box>
         <Box sx={panelOneCSS}><Link to={DELIVERABLE_REPORTS_PATH}>Scanning-Metadata</Link></Box>
         {/* <Box sx={panelOneCSS}><Link to={CATALOG_PATH}>Catalog-Work</Link></Box>
