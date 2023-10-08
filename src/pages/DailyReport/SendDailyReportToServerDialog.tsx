@@ -98,7 +98,7 @@ const SendReportDialog: React.FC<SendReportDialogProps> = ({ pdfData, setPdfData
 
     return (
         <div>
-            <Button variant="outlined" onClick={handleClickOpen} disabled={AllPdfStats.isEmpty(pdfData)}>
+            <Button variant="contained" onClick={handleClickOpen} disabled={AllPdfStats.isEmpty(pdfData)}>
                 Copy and Send Report
             </Button>
             <BootstrapDialog
