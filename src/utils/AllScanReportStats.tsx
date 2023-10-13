@@ -87,7 +87,7 @@ export const DecorateWorkReport: React.FC<{ all: ScanWorkReportType }> = ({ all 
     return <></>;
   }
   return (
-    <Box>
+    <Box sx={{bgcolor:"whitesmoke"}}>
       <Typography>
         Work Status for <span style={{ fontWeight: 'bold' }}>{GeneralUtils.capitalize(all.staffName)} ({all.center}/{all.lib})</span> :
       </Typography>
