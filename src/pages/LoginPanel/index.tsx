@@ -54,7 +54,7 @@ const LoginPanel: React.FC = () => {
 
   const onFormSubmit = async (formData: LoginFormPropsType) => {
     console.log(`formData ${JSON.stringify(formData)}`);
-    if (JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN)) {
+    if (overrideLogin === true) {
       setIsLoggedIn(true);
       setLoggedUserRole(BASIC_ROLE);
     }
