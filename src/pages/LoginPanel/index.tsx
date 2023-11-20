@@ -86,8 +86,8 @@ const LoginPanel: React.FC = () => {
       <Stack sx={{ display: "flex", flexDirection: "row", fontSize: "30px" }} spacing="2">
         <Box sx={panelOneCSS}><Link to={LANDING_PAGE_PATH}>Home</Link></Box>
         <Box sx={panelOneCSS}><Link to={DELIVERABLE_REPORTS_PATH}>Scanning-Metadata</Link></Box>
-        {/* <Box sx={panelOneCSS}><Link to={CATALOG_PATH}>Catalog-Work</Link></Box>
-        <Box sx={panelOneCSS}><Link to={CATALOG_REPORTS_METADATA_PATH}>Catalog-Work-Metadata</Link></Box> */}
+         <Box sx={panelOneCSS}><Link to={CATALOG_PATH}>Catalog-Work</Link></Box>
+        <Box sx={panelOneCSS}><Link to={CATALOG_REPORTS_METADATA_PATH}>Catalog-Work-Metadata</Link></Box>
         {(_isLoggedIn && _loggedUserRole === SUPERADMIN_ROLE) ? <Box sx={panelOneCSS}><Link to={USERS}>Users</Link></Box> : <></>}
         <Box sx={logoutCss}><a href="#" onClick={() => logout()}>Logout</a></Box>
       </Stack>

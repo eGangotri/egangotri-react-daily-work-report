@@ -44,7 +44,7 @@ export const libraryMenuOptions = [
     },
 ];
 
-export const panelOneCSS = { bgcolor: "beige", paddingRight: "10px",border:"2px solid black" };
+export const panelOneCSS = { bgcolor: "beige", paddingRight: "10px" };
 
 const range = _.range(1, 63);
 
