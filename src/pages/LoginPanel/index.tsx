@@ -46,10 +46,10 @@ const LoginPanel: React.FC = () => {
     formState: { errors },
   } = methods;
 
-
+  const overrideLogin = env.REACT_APP_OVER_RIDE_LOGIN ? JSON.parse( env.REACT_APP_OVER_RIDE_LOGIN) : false;
   const logoutCss = {
     ...panelOneCSS,
-    display: `${(JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN) === true || _isLoggedIn === false) ? "none" : "block"}`
+    display: `${(overrideLogin === true || _isLoggedIn === false) ? "none" : "block"}`
   }
 
   const onFormSubmit = async (formData: LoginFormPropsType) => {
@@ -92,7 +92,7 @@ const LoginPanel: React.FC = () => {
         <Box sx={logoutCss}><a href="#" onClick={() => logout()}>Logout</a></Box>
       </Stack>
       <Box>
-        {JSON.parse(env.REACT_APP_OVER_RIDE_LOGIN) ? <Typography variant="h5">नीचे फिलहाल कोई भी पास्वर्ड डाल दो/Use any password for now</Typography> : <></>}
+        {overrideLogin === true ? <Typography variant="h5">नीचे फिलहाल कोई भी पास्वर्ड डाल दो/Use any password for now</Typography> : <></>}
       </Box>
       <Box sx={{ display: "flex", flexDirection: "row" }}>
         {_isLoggedIn ?
