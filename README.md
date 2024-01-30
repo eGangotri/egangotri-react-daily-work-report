@@ -61,7 +61,6 @@ First time
     Configure as a single-page app (rewrite all urls to /index.html)? Yes
     Setup automatic builds No
 
-
 yarn run build
 firebase deploy
 
