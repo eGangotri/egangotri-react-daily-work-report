@@ -7,27 +7,13 @@ import * as GeneralUtils from 'utils/GeneralUtils';
 import type PdfStat from '../vo/PdfStat';
 import { QAWorkReportType } from 'mirror/qaWorkReportType';
 
-const emptyQAStats = {
-  center: "",
-  lib: "",
-  timeOfRequest: "",
-  dateOfReport: new Date(),
-  notes: "",
-  staffName: "",
-  folderNames: "",
-  pdfsRenamedCount: 0,
-  coverPagesRenamedCount: 0,
-  coverPagesMoved: 0
-} as QAWorkReportType
-
-
 export default class AllQAStats {
   static isEmpty(all: QAWorkReportType) {
-    return (all.pdfsRenamedCount === 0 ||  all.coverPagesRenamedCount === 0);
+    return (all.pdfsRenamedCount === 0 &&  all.coverPagesRenamedCount === 0);
   }
 
   static toString = (all: QAWorkReportType): string => {
-    return `Work Status for ${GeneralUtils.capitalize(all.staffName)} (${all.center}/${all.lib})
+    return `Work Status for ${GeneralUtils.capitalize(all.operatorName)} (${all.center}/${all.lib})
 On ${all.timeOfRequest}\n
 Cover Pages Moved?: ${all.coverPagesMoved ? "Yes" : "No"}
 Total Pdfs Renamed: ${all.pdfsRenamedCount} 
@@ -37,10 +23,10 @@ Notes: ${all.notes}
 `;
   };
 
-  static convertPdfStatsToDailyWorkReportTypeObject = (qaData: QAWorkReportType) => {
+  static convertStatsToQAReportTypeObject = (qaData: QAWorkReportType) => {
     const dailyQAWorkReport: QAWorkReportType =
     {
-      "staffName": qaData.staffName,
+      "operatorName": qaData.operatorName,
       "center": qaData.center,
       "lib": qaData.lib,
       "folderNames": qaData.folderNames,
@@ -57,17 +43,20 @@ Notes: ${all.notes}
 }
 
 
-export const DecorateWorkReport: React.FC<{ all: QAWorkReportType }> = ({ all }) => {
+export const DecorateQAWorkReport: React.FC<{ all: QAWorkReportType }> = ({ all }) => {
   if (AllQAStats.isEmpty(all)) {
     return <></>;
   }
   return (
     <Box sx={{bgcolor:"whitesmoke"}}>
       <Typography>
-        Work Status for <span style={{ fontWeight: 'bold' }}>{GeneralUtils.capitalize(all.staffName)} ({all.center}/{all.lib})</span> :
+        Work Status for <span style={{ fontWeight: 'bold' }}>{GeneralUtils.capitalize(all.operatorName)} ({all.center}/{all.lib})</span> :
       </Typography>
       <Typography>
-        Work From Home: <span style={{ fontWeight: 'bold' }}>{all.coverPagesMoved ? "Yes" : "No"}</span>
+        Cps Moved?: <span style={{ fontWeight: 'bold' }}>{all.coverPagesMoved ? "Yes" : "No"}</span>
+      </Typography>
+      <Typography>
+        Folders Worked On: <span style={{ fontWeight: 'bold' }}>{all.folderNames}</span>
       </Typography>
       <Typography>
         Notes: <span style={{ fontWeight: 'bold' }}>{all.notes}</span>
@@ -78,11 +67,11 @@ export const DecorateWorkReport: React.FC<{ all: QAWorkReportType }> = ({ all })
       </Typography>
       <Typography>
         {' '}
-        Total Pdf Count{' '}
+        Total Pdfs Renamed{' '}
         <span style={{ fontWeight: 'bold' }}> {all.pdfsRenamedCount} </span>
       </Typography>
       <Typography>
-        Total Page Count:{' '}
+        Total Cps Renamed:{' '}
         <span style={{ fontWeight: 'bold' }}>{all.coverPagesRenamedCount}</span>{' '}
       </Typography>
     </Box>

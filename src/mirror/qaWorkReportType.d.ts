@@ -8,5 +8,5 @@ export interface QAWorkReportType {
     coverPagesMoved:boollean
     timeOfRequest: string;
     notes: string;
-    staffName: string;
+    operatorName: string;
 }

@@ -34,7 +34,7 @@ interface SendReportDialogProps {
     qaWorkData: QAWorkReportType;
     setQAWorkData: React.Dispatch<React.SetStateAction<QAWorkReportType>>;
     snackBarMsg: [string, React.ReactNode];
-    setSnackBarMsg:  React.Dispatch<React.SetStateAction<[string, React.ReactNode]>>;
+    setSnackBarMsg: React.Dispatch<React.SetStateAction<[string, React.ReactNode]>>;
     password: string;
 }
 
@@ -80,7 +80,7 @@ const SendQAReportDialog: React.FC<SendReportDialogProps> = ({ qaWorkData, setQA
     const prepareReportForPush = async () => {
         handleClose();
         const qaReport: QAWorkReportType =
-        AllQAStats.convertPdfStatsToDailyWorkReportTypeObject(qaWorkData);
+            AllQAStats.convertStatsToQAReportTypeObject(qaWorkData);
         console.log(`qaReport ${JSON.stringify(qaReport)}`);
         const jsonResp = await pushQAReportToServer(qaReport, password);
         const respKey = Object.keys(jsonResp)[0];
@@ -97,7 +97,7 @@ const SendQAReportDialog: React.FC<SendReportDialogProps> = ({ qaWorkData, setQA
     return (
         <div>
             <Button variant="contained" onClick={handleClickOpen} disabled={AllQAStats.isEmpty(qaWorkData)}>
-                Copy and Send Report ({qaWorkData.pdfsRenamedCount})
+                Copy and Send Report
             </Button>
             <BootstrapDialog
                 onClose={handleClose}

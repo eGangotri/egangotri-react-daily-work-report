@@ -14,12 +14,10 @@ import {
   Grid,
   FormControlLabel
 } from "@mui/material";
-import _ from "lodash";
+import _, { add, set } from "lodash";
 import React, { ReactNode, useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { GoFileMedia } from "react-icons/go";
 import { libraryMenuOptions, centers, panelOneCSS } from "pages/constants";
-import SendReportDialog, { SUCCESS_MSG } from "pages/DailyReport/SendDailyReportToServerDialog";
 import LoginPanel from "pages/LoginPanel";
 import {
   useRecoilState,
@@ -29,25 +27,29 @@ import TextField from '@mui/material/TextField';
 import { loggedInState, loggedUser, loggedUserRole, loggedUserPassword } from "../../index";
 import Spinner from "widgets/Spinner";
 import { FormProvider, useForm } from 'react-hook-form';
-import { DailyWorkReportType } from "types/dailyWorkReportTypes";
 import Typography from "@mui/material/Typography";
 import { QAWorkReportType } from "mirror/qaWorkReportType";
 import SendQAReportDialog from "./SendQAReportToServerDialog";
+import { DecorateQAWorkReport } from "utils/AllQAReportStats";
 
 
 const emptyQAStats = {
   center: "",
   lib: "",
-  timeOfRequest: "",
+  timeOfRequest: new Date().toDateString(),
   dateOfReport: new Date(),
   notes: "",
-  staffName: "",
+  operatorName: "",
   folderNames: "",
   pdfsRenamedCount: 0,
   coverPagesRenamedCount: 0,
   coverPagesMoved: 0
 } as QAWorkReportType
 
+const qaStaffWithOperatorName = (_operatorName: string) => {
+  emptyQAStats.operatorName = _operatorName;
+  return emptyQAStats;
+};
 const QAReport = () => {
 
   const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
@@ -55,7 +57,7 @@ const QAReport = () => {
   const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
   const [_loggedUserPassword, setLoggedUserPassword] = useRecoilState(loggedUserPassword);
 
-  const [qaWorkData, setQAWorkData] = useState<QAWorkReportType>(emptyQAStats);
+  const [qaWorkData, setQAWorkData] = useState<QAWorkReportType>(qaStaffWithOperatorName(_loggedUser));
   const [snackBarMsg, setSnackBarMsg] = useState<[string, ReactNode]>(["", (<></>)]);
   const [disabledState, setDisabledState] = useState<boolean>(false);
 
@@ -87,11 +89,14 @@ const QAReport = () => {
   const [library, setLibrary] = React.useState<string>(libraries[0]);
 
   const clearResults = () => {
-    setQAWorkData(emptyQAStats);
+    setQAWorkData(qaStaffWithOperatorName(_loggedUser));
     setDisabledState(true);
     setSnackBarMsg(["", ""]);
     setNotes("");
     setFolderNames("");
+    setPdfsRenamedCount(0);
+    setCoverPagesRenamedCount(0);
+    setCoverPagesMoved(false);
   };
 
   const notesOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -171,34 +176,11 @@ const QAReport = () => {
       workFromHome: _cpsMoved,
     }
     setQAWorkData(updatedQAWorkData);
-
   };
 
-  const uploadPdf = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { files } = e.target;
-    if (files) {
-      try {
-        setIsLoading(true)
-        // const data = await HelperService.processFiles(
-        //   Array.from(files!),
-        //   _loggedUser,
-        //   center,
-        //   library,
-        //   _notes,
-        //   cpsMoved
-        // );
-        // setPdfData(data);
-        setIsLoading(false);
-      }
-      catch (e: any) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const methods = useForm<DailyWorkReportType>();
+  const methods = useForm<QAWorkReportType>();
   const { handleSubmit } = methods;
-  const onFormSubmit = async (formData: DailyWorkReportType) => {
+  const onFormSubmit = async (formData: QAWorkReportType) => {
     console.log(`formData ${JSON.stringify(formData)}`);
   };
 
@@ -272,33 +254,33 @@ const QAReport = () => {
                 multiline={true}
                 maxRows={3} />
             </Stack>
-
-            <Grid item xs={1} sm={2} md={3}>
-              <Typography>Pdfs Moved Count</Typography>
-              <TextField
-                required
-                id="pdfsRenamedCount"
-                type="number"
-                label="Required"
-                onChange={pdfsRenamedCountOnChange}
-                value={pdfsRenamedCount}
-                sx={cssForInputBox}
-                variant="filled"
-              />
-            </Grid>
-
-            <Grid item xs={1} sm={2} md={3}>
-              <Typography>Cover Pages Renamed Count</Typography>
-              <TextField
-                required
-                id="coverPagesRenamedCount"
-                type="number"
-                label="Required"
-                onChange={coverPagesRenamedCountOnChange}
-                value={coverPagesRenamedCount}
-                sx={cssForInputBox}
-                variant="filled"
-              />
+            <Grid container columns={{ xs: 3, sm: 6, md: 12 }} direction="row">
+              <Grid item xs={1} sm={2} md={3}>
+                <Typography>Pdfs Moved Count</Typography>
+                <TextField
+                  required
+                  id="pdfsRenamedCount"
+                  type="number"
+                  label="Required"
+                  onChange={pdfsRenamedCountOnChange}
+                  value={pdfsRenamedCount}
+                  sx={cssForInputBox}
+                  variant="filled"
+                />
+              </Grid>
+              <Grid item xs={1} sm={2} md={3}>
+                <Typography>Cover Pages Renamed Count</Typography>
+                <TextField
+                  required
+                  id="coverPagesRenamedCount"
+                  type="number"
+                  label="Required"
+                  onChange={coverPagesRenamedCountOnChange}
+                  value={coverPagesRenamedCount}
+                  sx={cssForInputBox}
+                  variant="filled"
+                />
+              </Grid>
             </Grid>
             <Grid container>
               <Grid item sx={{ paddingLeft: 0, paddingTop: 0 }}>
@@ -340,7 +322,7 @@ const QAReport = () => {
                 </Snackbar>
               </Box>
             </Stack>
-            {/* <Box ref={dataHoldingElement}><DecorateWorkReport all={pdfData} /></Box> */}
+            <Box ref={dataHoldingElement}><DecorateQAWorkReport all={qaWorkData} /></Box>
             <Box sx={{ paddingTop: "30px" }}></Box>
           </Stack>
         </form>

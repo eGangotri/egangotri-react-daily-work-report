@@ -59,7 +59,7 @@ export async function pushQAReportToServer(qaReport: QAWorkReportType, password:
         password
     }
 
-    const resp = await callBackendPostApi("qaCatWorkReport/add", _reportBody);
+    const resp = await callBackendPostApi("dailyQAWorkReport/add", _reportBody);
     console.log(`res ${JSON.stringify(resp)}`)
     const respAsJson = await resp.json()
     console.log(`respAsJson ${JSON.stringify(respAsJson)}`)
@@ -88,9 +88,9 @@ export async function sendFilteredFormToServerPost(operators: string,
     return respAsJson
 }
 
-export async function checkValidCredentials(staffName: string, password: string): Promise<LoginProps> {
+export async function checkValidCredentials(operatorName: string, password: string): Promise<LoginProps> {
     const loginInfo = {
-        username: staffName,
+        username: operatorName,
         password: password
     } as LoginUser;
 
@@ -105,7 +105,7 @@ export async function checkValidCredentials(staffName: string, password: string)
     const items = await res.json()
     console.log(`checkValidCredentials:res ${JSON.stringify(items)}`)
     return {
-        username: staffName,
+        username: operatorName,
         password,
         ...items
     }

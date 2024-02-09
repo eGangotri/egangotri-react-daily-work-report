@@ -19,7 +19,7 @@ export const emptyPdfStats = {
   timeOfRequest: "",
   dateOfReport: new Date(),
   notes: "",
-  staffName: "",
+  operatorName: "",
   pdfs: [],
   workFromHome: false
 } as ScanWorkReportType
@@ -43,7 +43,7 @@ export default class AllPdfStats {
   };
 
   static toString = (all: ScanWorkReportType): string => {
-    return `Work Status for ${GeneralUtils.capitalize(all.staffName)} (${all.center}/${all.lib})
+    return `Work Status for ${GeneralUtils.capitalize(all.operatorName)} (${all.center}/${all.lib})
 On ${all.timeOfRequest}\n
 Work From Home: ${all.workFromHome ? "Yes" : "No"}
 Notes: ${all.notes} 
@@ -56,7 +56,7 @@ ${AllPdfStats.pdfDataArrayToString(all.pdfs)}`;
   static convertPdfStatsToDailyWorkReportTypeObject = (pdfData: ScanWorkReportType) => {
     const dailyWorkReport: DailyWorkReportType =
     {
-      "operatorName": pdfData.staffName,
+      "operatorName": pdfData.operatorName,
       "center": pdfData.center,
       "lib": pdfData.lib,
       "totalPdfCount": pdfData.pdfCount,
@@ -89,7 +89,7 @@ export const DecorateWorkReport: React.FC<{ all: ScanWorkReportType }> = ({ all 
   return (
     <Box sx={{bgcolor:"whitesmoke"}}>
       <Typography>
-        Work Status for <span style={{ fontWeight: 'bold' }}>{GeneralUtils.capitalize(all.staffName)} ({all.center}/{all.lib})</span> :
+        Work Status for <span style={{ fontWeight: 'bold' }}>{GeneralUtils.capitalize(all.operatorName)} ({all.center}/{all.lib})</span> :
       </Typography>
       <Typography>
         Work From Home: <span style={{ fontWeight: 'bold' }}>{all.workFromHome ? "Yes" : "No"}</span>

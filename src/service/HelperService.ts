@@ -7,12 +7,12 @@ import AllPdfStats from 'utils/AllScanReportStats';
 import type PdfStat from 'vo/PdfStat';
 
 export class HelperService {
-  static processFiles = async (files: File[], staffName: string, 
+  static processFiles = async (files: File[], operatorName: string, 
     center: string, lib: string, 
     notes: string,
     workFromHome:boolean) => {
     const pdfStats = await this.createData(files);
-    return this.processData(pdfStats, staffName, center, lib, notes,workFromHome);
+    return this.processData(pdfStats, operatorName, center, lib, notes,workFromHome);
   };
 
   static createData = async (files: File[]) => {
@@ -25,7 +25,7 @@ export class HelperService {
     return data;
   };
 
-  static processData(pdfStats: PdfStat[], staffName: string, center: string, lib: string,
+  static processData(pdfStats: PdfStat[], operatorName: string, center: string, lib: string,
      notes: string,
      workFromHome:boolean) {
     const allPdfStats: ScanWorkReportType = {
@@ -41,7 +41,7 @@ export class HelperService {
       totalSize: DailyReportUtil.aggregate(
         pdfStats.map((x) => x.pdfSize)
       ),
-      staffName: staffName,
+      operatorName: operatorName,
       pdfs: pdfStats,
       workFromHome:workFromHome
     }
@@ -65,8 +65,8 @@ export class HelperService {
     return row;
   };
 
-  static logIn = async (staffName: string, password: string): Promise<LoginProps> => {
-    return await checkValidCredentials(staffName, password);
+  static logIn = async (operatorName: string, password: string): Promise<LoginProps> => {
+    return await checkValidCredentials(operatorName, password);
   }
 }
 

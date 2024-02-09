@@ -7,7 +7,7 @@ export interface ScanWorkReportType {
     pdfCount: number;
     timeOfRequest: string;
     notes: string;
-    staffName: string;
+    operatorName: string;
     pdfs: PdfStat[];
     workFromHome:boollean
 }
