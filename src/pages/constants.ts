@@ -6,7 +6,7 @@ export const appendOthersItemToList = (list:string[]) => {
     return list;
 }
 
-export const centers = appendOthersItemToList(["Choose Center", "Delhi", "Haridwar", "Jammu", "Srinagar", "Varanasi"]);
+export const centers = appendOthersItemToList(["Choose Center", "Delhi", "Haridwar", "Jammu", "Srinagar", "Varanasi", "Lucknow"]);
 
 export const libraryMenuOptions = [
     {
@@ -38,8 +38,18 @@ export const libraryMenuOptions = [
             "Panini",
         ]),
     },
+    
     {
         name: centers[6],
+        centers: appendOthersItemToList([
+            "UP State Museum",
+            "UPSS",
+            "AkhilBh.Skt.Parishad",
+            "Uni.Lucknow",
+        ]),
+    },
+    {
+        name: centers[7],
         centers: appendOthersItemToList([]),
     },
 ];

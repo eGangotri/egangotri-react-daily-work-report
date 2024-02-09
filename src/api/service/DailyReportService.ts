@@ -1,5 +1,6 @@
 import { AddDailyReportResponseType, DailyWorkReportType, LoginProps, LoginUser } from "types/dailyWorkReportTypes"
 import { callBackendGetApiForBlob, callBackendPostApi } from "./callApi";
+import { QAWorkReportType } from "mirror/qaWorkReportType";
 
 
 const backEndPathForMetadataScanners = "dailyWorkReport/csvAsFile";
@@ -46,6 +47,19 @@ export async function pushReportToServer(dailyReport: DailyWorkReportType, passw
     }
 
     const resp = await callBackendPostApi("dailyWorkReport/add", _reportBody);
+    console.log(`res ${JSON.stringify(resp)}`)
+    const respAsJson = await resp.json()
+    console.log(`respAsJson ${JSON.stringify(respAsJson)}`)
+    return respAsJson
+}
+
+export async function pushQAReportToServer(qaReport: QAWorkReportType, password: string): Promise<AddDailyReportResponseType> {
+    const _reportBody = {
+        ...qaReport,
+        password
+    }
+
+    const resp = await callBackendPostApi("qaCatWorkReport/add", _reportBody);
     console.log(`res ${JSON.stringify(resp)}`)
     const respAsJson = await resp.json()
     console.log(`respAsJson ${JSON.stringify(respAsJson)}`)
