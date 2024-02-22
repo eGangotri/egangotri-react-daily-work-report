@@ -61,8 +61,10 @@ First time
     Configure as a single-page app (rewrite all urls to /index.html)? Yes
     Setup automatic builds No
 
+
 yarn run build
 firebase deploy
+*** note you need to be logged in with the correct firebase email otherwise firebase deploy will fail
 
 Code will be viewable below:
 https://egangotri-daily-work-report.web.app

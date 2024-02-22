@@ -10,7 +10,7 @@ export type DailyWorkReportType = {
   dateOfReport: Date;
   pageCountStats: PageCountStatsType[];
   notes: string;
-  workFromHome: string;
+  workFromHome: boolean;
 };
 
 export type PageCountStatsType = {
