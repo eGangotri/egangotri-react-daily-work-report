@@ -256,7 +256,7 @@ const QAReport = () => {
             </Stack>
             <Grid container columns={{ xs: 3, sm: 6, md: 12 }} direction="row">
               <Grid item xs={1} sm={2} md={3}>
-                <Typography>Pdfs Moved Count</Typography>
+                <Typography>Pdfs Renamed Count</Typography>
                 <TextField
                   required
                   id="pdfsRenamedCount"
