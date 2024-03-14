@@ -43,7 +43,7 @@ const emptyQAStats = {
   folderNames: "",
   pdfsRenamedCount: 0,
   coverPagesRenamedCount: 0,
-  coverPagesMoved: 0
+  coverPagesMoved: false
 } as QAWorkReportType
 
 const qaStaffWithOperatorName = (_operatorName: string) => {
@@ -169,11 +169,11 @@ const QAReport = () => {
 
   const handleCPsMoved = (event: React.ChangeEvent<HTMLInputElement>) => {
     const _cpsMoved = event.target.checked;
-    console.log(`val ${_cpsMoved}`);
+    console.log(`_cpsMoved ${_cpsMoved}`);
     setCoverPagesMoved(_cpsMoved);
     const updatedQAWorkData = {
       ...qaWorkData,
-      workFromHome: _cpsMoved,
+      coverPagesMoved: _cpsMoved,
     }
     setQAWorkData(updatedQAWorkData);
   };

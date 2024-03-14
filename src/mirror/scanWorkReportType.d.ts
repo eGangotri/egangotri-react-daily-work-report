@@ -9,5 +9,5 @@ export interface ScanWorkReportType {
     notes: string;
     operatorName: string;
     pdfs: PdfStat[];
-    workFromHome:boollean
+    workFromHome:boolean
 }

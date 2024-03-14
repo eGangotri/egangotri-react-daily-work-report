@@ -5,7 +5,7 @@ export interface QAWorkReportType {
     folderNames: string;
     pdfsRenamedCount: number;
     coverPagesRenamedCount: number;
-    coverPagesMoved:boollean
+    coverPagesMoved:boolean
     timeOfRequest: string;
     notes: string;
     operatorName: string;
