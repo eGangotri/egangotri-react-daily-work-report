@@ -5,8 +5,9 @@ const development = {
   env: env.REACT_APP_DEV_ENV || 'dev'
 };
 
+//for some reason, firebase deploy is not picking this. So, hardcoding it here.
 const production = {
-  BACKEND_SERVER: env.REACT_APP_BACKEND_SERVER_PROD,
+  BACKEND_SERVER: "https://egangotri-node-backend-dwr.onrender.com/" || env.REACT_APP_BACKEND_SERVER_PROD,
   env: env.REACT_APP_DEV_ENV || 'prod'
 };
 
