@@ -15,7 +15,7 @@ export const libraryMenuOptions = [
     },
     {
         name: centers[1],
-        centers: appendOthersItemToList(["SV Shastri","CSU", "Sarai"]),
+        centers: appendOthersItemToList(["SV Shastri","Sundaram", "CSU"]),
     },
     {
         name: centers[2],
@@ -23,19 +23,19 @@ export const libraryMenuOptions = [
     },
     {
         name: centers[3],
-        centers: appendOthersItemToList(["BVT-Lucknow"]),
+        centers: appendOthersItemToList(["BVT-Lucknow", "Madras", "Chennai"]),
     },
     {
         name: centers[4],
-        centers: appendOthersItemToList(["SPS", "JKACADEMY", "Lucknow"]),
+        centers: appendOthersItemToList(["SPS", "JKACADEMY", "Lucknow-Books", "Noida-Books", "PZ"]),
     },
     {
         name: centers[5],
         centers: appendOthersItemToList([
-            "Vasishth Tripathi",
-            "Jangam",
-            "Kamalakarji",
+            "Melkote",
             "Panini",
+            "Jangam",
+            "Vidit",
         ]),
     },
     

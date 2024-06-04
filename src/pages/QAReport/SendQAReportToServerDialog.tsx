@@ -8,9 +8,9 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { FaRegWindowClose } from 'react-icons/fa';
-import { pushQAReportToServer } from "api/service/DailyReportService";
 import { QAWorkReportType } from 'mirror/qaWorkReportType';
 import AllQAStats from 'utils/AllQAReportStats';
+import { pushQAReportToServer } from 'api/service/QAReportService';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {

@@ -1,10 +1,10 @@
-import { checkValidCredentials } from 'api/service/DailyReportService';
 import { ScanWorkReportType } from 'mirror/scanWorkReportType';
 import { PDFDocument } from 'pdf-lib';
 import { LoginProps } from 'types/dailyWorkReportTypes';
 import * as DailyReportUtil from 'utils/DailyReportUtil';
 import AllPdfStats from 'utils/AllScanReportStats';
 import type PdfStat from 'vo/PdfStat';
+import { checkValidCredentials } from 'api/service/ScannerReportService';
 
 export class HelperService {
   static processFiles = async (files: File[], operatorName: string, 

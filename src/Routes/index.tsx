@@ -3,6 +3,7 @@ import CatalogReport from 'pages/CatalogReport';
 import DailyReport from 'pages/DailyReport';
 import DeliverableReports from 'pages/DeliverableReports';
 import QAReport from 'pages/QAReport';
+import QAReports from 'pages/QAReports';
 import Users from 'pages/Users';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -24,7 +25,7 @@ const DWRRoutes: React.FC = () => (
             {<Route path={CATALOG_PATH} element={<CatalogReport />} />}
             {<Route path={CATALOG_REPORTS_METADATA_PATH} element={<DeliverableReports />} />}
             {<Route path={QA_PATH} element={<QAReport />} />}
-            {<Route path={QA_REPORTS_METADATA_PATH} element={<DeliverableReports />} />}
+            {<Route path={QA_REPORTS_METADATA_PATH} element={<QAReports />} />}
             {<Route path={USERS} element={<Users />} />}
         </Route>
     </Routes>

@@ -21,11 +21,11 @@ import _ from "lodash";
 import moment from "moment";
 import { DD_MM_YYYY_FORMAT } from "utils/DailyReportUtil";
 import Spinner from "widgets/Spinner";
-import { CATALOG_REPORTS_METADATA_PATH } from "Routes";
+import { CATALOG_REPORTS_METADATA_PATH, QA_REPORTS_METADATA_PATH } from "Routes";
 import { sendFilteredFormToServerGet, sendFilteredFormToServerGetForBasicUser } from "api/service/ScannerReportService";
 
 
-const DeliverableReports = () => {
+const QAReports = () => {
     const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
     const [_loggedUser, setLoggedUser] = useRecoilState(loggedUser);
     const [_loggedUserRole, setLoggedUserRole] = useRecoilState(loggedUserRole);
@@ -51,7 +51,7 @@ const DeliverableReports = () => {
                 selectedEndDate,
                 aggregations,
                 _loggedUserPassword,
-                pathname === CATALOG_REPORTS_METADATA_PATH,
+                pathname === QA_REPORTS_METADATA_PATH,
             );
         }
         else {
@@ -60,7 +60,7 @@ const DeliverableReports = () => {
                 selectedEndDate,
                 aggregations,
                 _loggedUserPassword,
-                pathname === CATALOG_REPORTS_METADATA_PATH
+                pathname === QA_REPORTS_METADATA_PATH
             );
         }
         setIsLoading(false);
@@ -175,4 +175,4 @@ const DeliverableReports = () => {
         </Stack>
     )
 }
-export default DeliverableReports
+export default QAReports
