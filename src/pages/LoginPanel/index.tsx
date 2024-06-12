@@ -46,7 +46,7 @@ const LoginPanel: React.FC = () => {
     formState: { errors },
   } = methods;
 
-  const overrideLogin = env.REACT_APP_OVER_RIDE_LOGIN ? JSON.parse( env.REACT_APP_OVER_RIDE_LOGIN) : false;
+  const overrideLogin = import.meta.env.VITE_OVER_RIDE_LOGIN ? JSON.parse( import.meta.env.VITE_OVER_RIDE_LOGIN) : false;
   const logoutCss = {
     ...panelOneCSS,
     display: `${(overrideLogin === true || _isLoggedIn === false) ? "none" : "block"}`

@@ -39,10 +39,14 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-dotenv && react-scripts start",
-    "start2": "react-dotenv && npm run lint_fix && react-scripts start",
-    "build": "react-dotenv && react-scripts build",
-    "test": "react-scripts test",
+    "startOLD": "react-dotenv && react-scripts start",
+    "start2OLD": "react-dotenv && npm run lint_fix && react-scripts start",
+    "buildOLD": "react-dotenv && react-scripts build",
+    "start": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview",
+
+    "testOLD": "react-scripts test",
     "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
     "lint_fix": "npx eslint --fix . --ext .js,.jsx,.ts,.tsx"
   },
@@ -66,10 +70,9 @@
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
-    "serve": "^14.2.2",
-
     "@typescript-eslint/eslint-plugin": "^5.30.4",
     "@typescript-eslint/parser": "^5.30.4",
+    "@vitejs/plugin-react": "^4.3.1",
     "eslint": "^8.38.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",
@@ -83,7 +86,11 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "serve": "^14.2.2",
+    "vite": "^5.2.13",
+    "vite-plugin-svgr": "^4.2.0",
+    "vite-tsconfig-paths": "^4.3.2"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
