@@ -10,3 +10,5 @@ export interface QAWorkReportType {
     notes: string;
     operatorName: string;
 }
+
+

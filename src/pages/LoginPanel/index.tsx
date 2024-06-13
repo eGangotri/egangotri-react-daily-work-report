@@ -22,7 +22,7 @@ import { LoginProps } from "types/dailyWorkReportTypes";
 import { Link } from "react-router-dom";
 import { panelOneCSS } from "pages/constants";
 import { BASIC_ROLE, SUPERADMIN_ROLE } from 'mirror/FrontEndBackendCommonConsts'
-import { CATALOG_PATH, CATALOG_REPORTS_METADATA_PATH, DELIVERABLE_REPORTS_PATH, LANDING_PAGE_PATH, QA_PATH, QA_REPORTS_METADATA_PATH, USERS } from "Routes";
+import { CATALOG_PATH, CATALOG_REPORTS_METADATA_PATH, DELIVERABLE_REPORTS_PATH, GDRIVE_UPLOAD_METADATA_PATH, GDRIVE_UPLOAD_PATH, LANDING_PAGE_PATH, QA_PATH, QA_REPORTS_METADATA_PATH, USERS } from "Routes";
 import { FormProvider, useForm } from 'react-hook-form';
 import Spinner from "widgets/Spinner";
 
@@ -88,6 +88,8 @@ const LoginPanel: React.FC = () => {
         <Box sx={panelOneCSS}><Link to={DELIVERABLE_REPORTS_PATH}>Scanning-Metadata</Link></Box>
          <Box sx={panelOneCSS}><Link to={QA_PATH}>QA-Work</Link></Box>
         <Box sx={panelOneCSS}><Link to={QA_REPORTS_METADATA_PATH}>QA-Work-Metadata</Link></Box>
+         <Box sx={panelOneCSS}><Link to={GDRIVE_UPLOAD_PATH}>GDrive Upload-Work</Link></Box>
+        <Box sx={panelOneCSS}><Link to={GDRIVE_UPLOAD_METADATA_PATH}>GDrive-Upload-Metadata</Link></Box>
          {/* <Box sx={panelOneCSS}><Link to={CATALOG_PATH}>Catalog-Work</Link></Box>
         <Box sx={panelOneCSS}><Link to={CATALOG_REPORTS_METADATA_PATH}>Catalog-Work-Metadata</Link></Box> */}
         {(_isLoggedIn && _loggedUserRole === SUPERADMIN_ROLE) ? <Box sx={panelOneCSS}><Link to={USERS}>Users</Link></Box> : <></>}
