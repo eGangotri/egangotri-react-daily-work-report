@@ -12,6 +12,10 @@ export default defineConfig({
       include: '**/*.svg?react',
     }),
   ],
+  //Must match with value in firebase.json
+  build: {
+    outDir: 'build', // Specify the output directory
+  },
   server: {
     //host: "127.0.0.1",
     host: "0.0.0.0", // Change this to your IP address 
