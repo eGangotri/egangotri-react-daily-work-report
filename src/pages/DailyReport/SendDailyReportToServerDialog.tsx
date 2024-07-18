@@ -112,8 +112,8 @@ const SendReportDialog: React.FC<SendReportDialogProps> = ({ pdfData, setPdfData
                 <DialogContent dividers>
                     <Typography sx={{ fontSize: "20px" }} gutterBottom>
                         Once you click the Send-Report-and-Copy Button below, your report will be sent to the Server.
-                        The Pdf Report will also be copied.
-                        Place this Pdf Report in your respective whatsapp group.
+                        The Pdf Report will also be copied to your clipboard ( same as when you do Ctrl-C).
+                        Paste ( Ctrl-V)  this Pdf Report in your respective whatsapp group.
                     </Typography>
                     <Typography gutterBottom>
 

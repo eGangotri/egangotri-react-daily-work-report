@@ -65,8 +65,8 @@ const QAReport = () => {
   const [_notes, setNotes] = React.useState<string>("");
   const [folderNames, setFolderNames] = React.useState<string>("");
 
-  const [pdfsRenamedCount, setPdfsRenamedCount] = React.useState<number>(0);
-  const [coverPagesRenamedCount, setCoverPagesRenamedCount] = React.useState<number>(0);
+  const [pdfsRenamedCount, setPdfsRenamedCount] = React.useState<string>("");
+  const [coverPagesRenamedCount, setCoverPagesRenamedCount] = React.useState<string>("");
   const [coverPagesMoved, setCoverPagesMoved] = React.useState<boolean>(false);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -94,8 +94,8 @@ const QAReport = () => {
     setSnackBarMsg(["", ""]);
     setNotes("");
     setFolderNames("");
-    setPdfsRenamedCount(0);
-    setCoverPagesRenamedCount(0);
+    setPdfsRenamedCount("0");
+    setCoverPagesRenamedCount("0");
     setCoverPagesMoved(false);
   };
 
@@ -147,21 +147,23 @@ const QAReport = () => {
 
 
   const pdfsRenamedCountOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const _pdfsRenamedCount = parseInt(event.target.value);
-    setPdfsRenamedCount(_pdfsRenamedCount);
+    let _value = event.target.value;
+    setPdfsRenamedCount(_value);
+    const _pdfsRenamedCount = (isNaN(parseInt(_value)) ? "0": _value);
     const updatedQAWorkData = {
       ...qaWorkData,
-      pdfsRenamedCount: _pdfsRenamedCount,
+      pdfsRenamedCount: parseInt(_pdfsRenamedCount),
     }
     setQAWorkData(updatedQAWorkData);
   }
 
   const coverPagesRenamedCountOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const _cpsRenamedCount = parseInt(event.target.value);
-    setCoverPagesRenamedCount(_cpsRenamedCount);
+    let _value = event.target.value;
+    setCoverPagesRenamedCount(_value);
+    const _cpsRenamedCount = (isNaN(parseInt(_value)) ? "0": _value);
     const updatedQAWorkData = {
       ...qaWorkData,
-      coverPagesRenamedCount: _cpsRenamedCount,
+      coverPagesRenamedCount: parseInt(_cpsRenamedCount),
     }
     setQAWorkData(updatedQAWorkData);
   }
@@ -260,7 +262,7 @@ const QAReport = () => {
                 <TextField
                   required
                   id="pdfsRenamedCount"
-                  type="number"
+                  type="text"
                   label="Required"
                   onChange={pdfsRenamedCountOnChange}
                   value={pdfsRenamedCount}
@@ -273,7 +275,7 @@ const QAReport = () => {
                 <TextField
                   required
                   id="coverPagesRenamedCount"
-                  type="number"
+                  type="text"
                   label="Required"
                   onChange={coverPagesRenamedCountOnChange}
                   value={coverPagesRenamedCount}

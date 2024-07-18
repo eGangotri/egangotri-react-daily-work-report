@@ -9,7 +9,8 @@ import { QAWorkReportType } from 'mirror/qaWorkReportType';
 
 export default class AllQAStats {
   static isEmpty(all: QAWorkReportType) {
-    return (all.pdfsRenamedCount === 0 &&  all.coverPagesRenamedCount === 0);
+    return false
+    //return ((all.pdfsRenamedCount === 0 &&  all.coverPagesRenamedCount === 0) || (isNaN(all.coverPagesRenamedCount) || isNaN(all.pdfsRenamedCount)));
   }
 
   static toString = (all: QAWorkReportType): string => {

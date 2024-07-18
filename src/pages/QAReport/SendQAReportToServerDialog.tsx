@@ -66,8 +66,18 @@ const SendQAReportDialog: React.FC<SendReportDialogProps> = ({ qaWorkData, setQA
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
-        setOpen(true);
+        setSnackBarMsg(["", ""]);
+        if (qaWorkData.pdfsRenamedCount === 0 && qaWorkData.coverPagesRenamedCount === 0) {
+            setSnackBarMsg(["error", "One of Pdf Renamed Count and Cover Pages Renamed Count should be greater than 0"]);
+        }
+        else if (!qaWorkData.center) {
+            setSnackBarMsg(["error", "No Center/Lib Chosen"]);
+        }
+        else {
+            setOpen(true);
+        }
     };
+    
     const handleClose = () => {
         setOpen(false);
     };
@@ -96,7 +106,7 @@ const SendQAReportDialog: React.FC<SendReportDialogProps> = ({ qaWorkData, setQA
 
     return (
         <div>
-            <Button variant="contained" onClick={handleClickOpen} disabled={AllQAStats.isEmpty(qaWorkData)}>
+            <Button variant="contained" onClick={handleClickOpen} disabled={password === "" || AllQAStats.isEmpty(qaWorkData)}>
                 Copy and Send Report
             </Button>
             <BootstrapDialog
