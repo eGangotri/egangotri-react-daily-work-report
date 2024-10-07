@@ -32,10 +32,8 @@ export const libraryMenuOptions = [
     {
         name: centers[5],
         centers: appendOthersItemToList([
-            "Melkote",
-            "Panini",
             "Jangam",
-            "Vidit",
+            "Anandomayi",
         ]),
     },
     
