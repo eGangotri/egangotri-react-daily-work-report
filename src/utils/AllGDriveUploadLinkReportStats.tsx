@@ -5,13 +5,13 @@ import * as GeneralUtils from 'utils/GeneralUtils';
 import { GDriveUploadWorkReportType } from 'mirror/types';
 
 export default class AllGDriveUploadLinkReportStats {
-  static isEmpty(all: GDriveUploadWorkReportType) {
+  static isValid(all: GDriveUploadWorkReportType) {
     console.log(`all?.gDriveLinks?.length ${all?.gDriveLinks?.length}`);
-    return (all?.gDriveLinks?.length === 0);
+    return (all.center?.length > 0 && all?.gDriveLinks?.length > 0 && all?.gDriveLinks?.every((link) => link.startsWith("https://drive.google.com/")));
   }
 
   static toString = (all: GDriveUploadWorkReportType): string => {
-    return `G Drive Upload Status for ${GeneralUtils.capitalize(all.operatorName)} (${all.center}/${all.lib})
+    return `Google Drive Upload Status for ${GeneralUtils.capitalize(all.operatorName)} (${all.center}/${all.lib})
 On ${all.timeOfRequest}\n
 G-Drive Links pdfs uploaded to: ${all.gDriveLinks} \n
 Notes: ${all.notes} 
@@ -36,7 +36,7 @@ Notes: ${all.notes}
 
 
 export const DecorateGDriveWorkReport: React.FC<{ all: GDriveUploadWorkReportType }> = ({ all }) => {
-  if (AllGDriveUploadLinkReportStats.isEmpty(all)) {
+  if (AllGDriveUploadLinkReportStats.isValid(all)) {
     return <></>;
   }
   return (

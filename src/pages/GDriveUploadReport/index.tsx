@@ -4,7 +4,6 @@ import {
   Alert,
   Box,
   Button,
-  Checkbox,
   InputLabel,
   MenuItem,
   Select,
@@ -12,7 +11,6 @@ import {
   Snackbar,
   Stack,
   Grid,
-  FormControlLabel
 } from "@mui/material";
 import _, { add, set } from "lodash";
 import React, { ChangeEvent, ReactNode, useRef, useState } from "react";
@@ -64,7 +62,7 @@ const GDriveUploadeport = () => {
   const [gDriveLinks, setGDriveLinks] = React.useState<string[]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const [gDriveInvalidErrorMsg, setGgDriveInvalidErrorMsg] = useState<string>("");
   const cssForInputBox = { width: { xs: "80px", sm: "100px", md: "120px" } }
 
   const dataHoldingElement = useRef();
@@ -88,11 +86,11 @@ const GDriveUploadeport = () => {
   const notesOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.target.value;
     setNotes(val);
-    const updatedQAWorkData = {
+    const _gDriveWorkData = {
       ...gDriveUploadReport,
       notes: val,
     }
-    setGDriveUploadReport(updatedQAWorkData);
+    setGDriveUploadReport(_gDriveWorkData);
   }
 
 
@@ -103,12 +101,12 @@ const GDriveUploadeport = () => {
     const _libraries = getLibrariesInCenter(val);
     setLibrary(_libraries[0]);
     setLibraries(_libraries);
-    const updatedQAWorkData = {
+    const updatedGDriveWorkData = {
       ...gDriveUploadReport,
       lib: _libraries[0],
       center: val,
     }
-    setGDriveUploadReport(updatedQAWorkData);
+    setGDriveUploadReport(updatedGDriveWorkData);
   };
 
   const handleLibChange = (event: SelectChangeEvent) => {
@@ -128,6 +126,7 @@ const GDriveUploadeport = () => {
     console.log(`formData ${JSON.stringify(formData)}`);
   };
   const [textBoxes, setTextBoxes] = useState<string[]>(['']);
+  const textBoxRefs = useRef<(HTMLInputElement | HTMLTextAreaElement)[]>([]);
 
   const handleAddTextBox = () => {
     setTextBoxes([...textBoxes, '']);
@@ -135,14 +134,30 @@ const GDriveUploadeport = () => {
 
   const handleTextBoxChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
     const input = event.target.value;
+    console.log(`input ${input}(${index}) ${textBoxRefs.current[index]}`);
+    console.log(`input?.trim().startsWith("https://drive.google.com/) 
+      ${input?.trim().startsWith("https://drive.google.com/")}`);
+
+    if (!input?.trim().startsWith("https://drive.google.com/") && input?.trim().length > 0) {
+      if (textBoxRefs.current[index]) {
+        textBoxRefs.current[index].style.background = 'red';
+        setGgDriveInvalidErrorMsg("*Cannot be empty or not a valid G-Drive Link");
+      }
+    }
+    else {
+      setGgDriveInvalidErrorMsg("");
+      textBoxRefs.current[index].style.background = '';
+    }
     const newValues = [...gDriveLinks];
     newValues[index] = input
     setGDriveLinks(newValues);
+    setGDriveUploadReport({ ...gDriveUploadReport, gDriveLinks: newValues, operatorName: _loggedUser });
     console.log(`gDriveLinks ${gDriveLinks}`);
     const newTextBoxes = [...textBoxes];
-    newTextBoxes[index] = event.target.value;
+    newTextBoxes[index] = input;
     setTextBoxes(newTextBoxes);
-  };
+  }
+
   return (
     <Stack spacing={2}>
       {isLoading && <Spinner />}
@@ -210,12 +225,14 @@ const GDriveUploadeport = () => {
                     <TextField
                       key={index}
                       value={textBox}
-                      sx={{ minWidth: "400px", paddingBottom: "10px" }}
+                      sx={{ minWidth: "700px", paddingBottom: "10px" }}
                       onChange={(event) => handleTextBoxChange(event, index)}
+                      inputRef={(el) => (textBoxRefs.current[index] = el)}
                     />
                     {index == 0 && <Button sx={{ padding: "0" }} onClick={handleAddTextBox}><h2>+</h2></Button>}
                   </Box>
                 ))}
+                <Box sx={{color:"red"}}>{gDriveInvalidErrorMsg}</Box>
               </Box>
             </Stack>
             <Stack spacing={5} direction="row">

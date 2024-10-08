@@ -50,6 +50,7 @@ const qaStaffWithOperatorName = (_operatorName: string) => {
   emptyQAStats.operatorName = _operatorName;
   return emptyQAStats;
 };
+
 const QAReport = () => {
 
   const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);

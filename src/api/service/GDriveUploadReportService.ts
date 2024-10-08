@@ -8,7 +8,7 @@ export async function pushGDriveReportToServer(gdriveUploadReport: GDriveUploadW
         password
     }
 
-    const resp = await callBackendPostApi("dailyGDriveUploadWorkReport/add", _reportBody);
+    const resp = await callBackendPostApi("gDriveUploadWorkReport/add", _reportBody);
     console.log(`res ${JSON.stringify(resp)}`)
     const respAsJson = await resp.json()
     console.log(`respAsJson ${JSON.stringify(respAsJson)}`)
