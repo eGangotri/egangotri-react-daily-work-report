@@ -7,7 +7,7 @@ const development = {
 
 //for some reason, firebase deploy is not picking this. So, hardcoding it here.
 const production = {
-  BACKEND_SERVER: "https://egangotri-node-backend-dwr.onrender.com/" || import.meta.env.VITE_BACKEND_SERVER_PROD,
+  BACKEND_SERVER:import.meta.env.VITE_BACKEND_SERVER_PROD ||  "https://egangotri-node-backend-dwr.onrender.com/",
   env: import.meta.env.VITE_DEV_ENV || 'prod'
 };
 

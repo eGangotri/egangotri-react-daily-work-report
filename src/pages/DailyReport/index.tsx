@@ -20,7 +20,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { GoFileMedia } from "react-icons/go";
 import HelperService from "service/HelperService";
 import AllPdfStats, { DecorateWorkReport, emptyPdfStats } from "utils/AllScanReportStats";
-import { libraryMenuOptions, centers, panelOneCSS } from "pages/constants";
+import { libraryMenuOptions, scanCenters, panelOneCSS } from "pages/constants";
 import SendReportDialog, { SUCCESS_MSG } from "pages/DailyReport/SendDailyReportToServerDialog";
 import LoginPanel from "pages/LoginPanel";
 import {
@@ -47,7 +47,7 @@ const DailyReport = () => {
   const [disabledState, setDisabledState] = useState<boolean>(false);
   const [workFromHome, setWorkFromHome] = useState<boolean>(false);
 
-  const [center, setCenter] = React.useState<string>(centers[0]);
+  const [center, setCenter] = React.useState<string>(scanCenters[0]);
   const [_notes, setNotes] = React.useState<string>("");
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -175,7 +175,7 @@ const DailyReport = () => {
                     sx={{ minWidth: '200px' }}
                     disabled={!_isLoggedIn}
                   >
-                    {centers.map((option: string) => (
+                    {scanCenters.map((option: string) => (
                       <MenuItem key={option} value={option}>
                         {option}
                       </MenuItem>
@@ -240,14 +240,14 @@ const DailyReport = () => {
                 type="file"
                 multiple
                 accept=".pdf"
-                disabled={!_isLoggedIn || center === centers[0]}
+                disabled={!_isLoggedIn || center === scanCenters[0]}
                 onChange={uploadPdf}
               />
               <Button
                 color="primary"
                 variant="contained"
                 component="span"
-                disabled={!_isLoggedIn || center === centers[0]}
+                disabled={!_isLoggedIn || center === scanCenters[0]}
                 endIcon={<GoFileMedia style={{ color: "primary" }} />}
               >
                 Choose PDFs

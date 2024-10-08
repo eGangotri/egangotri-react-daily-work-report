@@ -33,7 +33,8 @@ export const callBackendGetApi = async (route: string, params: any) => {
   Object.keys(params).forEach(key => _url.searchParams.append(key, params[key]));
 
   const resp = await fetch(_url)
-  return resp;
+  const _json = await resp.json()
+  return _json.response;
 }
 
 

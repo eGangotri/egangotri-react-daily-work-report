@@ -10,7 +10,7 @@ import {
   FormLabel
 } from "@mui/material";
 import _ from "lodash";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiLogIn } from "react-icons/fi";
 import HelperService from "service/HelperService";
 import {
@@ -25,6 +25,7 @@ import { BASIC_ROLE, SUPERADMIN_ROLE } from 'mirror/FrontEndBackendCommonConsts'
 import { CATALOG_PATH, CATALOG_REPORTS_METADATA_PATH, DELIVERABLE_REPORTS_PATH, GDRIVE_UPLOAD_METADATA_PATH, GDRIVE_UPLOAD_PATH, LANDING_PAGE_PATH, QA_PATH, QA_REPORTS_METADATA_PATH, USERS } from "Routes";
 import { FormProvider, useForm } from 'react-hook-form';
 import Spinner from "widgets/Spinner";
+import { getCentersAndLibraries } from "service/CentersService";
 
 type LoginFormPropsType = {
   username: string;
@@ -41,12 +42,17 @@ const LoginPanel: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const methods = useForm<LoginFormPropsType>();
+
+  useEffect(() => {
+    getCentersAndLibraries();
+  });
+
   const { handleSubmit,
     register,
     formState: { errors },
   } = methods;
 
-  const overrideLogin = import.meta.env.VITE_OVER_RIDE_LOGIN ? JSON.parse( import.meta.env.VITE_OVER_RIDE_LOGIN) : false;
+  const overrideLogin = import.meta.env.VITE_OVER_RIDE_LOGIN ? JSON.parse(import.meta.env.VITE_OVER_RIDE_LOGIN) : false;
   const logoutCss = {
     ...panelOneCSS,
     display: `${(overrideLogin === true || _isLoggedIn === false) ? "none" : "block"}`
@@ -86,11 +92,11 @@ const LoginPanel: React.FC = () => {
       <Stack sx={{ display: "flex", flexDirection: "row", fontSize: "30px" }} spacing="2">
         <Box sx={panelOneCSS}><Link to={LANDING_PAGE_PATH}>Home</Link></Box>
         <Box sx={panelOneCSS}><Link to={DELIVERABLE_REPORTS_PATH}>Scanning-Metadata</Link></Box>
-         <Box sx={panelOneCSS}><Link to={QA_PATH}>QA-Work</Link></Box>
+        <Box sx={panelOneCSS}><Link to={QA_PATH}>QA-Work</Link></Box>
         <Box sx={panelOneCSS}><Link to={QA_REPORTS_METADATA_PATH}>QA-Work-Metadata</Link></Box>
-         <Box sx={panelOneCSS}><Link to={GDRIVE_UPLOAD_PATH}>GDrive Upload-Work</Link></Box>
+        <Box sx={panelOneCSS}><Link to={GDRIVE_UPLOAD_PATH}>GDrive Upload-Work</Link></Box>
         <Box sx={panelOneCSS}><Link to={GDRIVE_UPLOAD_METADATA_PATH}>GDrive-Upload-Metadata</Link></Box>
-         {/* <Box sx={panelOneCSS}><Link to={CATALOG_PATH}>Catalog-Work</Link></Box>
+        {/* <Box sx={panelOneCSS}><Link to={CATALOG_PATH}>Catalog-Work</Link></Box>
         <Box sx={panelOneCSS}><Link to={CATALOG_REPORTS_METADATA_PATH}>Catalog-Work-Metadata</Link></Box> */}
         {(_isLoggedIn && _loggedUserRole === SUPERADMIN_ROLE) ? <Box sx={panelOneCSS}><Link to={USERS}>Users</Link></Box> : <></>}
         <Box sx={logoutCss}><a href="#" onClick={() => logout()}>Logout</a></Box>
@@ -131,9 +137,9 @@ const LoginPanel: React.FC = () => {
                   <Button
                     color="primary"
                     variant="contained"
-                   // sx={{  }}
+                    // sx={{  }}
                     type="submit"
-                    sx={{ cursor: "pointer", paddingRight: "10px"}}
+                    sx={{ cursor: "pointer", paddingRight: "10px" }}
                     endIcon={<FiLogIn style={{ color: "primary" }} />}
                   >
                     Login
