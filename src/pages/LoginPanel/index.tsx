@@ -20,7 +20,7 @@ import { loggedInState, loggedUser, loggedUserRole, loggedUserPassword } from ".
 
 import { LoginProps } from "types/dailyWorkReportTypes";
 import { Link } from "react-router-dom";
-import { panelOneCSS } from "pages/constants";
+import { panelOneCSS } from "pages/centerConstants";
 import { BASIC_ROLE, SUPERADMIN_ROLE } from 'mirror/FrontEndBackendCommonConsts'
 import { CATALOG_PATH, CATALOG_REPORTS_METADATA_PATH, DELIVERABLE_REPORTS_PATH, GDRIVE_UPLOAD_METADATA_PATH, GDRIVE_UPLOAD_PATH, LANDING_PAGE_PATH, QA_PATH, QA_REPORTS_METADATA_PATH, USERS } from "Routes";
 import { FormProvider, useForm } from 'react-hook-form';

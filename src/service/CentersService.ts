@@ -1,7 +1,12 @@
 import { callBackendGetApi } from "api/service/callApi"
+import { ScanningCenterType } from "types/types";
+import * as _ from 'lodash';
+
 const OTHERS = "Other";
 const CHOOSE_CENTER = "Choose Center";
 const CHOOSE_LIBRARY = "Choose Library";
+
+let cachedCentersData: any = [];
 
 const getCentersAndLibrariesViaApi = async () => {
     const centersData = await callBackendGetApi('scanningCenter/getCenters', {})
@@ -9,11 +14,8 @@ const getCentersAndLibrariesViaApi = async () => {
     return centersData;
 }
 
-let cachedCentersData: any = [];
-
-export const getCentersAndLibraries = async () => {
+export const getCentersAndLibraries = async ():Promise<ScanningCenterType[]> => {
     if (cachedCentersData?.length > 0) {
-        console.log('Returning cached centers data', JSON.stringify(cachedCentersData));
         return cachedCentersData;
     }
     const _response = await getCentersAndLibrariesViaApi();
@@ -22,22 +24,49 @@ export const getCentersAndLibraries = async () => {
         libraries: [CHOOSE_LIBRARY]
     },
     ..._response,
-    { centerName: OTHERS, libraries: [OTHERS] }];
+    { centerName: OTHERS, libraries: [] }];
+    console.log('Returning cached centers data', JSON.stringify(cachedCentersData));
     return cachedCentersData;
 };
 
-export const getScanningCenters = async () => {
+export const getScanningCenters = async ():Promise<string[]> => {
     const centersData = await getCentersAndLibraries();
     return centersData.map((center: any) => center.centerName);
 }
 
-export const getLibraryMenuUptopns = async () => {
-    const centersData = await getCentersAndLibraries();
+export const getLibraryMenuOptions = async ():Promise<ScanningCenterType[]> => {
+    const centersData:ScanningCenterType[] = await getCentersAndLibraries();
     const menuOptions = centersData.map((center: any) => {
         return {
-            name: center.centerName,
-            centers: [...center.libraries, OTHERS],
+            centerName: center.centerName,
+            libraries: [...center.libraries, OTHERS],
         }
     })
     return menuOptions;
 }
+
+
+const appendOthersItemToList = (list: string[]) => {
+    list.push(OTHERS);
+    return list;
+}
+
+export const scanCenters: string[] = await getScanningCenters()
+
+export const libraryMenuOptions = await getLibraryMenuOptions()
+
+export const panelOneCSS = { bgcolor: "beige", paddingRight: "10px" };
+
+const range = _.range(1, 75);
+
+export const catalogProfiles = appendOthersItemToList(["Choose Profile",
+    ...(range.map(x => `Treasures-${x}`))]);
+
+
+export const getLibrariesInCenter = (center: string = ""): string[] => {
+    const obj = libraryMenuOptions.find((o: ScanningCenterType) => o.centerName === (center));
+    const _libraries = obj?.libraries || [];
+    return _libraries;
+};
+
+

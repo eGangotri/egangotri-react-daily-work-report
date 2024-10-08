@@ -6,3 +6,5 @@ export const capitalize = (_text: string) => {
       w.replace(/^\w/, (c: string) => c.toUpperCase())
     );
 };
+
+

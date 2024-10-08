@@ -6,7 +6,7 @@ import {
 import { loggedInState, loggedUser, loggedUserRole, loggedUserPassword } from "../../index";
 
 import LoginPanel from "pages/LoginPanel";
-import { panelOneCSS } from "pages/constants";
+import { panelOneCSS } from "pages/centerConstants";
 import { ADMIN_ROLE, SUPERADMIN_ROLE } from 'mirror/FrontEndBackendCommonConsts'
 
 import { FaRegTrashAlt } from "react-icons/fa";

@@ -19,8 +19,8 @@ import React, { ReactNode, useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { GoFileMedia } from "react-icons/go";
 import HelperService from "service/HelperService";
-import AllPdfStats, { DecorateWorkReport, emptyPdfStats } from "utils/AllScanReportStats";
-import { libraryMenuOptions, scanCenters, panelOneCSS } from "pages/constants";
+import { DecorateWorkReport, emptyPdfStats } from "utils/AllScanReportStats";
+import { scanCenters, panelOneCSS } from "pages/centerConstants";
 import SendReportDialog, { SUCCESS_MSG } from "pages/DailyReport/SendDailyReportToServerDialog";
 import LoginPanel from "pages/LoginPanel";
 import {
@@ -34,6 +34,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { DailyWorkReportType } from "types/dailyWorkReportTypes";
 import Typography from "@mui/material/Typography";
 import { ScanWorkReportType } from "mirror/scanWorkReportType";
+import { getLibrariesInCenter } from "utils/GeneralUtils";
 
 const DailyReport = () => {
 
@@ -57,14 +58,8 @@ const DailyReport = () => {
   const copyButton = useRef();
   const clearButton = useRef();
 
-  const getLibrariesInCenter = (_center: string = ""): string[] => {
-    const obj = libraryMenuOptions.find((o) => o.name === (_center || center));
-    const _libraries = obj?.centers || [];
-    return _libraries;
-  };
-
   const [libraries, setLibraries] = React.useState<string[]>(
-    getLibrariesInCenter()
+    getLibrariesInCenter(center)
   );
   const [library, setLibrary] = React.useState<string>(libraries[0]);
 
@@ -81,7 +76,7 @@ const DailyReport = () => {
     setNotes(val);
     const updatedPdfData = {
       ...pdfData,
-      notes:val,
+      notes: val,
     }
     setPdfData(updatedPdfData);
   }
@@ -95,8 +90,8 @@ const DailyReport = () => {
     setLibraries(_libraries);
     const updatedPdfData = {
       ...pdfData,
-      lib:_libraries[0],
-      center:val,
+      lib: _libraries[0],
+      center: val,
     }
     setPdfData(updatedPdfData);
   };
@@ -107,7 +102,7 @@ const DailyReport = () => {
     setLibrary(val);
     const updatedPdfData = {
       ...pdfData,
-      library:val,
+      library: val,
     }
     setPdfData(updatedPdfData);
   };
@@ -118,7 +113,7 @@ const DailyReport = () => {
     setWorkFromHome(_workFromHome);
     const updatedPdfData = {
       ...pdfData,
-      workFromHome:_workFromHome,
+      workFromHome: _workFromHome,
     }
     setPdfData(updatedPdfData);
 
@@ -211,8 +206,8 @@ const DailyReport = () => {
               </Grid>
             </Grid>
             <Grid container>
-              <Grid item sx={{paddingLeft:0,paddingTop:0}}>
-                <FormControlLabel sx={{marginLeft:0}}
+              <Grid item sx={{ paddingLeft: 0, paddingTop: 0 }}>
+                <FormControlLabel sx={{ marginLeft: 0 }}
                   control={<Checkbox
                     checked={workFromHome}
                     onChange={handleWorkFromHome} />}
@@ -271,7 +266,7 @@ const DailyReport = () => {
                 </Snackbar>
               </Box>
             </Stack>
-            <Box ref={dataHoldingElement}><DecorateWorkReport all={pdfData}/></Box>
+            <Box ref={dataHoldingElement}><DecorateWorkReport all={pdfData} /></Box>
             <Box sx={{ paddingTop: "30px" }}></Box>
           </Stack>
         </form>

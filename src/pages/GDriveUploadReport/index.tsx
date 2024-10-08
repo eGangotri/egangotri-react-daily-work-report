@@ -17,7 +17,7 @@ import {
 import _, { add, set } from "lodash";
 import React, { ChangeEvent, ReactNode, useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { libraryMenuOptions, scanCenters, panelOneCSS } from "pages/constants";
+import { getLibrariesInCenter, scanCenters, panelOneCSS } from "pages/centerConstants";
 import LoginPanel from "pages/LoginPanel";
 import {
   useRecoilState,
@@ -28,7 +28,7 @@ import { loggedInState, loggedUser, loggedUserRole, loggedUserPassword } from ".
 import Spinner from "widgets/Spinner";
 import { FormProvider, useForm } from 'react-hook-form';
 import Typography from "@mui/material/Typography";
-import SendQAReportDialog from "./SendGDriveReportToServerDialog";
+import SendGDriveReportDialog from "./SendGDriveReportToServerDialog";
 import { GDriveUploadWorkReportType } from "mirror/types";
 import { DecorateGDriveWorkReport } from "utils/AllGDriveUploadLinkReportStats";
 
@@ -71,14 +71,9 @@ const GDriveUploadeport = () => {
   const copyButton = useRef();
   const clearButton = useRef();
 
-  const getLibrariesInCenter = (_center: string = ""): string[] => {
-    const obj = libraryMenuOptions.find((o) => o.name === (_center || center));
-    const _libraries = obj?.centers || [];
-    return _libraries;
-  };
 
   const [libraries, setLibraries] = React.useState<string[]>(
-    getLibrariesInCenter()
+    getLibrariesInCenter(center)
   );
   const [library, setLibrary] = React.useState<string>(libraries[0]);
 
@@ -211,14 +206,16 @@ const GDriveUploadeport = () => {
               <Typography>G Drive Links of Uploads</Typography>
               <Box>
                 {textBoxes.map((textBox, index) => (
-                  <TextField
-                    key={index}
-                    value={textBox}
-                    sx={{ minWidth: "400px" }}
-                    onChange={(event) => handleTextBoxChange(event, index)}
-                  />
+                  <Box key={index} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '10px' }}>
+                    <TextField
+                      key={index}
+                      value={textBox}
+                      sx={{ minWidth: "400px", paddingBottom: "10px" }}
+                      onChange={(event) => handleTextBoxChange(event, index)}
+                    />
+                    {index == 0 && <Button sx={{ padding: "0" }} onClick={handleAddTextBox}><h2>+</h2></Button>}
+                  </Box>
                 ))}
-                <Button onClick={handleAddTextBox}><h2>+</h2></Button>
               </Box>
             </Stack>
             <Stack spacing={5} direction="row">
@@ -233,7 +230,7 @@ const GDriveUploadeport = () => {
                 maxRows={3} />
             </Stack>
             <Stack spacing={2} direction="row">
-              <SendQAReportDialog gDriveUploadData={gDriveUploadReport} setGDriveUploadData={setGDriveUploadReport} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} password={_loggedUserPassword} />
+              <SendGDriveReportDialog gDriveUploadData={gDriveUploadReport} setGDriveUploadData={setGDriveUploadReport} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} password={_loggedUserPassword} />
               <Button
                 variant="contained"
                 endIcon={<FaRegTrashAlt style={{ color: "primary" }} />}

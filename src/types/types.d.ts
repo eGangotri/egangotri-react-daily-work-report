@@ -14,3 +14,11 @@ export type BackendResponseType = {
     warning?: string;
     //[key: string]: any;
 };
+
+export type ScanningCenterType = {
+    centerName?: string;
+    libraries?: string[];
+};
+
+
+

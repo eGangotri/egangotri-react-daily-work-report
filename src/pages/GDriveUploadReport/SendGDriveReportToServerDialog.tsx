@@ -62,7 +62,7 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
     );
 }
 
-const SendQAReportDialog: React.FC<SendGDriveReportToServerDialog> = ({ gDriveUploadData, setGDriveUploadData, snackBarMsg, setSnackBarMsg, password }) => {
+const SendGDriveReportDialog: React.FC<SendGDriveReportToServerDialog> = ({ gDriveUploadData, setGDriveUploadData, snackBarMsg, setSnackBarMsg, password }) => {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -135,4 +135,4 @@ const SendQAReportDialog: React.FC<SendGDriveReportToServerDialog> = ({ gDriveUp
     );
 }
 
-export default SendQAReportDialog
+export default SendGDriveReportDialog

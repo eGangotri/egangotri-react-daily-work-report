@@ -17,7 +17,7 @@ import {
 import _, { add, set } from "lodash";
 import React, { ReactNode, useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { libraryMenuOptions, scanCenters, panelOneCSS } from "pages/constants";
+import { scanCenters, panelOneCSS } from "pages/centerConstants";
 import LoginPanel from "pages/LoginPanel";
 import {
   useRecoilState,
@@ -31,6 +31,7 @@ import Typography from "@mui/material/Typography";
 import { QAWorkReportType } from "mirror/qaWorkReportType";
 import SendQAReportDialog from "./SendQAReportToServerDialog";
 import { DecorateQAWorkReport } from "utils/AllQAReportStats";
+import { getLibrariesInCenter } from "utils/GeneralUtils";
 
 
 const emptyQAStats = {
@@ -77,14 +78,8 @@ const QAReport = () => {
   const copyButton = useRef();
   const clearButton = useRef();
 
-  const getLibrariesInCenter = (_center: string = ""): string[] => {
-    const obj = libraryMenuOptions.find((o) => o.name === (_center || center));
-    const _libraries = obj?.centers || [];
-    return _libraries;
-  };
-
   const [libraries, setLibraries] = React.useState<string[]>(
-    getLibrariesInCenter()
+    getLibrariesInCenter(center)
   );
   const [library, setLibrary] = React.useState<string>(libraries[0]);
 

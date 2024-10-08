@@ -1,10 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 
-import * as FrontEndBackendCommonCode from 'mirror/FrontEndBackendCommonCode';
 import * as GeneralUtils from 'utils/GeneralUtils';
-
-import type PdfStat from '../vo/PdfStat';
 import { GDriveUploadWorkReportType } from 'mirror/types';
 
 export default class AllGDriveUploadLinkReportStats {
