@@ -21,7 +21,7 @@ import { GoFileMedia } from "react-icons/go";
 import HelperService from "service/HelperService";
 import { DecorateWorkReport, emptyPdfStats } from "utils/AllScanReportStats";
 import { scanCenters, panelOneCSS } from "service/CentersService";
-import SendReportDialog, { SUCCESS_MSG } from "pages/DailyReport/SendDailyReportToServerDialog";
+import SendReportDialog from "pages/DailyReport/SendDailyReportToServerDialog";
 import LoginPanel from "pages/LoginPanel";
 import {
   useRecoilState,
