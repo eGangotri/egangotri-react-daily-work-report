@@ -17,7 +17,7 @@ import {
 import _, { add, set } from "lodash";
 import React, { ReactNode, useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { scanCenters, panelOneCSS } from "service/CentersService";
+import { scanCenters, panelOneCSS, getLibrariesInCenter } from "service/CentersService";
 import LoginPanel from "pages/LoginPanel";
 import {
   useRecoilState,
@@ -31,7 +31,6 @@ import Typography from "@mui/material/Typography";
 import { QAWorkReportType } from "mirror/qaWorkReportType";
 import SendQAReportDialog from "./SendQAReportToServerDialog";
 import { DecorateQAWorkReport } from "utils/AllQAReportStats";
-import { getLibrariesInCenter } from "utils/GeneralUtils";
 
 
 const emptyQAStats = {

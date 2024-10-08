@@ -34,7 +34,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { DailyWorkReportType } from "types/dailyWorkReportTypes";
 import Typography from "@mui/material/Typography";
 import { ScanWorkReportType } from "mirror/scanWorkReportType";
-import { getLibrariesInCenter } from "utils/GeneralUtils";
+import { getLibrariesInCenter } from "service/CentersService";
 
 const DailyReport = () => {
 
