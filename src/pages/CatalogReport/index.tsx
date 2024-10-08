@@ -15,7 +15,7 @@ import {
 import _ from "lodash";
 import React, { useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { panelOneCSS, catalogProfiles } from "pages/centerConstants";
+import { panelOneCSS, catalogProfiles } from "service/CentersService";
 import LoginPanel from "pages/LoginPanel";
 import {
     useRecoilState,
