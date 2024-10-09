@@ -66,9 +66,8 @@ yarn run build
 firebase deploy
 *** note you need to be logged in with the correct firebase email otherwise firebase deploy will fail
 
-Code will be viewable below:
-https://egangotri-daily-work-report.web.app
-
+Project Console: https://console.firebase.google.com/project/egangotri-daily-work-report/overview
+Hosting URL: https://egangotri-daily-work-report.web.app
 
 ###ENvironment Variables
 
