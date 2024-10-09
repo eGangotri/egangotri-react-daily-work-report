@@ -48,7 +48,7 @@ const SendGDriveReportDialog: React.FC<SendGDriveReportToServerDialog> = ({ gDri
 
     return (
         <div>
-            <Button variant="contained" onClick={handleClickOpen} disabled={!AllGDriveUploadLinkReportStats.isValid(gDriveUploadData)}>
+            <Button variant="contained" onClick={handleClickOpen} disabled={!AllGDriveUploadLinkReportStats.isValidGDriveUploadReport(gDriveUploadData)}>
                 Copy and G-Drive Upload Send Report
             </Button>
             <GDRiveReportBootstrapDialog

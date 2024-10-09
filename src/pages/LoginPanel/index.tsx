@@ -1,5 +1,3 @@
-import env from "react-dotenv";
-
 import {
   Box,
   Button,
@@ -10,7 +8,7 @@ import {
   FormLabel
 } from "@mui/material";
 import _ from "lodash";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FiLogIn } from "react-icons/fi";
 import HelperService from "service/HelperService";
 import {
@@ -22,10 +20,12 @@ import { LoginProps } from "types/dailyWorkReportTypes";
 import { Link } from "react-router-dom";
 import { panelOneCSS } from "service/CentersService";
 import { BASIC_ROLE, SUPERADMIN_ROLE } from 'mirror/FrontEndBackendCommonConsts'
-import { CATALOG_PATH, CATALOG_REPORTS_METADATA_PATH, DELIVERABLE_REPORTS_PATH, GDRIVE_UPLOAD_METADATA_PATH, GDRIVE_UPLOAD_PATH, LANDING_PAGE_PATH, QA_PATH, QA_REPORTS_METADATA_PATH, USERS } from "Routes";
+import {
+  DELIVERABLE_REPORTS_PATH, GDRIVE_UPLOAD_METADATA_PATH, GDRIVE_UPLOAD_PATH,
+  LANDING_PAGE_PATH, QA_PATH, QA_REPORTS_METADATA_PATH, USERS
+} from "Routes";
 import { FormProvider, useForm } from 'react-hook-form';
 import Spinner from "widgets/Spinner";
-import { getCentersAndLibraries } from "service/CentersService";
 
 type LoginFormPropsType = {
   username: string;
@@ -42,10 +42,6 @@ const LoginPanel: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const methods = useForm<LoginFormPropsType>();
-
-  useEffect(() => {
-    getCentersAndLibraries();
-  });
 
   const { handleSubmit,
     register,

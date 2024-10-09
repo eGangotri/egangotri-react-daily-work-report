@@ -3,7 +3,7 @@ import { ScanningCenterType } from "types/types";
 import * as _ from 'lodash';
 
 const OTHERS = "Other";
-const CHOOSE_CENTER = "Choose Center";
+export const CHOOSE_CENTER = "Choose Center";
 const CHOOSE_LIBRARY = "Choose Library";
 
 let CENTERS_DATA_AS_CACHE: any = [];
