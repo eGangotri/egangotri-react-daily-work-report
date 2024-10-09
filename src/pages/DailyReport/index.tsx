@@ -15,12 +15,12 @@ import {
   FormControlLabel
 } from "@mui/material";
 import _ from "lodash";
-import React, { ReactNode, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { GoFileMedia } from "react-icons/go";
 import HelperService from "service/HelperService";
 import { DecorateWorkReport, emptyPdfStats } from "utils/AllScanReportStats";
-import { SCAN_CENTERS, panelOneCSS } from "service/CentersService";
+import { SCAN_CENTERS, getCentersAndLibraries, panelOneCSS } from "service/CentersService";
 import SendReportDialog from "pages/DailyReport/SendDailyReportToServerDialog";
 import LoginPanel from "pages/LoginPanel";
 import {
@@ -48,7 +48,7 @@ const DailyReport = () => {
   const [disabledState, setDisabledState] = useState<boolean>(false);
   const [workFromHome, setWorkFromHome] = useState<boolean>(false);
 
-  const [center, setCenter] = React.useState<string>(SCAN_CENTERS[0]);
+  const [center, setCenter] = React.useState<string>("");
   const [_notes, setNotes] = React.useState<string>("");
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -58,11 +58,17 @@ const DailyReport = () => {
   const copyButton = useRef();
   const clearButton = useRef();
 
-  const [libraries, setLibraries] = React.useState<string[]>(
-    getLibrariesInCenter(center)
-  );
-  const [library, setLibrary] = React.useState<string>(libraries[0]);
+  const [libraries, setLibraries] = React.useState<string[]>([]);
+  const [library, setLibrary] = React.useState<string>("");
 
+  useEffect(() => {
+    getCentersAndLibraries().then((centersData) => {
+      setCenter(SCAN_CENTERS[0]);
+      const _libraries = getLibrariesInCenter(SCAN_CENTERS[0]);
+      setLibrary(_libraries[0]);
+      setLibraries(_libraries);
+    })
+  }, []);
 
   const clearResults = () => {
     setPdfData(emptyPdfStats);

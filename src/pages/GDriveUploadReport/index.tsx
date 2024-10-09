@@ -13,9 +13,9 @@ import {
   Grid,
 } from "@mui/material";
 import _, { add, set } from "lodash";
-import React, { ChangeEvent, ReactNode, useRef, useState } from "react";
+import React, { ChangeEvent, ReactNode, useEffect, useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { getLibrariesInCenter, SCAN_CENTERS, panelOneCSS } from "service/CentersService";
+import { getLibrariesInCenter, SCAN_CENTERS, panelOneCSS, getCentersAndLibraries } from "service/CentersService";
 import LoginPanel from "pages/LoginPanel";
 import {
   useRecoilState,
@@ -70,10 +70,8 @@ const GDriveUploadeport = () => {
   const clearButton = useRef();
 
 
-  const [libraries, setLibraries] = React.useState<string[]>(
-    getLibrariesInCenter(center)
-  );
-  const [library, setLibrary] = React.useState<string>(libraries[0]);
+  const [libraries, setLibraries] = React.useState<string[]>([]);
+  const [library, setLibrary] = React.useState<string>("");
 
   const clearResults = () => {
     setGDriveUploadReport(staffWithOperatorName(_loggedUser));
@@ -157,6 +155,15 @@ const GDriveUploadeport = () => {
     newTextBoxes[index] = input;
     setTextBoxes(newTextBoxes);
   }
+
+  useEffect(() => {
+    getCentersAndLibraries().then(() => {
+      setCenter(SCAN_CENTERS[0]);
+      const _libraries = getLibrariesInCenter(SCAN_CENTERS[0]);
+      setLibrary(_libraries[0]);
+      setLibraries(_libraries);
+    })
+  }, []);
 
   return (
     <Stack spacing={2}>

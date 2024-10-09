@@ -6,7 +6,7 @@ const OTHERS = "Other";
 const CHOOSE_CENTER = "Choose Center";
 const CHOOSE_LIBRARY = "Choose Library";
 
-let cachedCentersData: any = [];
+let CENTERS_DATA_AS_CACHE: any = [];
 
 const getCentersAndLibrariesViaApi = async () => {
     const centersData = await callBackendGetApi('scanningCenter/getCenters', {})
@@ -15,18 +15,18 @@ const getCentersAndLibrariesViaApi = async () => {
 }
 
 export const getCentersAndLibraries = async ():Promise<ScanningCenterType[]> => {
-    if (cachedCentersData?.length > 0) {
-        return cachedCentersData;
+    if (CENTERS_DATA_AS_CACHE?.length > 0) {
+        return CENTERS_DATA_AS_CACHE;
     }
     const _response = await getCentersAndLibrariesViaApi();
-    cachedCentersData =  [{
+    CENTERS_DATA_AS_CACHE =  [{
         centerName: CHOOSE_CENTER,
         libraries: [CHOOSE_LIBRARY]
     },
     ..._response,
     { centerName: OTHERS, libraries: [] }];
-    console.log('Returning cached centers data', JSON.stringify(cachedCentersData));
-    return cachedCentersData;
+    console.log('Returning cached centers data', JSON.stringify(CENTERS_DATA_AS_CACHE));
+    return CENTERS_DATA_AS_CACHE;
 };
 
 export const getScanningCenters = async ():Promise<string[]> => {

@@ -15,9 +15,9 @@ import {
   FormControlLabel
 } from "@mui/material";
 import _, { add, set } from "lodash";
-import React, { ReactNode, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { SCAN_CENTERS, panelOneCSS, getLibrariesInCenter } from "service/CentersService";
+import { SCAN_CENTERS, panelOneCSS, getLibrariesInCenter, getCentersAndLibraries } from "service/CentersService";
 import LoginPanel from "pages/LoginPanel";
 import {
   useRecoilState,
@@ -62,7 +62,7 @@ const QAReport = () => {
   const [snackBarMsg, setSnackBarMsg] = useState<[string, ReactNode]>(["", (<></>)]);
   const [disabledState, setDisabledState] = useState<boolean>(false);
 
-  const [center, setCenter] = React.useState<string>(SCAN_CENTERS[0]);
+  const [center, setCenter] = React.useState<string>("");
   const [_notes, setNotes] = React.useState<string>("");
   const [folderNames, setFolderNames] = React.useState<string>("");
 
@@ -78,10 +78,8 @@ const QAReport = () => {
   const copyButton = useRef();
   const clearButton = useRef();
 
-  const [libraries, setLibraries] = React.useState<string[]>(
-    getLibrariesInCenter(center)
-  );
-  const [library, setLibrary] = React.useState<string>(libraries[0]);
+  const [libraries, setLibraries] = React.useState<string[]>([]);
+  const [library, setLibrary] = React.useState<string>("");
 
   const clearResults = () => {
     setQAWorkData(qaStaffWithOperatorName(_loggedUser));
@@ -144,7 +142,7 @@ const QAReport = () => {
   const pdfsRenamedCountOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let _value = event.target.value;
     setPdfsRenamedCount(_value);
-    const _pdfsRenamedCount = (isNaN(parseInt(_value)) ? "0": _value);
+    const _pdfsRenamedCount = (isNaN(parseInt(_value)) ? "0" : _value);
     const updatedQAWorkData = {
       ...qaWorkData,
       pdfsRenamedCount: parseInt(_pdfsRenamedCount),
@@ -155,7 +153,7 @@ const QAReport = () => {
   const coverPagesRenamedCountOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let _value = event.target.value;
     setCoverPagesRenamedCount(_value);
-    const _cpsRenamedCount = (isNaN(parseInt(_value)) ? "0": _value);
+    const _cpsRenamedCount = (isNaN(parseInt(_value)) ? "0" : _value);
     const updatedQAWorkData = {
       ...qaWorkData,
       coverPagesRenamedCount: parseInt(_cpsRenamedCount),
@@ -180,6 +178,15 @@ const QAReport = () => {
   const onFormSubmit = async (formData: QAWorkReportType) => {
     console.log(`formData ${JSON.stringify(formData)}`);
   };
+
+  useEffect(() => {
+    getCentersAndLibraries().then(() => {
+      setCenter(SCAN_CENTERS[0]);
+      const _libraries = getLibrariesInCenter(SCAN_CENTERS[0]);
+      setLibrary(_libraries[0]);
+      setLibraries(_libraries);
+    })
+  }, []);
 
   return (
     <Stack spacing={2}>
