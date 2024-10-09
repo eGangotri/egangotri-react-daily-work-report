@@ -8,6 +8,10 @@ const CHOOSE_LIBRARY = "Choose Library";
 
 let CENTERS_DATA_AS_CACHE: any = [];
 
+export let SCAN_CENTERS: string[] = []
+
+export let LIBRARY_MENU_OPTIONS:ScanningCenterType[] = [];
+
 const getCentersAndLibrariesViaApi = async () => {
     const centersData = await callBackendGetApi('scanningCenter/getCenters', {})
     console.log(`centersData ${JSON.stringify(centersData)}`)
@@ -26,6 +30,10 @@ export const getCentersAndLibraries = async ():Promise<ScanningCenterType[]> => 
     ..._response,
     { centerName: OTHERS, libraries: [] }];
     console.log('Returning cached centers data', JSON.stringify(CENTERS_DATA_AS_CACHE));
+    
+    SCAN_CENTERS = await getScanningCenters();
+    LIBRARY_MENU_OPTIONS = await getLibraryMenuOptions();
+
     return CENTERS_DATA_AS_CACHE;
 };
 
@@ -51,9 +59,7 @@ const appendOthersItemToList = (list: string[]) => {
     return list;
 }
 
-export const SCAN_CENTERS: string[] = await getScanningCenters()
 
-export const LIBRARY_MENU_OPTIONS = await getLibraryMenuOptions()
 
 export const panelOneCSS = { bgcolor: "beige", paddingRight: "10px" };
 
