@@ -51,9 +51,9 @@ const appendOthersItemToList = (list: string[]) => {
     return list;
 }
 
-export const scanCenters: string[] = await getScanningCenters()
+export const SCAN_CENTERS: string[] = await getScanningCenters()
 
-export const libraryMenuOptions = await getLibraryMenuOptions()
+export const LIBRARY_MENU_OPTIONS = await getLibraryMenuOptions()
 
 export const panelOneCSS = { bgcolor: "beige", paddingRight: "10px" };
 
@@ -64,7 +64,7 @@ export const catalogProfiles = appendOthersItemToList(["Choose Profile",
 
 
 export const getLibrariesInCenter = (center: string = ""): string[] => {
-    const obj = libraryMenuOptions.find((o: ScanningCenterType) => o.centerName === (center));
+    const obj = LIBRARY_MENU_OPTIONS.find((o: ScanningCenterType) => o.centerName === (center));
     const _libraries = obj?.libraries || [];
     return _libraries;
 };

@@ -17,7 +17,7 @@ import {
 import _, { add, set } from "lodash";
 import React, { ReactNode, useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { scanCenters, panelOneCSS, getLibrariesInCenter } from "service/CentersService";
+import { SCAN_CENTERS, panelOneCSS, getLibrariesInCenter } from "service/CentersService";
 import LoginPanel from "pages/LoginPanel";
 import {
   useRecoilState,
@@ -62,7 +62,7 @@ const QAReport = () => {
   const [snackBarMsg, setSnackBarMsg] = useState<[string, ReactNode]>(["", (<></>)]);
   const [disabledState, setDisabledState] = useState<boolean>(false);
 
-  const [center, setCenter] = React.useState<string>(scanCenters[0]);
+  const [center, setCenter] = React.useState<string>(SCAN_CENTERS[0]);
   const [_notes, setNotes] = React.useState<string>("");
   const [folderNames, setFolderNames] = React.useState<string>("");
 
@@ -204,7 +204,7 @@ const QAReport = () => {
                     sx={{ minWidth: '200px' }}
                     disabled={!_isLoggedIn}
                   >
-                    {scanCenters.map((option: string) => (
+                    {SCAN_CENTERS.map((option: string) => (
                       <MenuItem key={option} value={option}>
                         {option}
                       </MenuItem>

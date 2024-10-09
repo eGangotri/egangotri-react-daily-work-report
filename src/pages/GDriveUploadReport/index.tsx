@@ -15,7 +15,7 @@ import {
 import _, { add, set } from "lodash";
 import React, { ChangeEvent, ReactNode, useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { getLibrariesInCenter, scanCenters, panelOneCSS } from "service/CentersService";
+import { getLibrariesInCenter, SCAN_CENTERS, panelOneCSS } from "service/CentersService";
 import LoginPanel from "pages/LoginPanel";
 import {
   useRecoilState,
@@ -57,7 +57,7 @@ const GDriveUploadeport = () => {
   const [snackBarMsg, setSnackBarMsg] = useState<[string, ReactNode]>(["", (<></>)]);
   const [disabledState, setDisabledState] = useState<boolean>(false);
 
-  const [center, setCenter] = React.useState<string>(scanCenters[0]);
+  const [center, setCenter] = React.useState<string>(SCAN_CENTERS[0]);
   const [_notes, setNotes] = React.useState<string>("");
   const [gDriveLinks, setGDriveLinks] = React.useState<string[]>([]);
 
@@ -181,7 +181,7 @@ const GDriveUploadeport = () => {
                     sx={{ minWidth: '200px' }}
                     disabled={!_isLoggedIn}
                   >
-                    {scanCenters.map((option: string) => (
+                    {SCAN_CENTERS.map((option: string) => (
                       <MenuItem key={option} value={option}>
                         {option}
                       </MenuItem>
