@@ -1,5 +1,3 @@
-import "./QAReport.css";
-
 import {
   Alert,
   Box,
@@ -29,6 +27,7 @@ import Typography from "@mui/material/Typography";
 import SendGDriveReportDialog from "./SendGDriveReportToServerDialog";
 import { GDriveUploadWorkReportType } from "mirror/types";
 import { DecorateGDriveWorkReport } from "utils/AllGDriveUploadLinkReportStats";
+import { text } from "stream/consumers";
 
 
 const emptyQAStats = {
@@ -57,7 +56,7 @@ const GDriveUploadeport = () => {
   const [snackBarMsg, setSnackBarMsg] = useState<[string, ReactNode]>(["", (<></>)]);
   const [disabledState, setDisabledState] = useState<boolean>(false);
 
-  const [center, setCenter] = React.useState<string>(SCAN_CENTERS[0]);
+  const [center, setCenter] = React.useState<string>("");
   const [_notes, setNotes] = React.useState<string>("");
   const [gDriveLinks, setGDriveLinks] = React.useState<string[]>([]);
 
@@ -129,6 +128,13 @@ const GDriveUploadeport = () => {
   const handleAddTextBox = () => {
     setTextBoxes([...textBoxes, '']);
   };
+  const handleMinusTextBox = (event: React.MouseEvent<HTMLButtonElement>, index: number) => {
+    const newTextBoxes = textBoxes.filter((_, i) => i !== index);
+    setTextBoxes(newTextBoxes);
+    const newValues = gDriveLinks.filter((_, i) => i !== index);
+    setGDriveLinks(newValues);
+    setGDriveUploadReport({ ...gDriveUploadReport, gDriveLinks: newValues, operatorName: _loggedUser });
+  };
 
   const handleTextBoxChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
     const input = event.target.value;
@@ -157,7 +163,7 @@ const GDriveUploadeport = () => {
   }
 
   useEffect(() => {
-    getCentersAndLibraries().then(() => {
+    getCentersAndLibraries().then((centersData) => {
       setCenter(SCAN_CENTERS[0]);
       const _libraries = getLibrariesInCenter(SCAN_CENTERS[0]);
       setLibrary(_libraries[0]);
@@ -236,7 +242,8 @@ const GDriveUploadeport = () => {
                       onChange={(event) => handleTextBoxChange(event, index)}
                       inputRef={(el) => (textBoxRefs.current[index] = el)}
                     />
-                    {index == 0 && <Button sx={{ padding: "0" }} onClick={handleAddTextBox}><h2>+</h2></Button>}
+                    {index == textBoxes.length-1 && <Button sx={{ padding: "0" }} onClick={handleAddTextBox}><h2>+</h2></Button>}
+                    {index != textBoxes.length-1 && <Button sx={{ padding: "0" }} onClick={(event) => handleMinusTextBox(event, index)}><h2>-</h2></Button>}
                   </Box>
                 ))}
                 <Box sx={{color:"red"}}>{gDriveInvalidErrorMsg}</Box>

@@ -46,7 +46,6 @@ Notes: ${all.notes}
   }
 }
 
-
 export const DecorateGDriveWorkReport: React.FC<{ all: GDriveUploadWorkReportType }> = ({ all }) => {
   if (!AllGDriveUploadLinkReportStats.isValidGDriveUploadReport(all)) {
     return <></>;
@@ -55,6 +54,10 @@ export const DecorateGDriveWorkReport: React.FC<{ all: GDriveUploadWorkReportTyp
     <Box sx={{ bgcolor: "whitesmoke" }}>
       <Typography>
         G-Drive Upload Status for <span style={{ fontWeight: 'bold' }}>{GeneralUtils.capitalize(all.operatorName)} ({all.center}/{all.lib})</span> :
+      </Typography>
+      <Typography>
+        {' '}
+        On <span style={{ fontWeight: 'bold' }}>{all.timeOfRequest}</span>
       </Typography>
       <Typography>
         All Google Drive Links:{' '}
@@ -70,10 +73,6 @@ export const DecorateGDriveWorkReport: React.FC<{ all: GDriveUploadWorkReportTyp
       
       <Typography>
         Notes: <span style={{ fontWeight: 'bold' }}>{all.notes}</span>
-      </Typography>
-      <Typography>
-        {' '}
-        On <span style={{ fontWeight: 'bold' }}>{all.timeOfRequest}</span>
       </Typography>
     </Box>
   );
