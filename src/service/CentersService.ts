@@ -10,28 +10,39 @@ let CENTERS_DATA_AS_CACHE: ScanningCenterType[] = [];
 
 export let SCAN_CENTERS: string[] = []
 
-export let LIBRARY_MENU_OPTIONS:ScanningCenterType[] = [];
+export let LIBRARY_MENU_OPTIONS: ScanningCenterType[] = [];
 
 const getCentersAndLibrariesViaApi = async () => {
     const centersData = await callBackendGetApi('scanningCenter/getCenters', {})
     return centersData;
 }
 
-export const getCentersAndLibraries = async ():Promise<ScanningCenterType[]> => {
+export const getCentersAndLibraries = async (): Promise<ScanningCenterType[]> => {
     if (CENTERS_DATA_AS_CACHE?.length > 0) {
-        return CENTERS_DATA_AS_CACHE;
+        return CENTERS_DATA_AS_CACHE
+    }
+    const _cache = localStorage.getItem('CENTERS_DATA_AS_CACHE');
+    if (_cache) {
+        CENTERS_DATA_AS_CACHE = JSON.parse(_cache);
+
+        SCAN_CENTERS = await getScanningCenters();
+        LIBRARY_MENU_OPTIONS = await getLibraryMenuOptions();
+        return CENTERS_DATA_AS_CACHE
     }
     const _response = await getCentersAndLibrariesViaApi();
-    CENTERS_DATA_AS_CACHE =  [{
+
+    CENTERS_DATA_AS_CACHE = [{
         centerName: CHOOSE_CENTER,
         libraries: [CHOOSE_LIBRARY]
     },
     ..._response,
     { centerName: OTHERS, libraries: [] }];
-    
+
     SCAN_CENTERS = await getScanningCenters();
     LIBRARY_MENU_OPTIONS = await getLibraryMenuOptions();
-
+    localStorage.setItem('scanCenters', JSON.stringify(SCAN_CENTERS));
+    localStorage.setItem('libraryMenuOptions', JSON.stringify(LIBRARY_MENU_OPTIONS));
+    localStorage.setItem('CENTERS_DATA_AS_CACHE', JSON.stringify(CENTERS_DATA_AS_CACHE));
     return CENTERS_DATA_AS_CACHE;
 };
 
@@ -45,12 +56,12 @@ export const getScanningCenters = async (): Promise<string[]> => {
     return centersData.map((center: any) => center.centerName) || [];
 }
 
-export const getLibraryMenuOptions = async ():Promise<ScanningCenterType[]> => {
+export const getLibraryMenuOptions = async (): Promise<ScanningCenterType[]> => {
     const libraryMenuOptions = localStorage.getItem('libraryMenuOptions');
     if (libraryMenuOptions) {
         return JSON.parse(libraryMenuOptions);
     }
-    const centersData:ScanningCenterType[] = await getCentersAndLibraries();
+    const centersData: ScanningCenterType[] = await getCentersAndLibraries();
     const menuOptions = centersData.map((center: any) => {
         return {
             centerName: center.centerName,

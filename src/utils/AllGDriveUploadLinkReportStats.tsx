@@ -10,12 +10,6 @@ export default class AllGDriveUploadLinkReportStats {
     const centerChosen = (all.center?.length > 0 && CHOOSE_CENTER !== all.center)
     const gDriveLinksPresent = (all?.gDriveLinks?.length > 0)
     const startsWithClause =  all?.gDriveLinks?.every((link) => link.startsWith("https://drive.google.com/"))
-
-    console.log(`isValid. Criteria
-      (1) centerChosen ${centerChosen}
-      (2) gDriveLinksPresent ${gDriveLinksPresent}
-      (3) startsWithClause ${startsWithClause}
-      `);
     return ( centerChosen && gDriveLinksPresent && startsWithClause);
   }
 
