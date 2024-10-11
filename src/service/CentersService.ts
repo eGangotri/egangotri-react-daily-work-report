@@ -24,13 +24,12 @@ export const getCentersAndLibraries = async (): Promise<ScanningCenterType[]> =>
     const _cache = localStorage.getItem('CENTERS_DATA_AS_CACHE');
     if (_cache) {
         CENTERS_DATA_AS_CACHE = JSON.parse(_cache);
-
         SCAN_CENTERS = await getScanningCenters();
         LIBRARY_MENU_OPTIONS = await getLibraryMenuOptions();
         return CENTERS_DATA_AS_CACHE
     }
-    const _response = await getCentersAndLibrariesViaApi();
 
+    const _response = await getCentersAndLibrariesViaApi();
     CENTERS_DATA_AS_CACHE = [{
         centerName: CHOOSE_CENTER,
         libraries: [CHOOSE_LIBRARY]
