@@ -47,7 +47,9 @@
     "serve": "vite preview",
     "testOLD": "react-scripts test",
     "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint_fix": "npx eslint --fix . --ext .js,.jsx,.ts,.tsx"
+    "lint_fix": "npx eslint --fix . --ext .js,.jsx,.ts,.tsx",
+    "build:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
+    "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css"
   },
   "eslintConfig": {
     "extends": [
