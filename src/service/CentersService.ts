@@ -18,9 +18,11 @@ const getCentersAndLibrariesViaApi = async () => {
 }
 
 export const getCentersAndLibraries = async (): Promise<ScanningCenterType[]> => {
+
     if (CENTERS_DATA_AS_CACHE?.length > 0) {
         return CENTERS_DATA_AS_CACHE
     }
+    localStorage.clear();
     const _cache = localStorage.getItem('CENTERS_DATA_AS_CACHE');
     if (_cache) {
         CENTERS_DATA_AS_CACHE = JSON.parse(_cache);
@@ -75,15 +77,7 @@ const appendOthersItemToList = (list: string[]) => {
     return list;
 }
 
-
-
-// export const panelOneCSS = { bgcolor: "beige",
-//      paddingRight: "10px" , 
-//     border: "1px solid black",  
-//     borderRadius: "5px",
-//     marginRight: "5px",
-//  };
- export const panelOneCSS = "py-2";
+export const panelOneCSS = "py-2";
 
 export const panelMainCSS = "bg-green-200 p-2.5 border border-black rounded text-sm mr-3";
 
