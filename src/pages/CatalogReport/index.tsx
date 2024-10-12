@@ -143,10 +143,10 @@ const CatalogReport = () => {
             </>
             <>
                 <Box sx={{ display: "flex", flexDirection: "row" }}>
-                    <Box sx={panelOneCSS}>
+                    <Box className={panelOneCSS}>
                         <InputLabel id="l1">Profile</InputLabel>
                     </Box>
-                    <Box sx={panelOneCSS}>
+                    <Box className={panelOneCSS}>
                         <Select
                             labelId="l1"
                             id="demo-simple-select-standard"

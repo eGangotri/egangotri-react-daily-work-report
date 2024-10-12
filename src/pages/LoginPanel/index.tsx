@@ -18,7 +18,7 @@ import { loggedInState, loggedUser, loggedUserRole, loggedUserPassword } from ".
 
 import { LoginProps } from "types/dailyWorkReportTypes";
 import { Link } from "react-router-dom";
-import { panelOneCSS } from "service/CentersService";
+import { panelMainCSS, panelOneCSS } from "service/CentersService";
 import { BASIC_ROLE, SUPERADMIN_ROLE } from 'mirror/FrontEndBackendCommonConsts'
 import {
   DELIVERABLE_REPORTS_PATH, GDRIVE_UPLOAD_METADATA_PATH, GDRIVE_UPLOAD_PATH,
@@ -49,10 +49,7 @@ const LoginPanel: React.FC = () => {
   } = methods;
 
   const overrideLogin = import.meta.env.VITE_OVER_RIDE_LOGIN ? JSON.parse(import.meta.env.VITE_OVER_RIDE_LOGIN) : false;
-  const logoutCss = {
-    ...panelOneCSS,
-    display: `${(overrideLogin === true || _isLoggedIn === false) ? "none" : "block"}`
-  }
+  const logoutCss = `p-1 border border-black rounded ml-10 bg-red-600 text-md ${(overrideLogin === true || _isLoggedIn === false) ? "hidden" : "block"}`;
 
   const onFormSubmit = async (formData: LoginFormPropsType) => {
     console.log(`formData ${JSON.stringify(formData)}`);
@@ -86,23 +83,26 @@ const LoginPanel: React.FC = () => {
       {isLoading && <Spinner text={"Wait atleast 30-50 seconds"} />}
 
       <Stack sx={{ display: "flex", flexDirection: "row", fontSize: "30px" }} spacing="2">
-        <Box sx={panelOneCSS}><Link to={LANDING_PAGE_PATH}>Home</Link></Box>
-        <Box sx={panelOneCSS}><Link to={DELIVERABLE_REPORTS_PATH}>Scanning-Metadata</Link></Box>
-        <Box sx={panelOneCSS}><Link to={QA_PATH}>QA-Work</Link></Box>
-        <Box sx={panelOneCSS}><Link to={QA_REPORTS_METADATA_PATH}>QA-Work-Metadata</Link></Box>
-        <Box sx={panelOneCSS}><Link to={GDRIVE_UPLOAD_PATH}>GDrive Upload-Work</Link></Box>
-        <Box sx={panelOneCSS}><Link to={GDRIVE_UPLOAD_METADATA_PATH}>GDrive-Upload-Metadata</Link></Box>
-        {/* <Box sx={panelOneCSS}><Link to={CATALOG_PATH}>Catalog-Work</Link></Box>
-        <Box sx={panelOneCSS}><Link to={CATALOG_REPORTS_METADATA_PATH}>Catalog-Work-Metadata</Link></Box> */}
-        {(_isLoggedIn && _loggedUserRole === SUPERADMIN_ROLE) ? <Box sx={panelOneCSS}><Link to={USERS}>Users</Link></Box> : <></>}
-        <Box sx={logoutCss}><a href="#" onClick={() => logout()}>Logout</a></Box>
+        <Box><Link className={panelMainCSS} to={LANDING_PAGE_PATH}>Home</Link></Box>
+        <Box><Link className={panelMainCSS} to={DELIVERABLE_REPORTS_PATH}>Scanning-Metadata</Link></Box>
+        <Box><Link className={panelMainCSS} to={QA_PATH}>QA-Work</Link></Box>
+        <Box><Link className={panelMainCSS} to={QA_REPORTS_METADATA_PATH}>QA-Work-Metadata</Link></Box>
+        <Box><Link className={panelMainCSS} to={GDRIVE_UPLOAD_PATH}>GDrive Upload-Work</Link></Box>
+        <Box><Link className={panelMainCSS} to={GDRIVE_UPLOAD_METADATA_PATH}>GDrive-Upload-Metadata</Link></Box>
+        {/* <Box><Link className={panelMainCSS} to={CATALOG_PATH}>Catalog-Work</Link></Box>
+        <Box><Link className={panelMainCSS} to={CATALOG_REPORTS_METADATA_PATH}>Catalog-Work-Metadata</Link></Box> */}
+        {(_isLoggedIn && _loggedUserRole === SUPERADMIN_ROLE) ? <Box className="mx-3"><Link className={panelMainCSS} to={USERS}>Users</Link></Box> : <></>}
       </Stack>
       <Box>
         {overrideLogin === true ? <Typography variant="h5">नीचे फिलहाल कोई भी पास्वर्ड डाल दो/Use any password for now</Typography> : <></>}
       </Box>
       <Box sx={{ display: "flex", flexDirection: "row" }}>
         {_isLoggedIn ?
-          <Typography variant="h5">Hi {_.capitalize(_loggedUser)}</Typography> :
+          <Box sx={{ display: "flex", flexDirection: "row" }}>
+            <Typography variant="h5">Hi {_.capitalize(_loggedUser)}
+            </Typography>
+            <Link className={logoutCss} to="#" onClick={logout}>Logout</Link>
+          </Box> :
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onFormSubmit)}>
               <Grid container columns={{ xs: 3, sm: 6, md: 12 }} direction="row" spacing={2}>

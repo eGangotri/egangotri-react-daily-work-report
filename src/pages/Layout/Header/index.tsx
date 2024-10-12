@@ -7,9 +7,9 @@ import Icon from "components/common/Icons";
 
 const Header = () => {
     return (
-        <Box component="div">
+        <Box className="flex pb-5">
             <Icon icon="gangotri" height="100px" width="220px" />
-            <Typography variant="h3" sx={{paddingBottom:"30px"}}>eGangotri Daily Work Report</Typography>
+            <Typography variant="h3" className="pb-5 pl-5">eGangotri Daily Work Report</Typography>
         </Box>
     )
 }

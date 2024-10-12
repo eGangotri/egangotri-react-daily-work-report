@@ -182,10 +182,10 @@ const GDriveUploadeport = () => {
           <Stack spacing={2} direction="column">
             <Grid container spacing={{ xs: 1, md: 4 }} columns={{ xs: 2, sm: 6, md: 12 }} direction="row">
               <Grid item xs={2} sm={3} md={3}>
-                <Box sx={panelOneCSS}>
+                <Box className={panelOneCSS}>
                   <InputLabel id="l1">Center</InputLabel>
                 </Box>
-                <Box sx={panelOneCSS}>
+                <Box className={panelOneCSS}>
                   <Select
                     labelId="l1"
                     id="demo-simple-select-standard"
@@ -203,10 +203,10 @@ const GDriveUploadeport = () => {
                 </Box>
               </Grid>
               <Grid item xs={2} sm={3} md={3}>
-                <Box sx={panelOneCSS}>
+                <Box className={panelOneCSS}>
                   <InputLabel id="l2">Library</InputLabel>
                 </Box>
-                <Box sx={panelOneCSS}>
+                <Box className={panelOneCSS}>
                   <Select
                     labelId="l2"
                     id="demo-simple-select-filled"

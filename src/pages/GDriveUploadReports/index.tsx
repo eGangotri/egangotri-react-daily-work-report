@@ -104,7 +104,7 @@ const GDriveUploadeports = () => {
             <Box sx={{ display: "flex", flexDirection: "column" }}>
                 {_isLoggedIn ?
                     <Stack spacing={2}>
-                        {(_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE) && <Box sx={panelOneCSS} alignItems="columns">
+                        {(_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE) && <Box className={panelOneCSS} alignItems="columns">
                             <Typography>Filter by Operator Name:{" "}</Typography>
                             <Typography>(Use comman separation for multiple values):{" "}</Typography>
                             <TextField
@@ -115,7 +115,7 @@ const GDriveUploadeports = () => {
                                 onChange={(e) => setOperators(e.target.value)}
                             />
                         </Box>}
-                        {(_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE) && <Box sx={panelOneCSS} alignItems="columns">
+                        {(_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE) && <Box className={panelOneCSS} alignItems="columns">
                             <Typography>Filter by Centers :{" "}</Typography>
                             <Typography>(Use comman separation for multiple values):{" "}</Typography>
                             <TextField

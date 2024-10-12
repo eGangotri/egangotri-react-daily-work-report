@@ -84,7 +84,7 @@ const Users = () => {
                 {(_loggedUserRole === SUPERADMIN_ROLE) ?
                     <Stack spacing={2}>
                         <Box>{addUserBackendResponse}</Box>
-                        {<Box sx={panelOneCSS} alignItems="columns">
+                        {<Box className={panelOneCSS} alignItems="columns">
                             <Typography>Username:{" "}</Typography>
                             <TextField
                                 variant="outlined"
@@ -103,10 +103,10 @@ const Users = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             <Box sx={{ display: "flex", flexDirection: "row" }}>
-                                <Box sx={panelOneCSS}>
+                                <Box className={panelOneCSS}>
                                     <InputLabel id="l1">Profile</InputLabel>
                                 </Box>
-                                <Box sx={panelOneCSS}>
+                                <Box className={panelOneCSS}>
                                     <Select
                                         labelId="l1"
                                         id="demo-simple-select-standard"

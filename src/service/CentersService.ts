@@ -77,7 +77,15 @@ const appendOthersItemToList = (list: string[]) => {
 
 
 
-export const panelOneCSS = { bgcolor: "beige", paddingRight: "10px" };
+// export const panelOneCSS = { bgcolor: "beige",
+//      paddingRight: "10px" , 
+//     border: "1px solid black",  
+//     borderRadius: "5px",
+//     marginRight: "5px",
+//  };
+ export const panelOneCSS = "py-2";
+
+export const panelMainCSS = "bg-green-200 p-2.5 border border-black rounded text-sm mr-3";
 
 const range = _.range(1, 75);
 
