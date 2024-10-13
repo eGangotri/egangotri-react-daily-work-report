@@ -79,8 +79,6 @@ const appendOthersItemToList = (list: string[]) => {
 
 export const panelOneCSS = "py-2";
 
-export const panelMainCSS = "bg-green-200 p-2.5 border border-black rounded text-sm mr-3";
-
 const range = _.range(1, 75);
 
 export const catalogProfiles = appendOthersItemToList(["Choose Profile",

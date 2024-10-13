@@ -18,7 +18,6 @@ import { loggedInState, loggedUser, loggedUserRole, loggedUserPassword } from ".
 
 import { LoginProps } from "types/dailyWorkReportTypes";
 import { Link } from "react-router-dom";
-import { panelMainCSS, panelOneCSS } from "service/CentersService";
 import { BASIC_ROLE, SUPERADMIN_ROLE } from 'mirror/FrontEndBackendCommonConsts'
 import {
   DELIVERABLE_REPORTS_PATH, GDRIVE_UPLOAD_METADATA_PATH, GDRIVE_UPLOAD_PATH,
@@ -31,6 +30,8 @@ type LoginFormPropsType = {
   username: string;
   password: string;
 };
+
+const panelMainCSS = "bg-green-200 p-2.5 border border-black rounded text-sm";
 
 const LoginPanel: React.FC = () => {
   const [_isLoggedIn, setIsLoggedIn] = useRecoilState(loggedInState);
@@ -81,19 +82,36 @@ const LoginPanel: React.FC = () => {
   return (
     <Stack spacing={2}>
       {isLoading && <Spinner text={"Wait atleast 30-50 seconds"} />}
-
-      <Stack sx={{ display: "flex", flexDirection: "row", fontSize: "30px", alignItems:'center' }} spacing="2">
-        <Box><Link className={panelMainCSS} to={LANDING_PAGE_PATH}>Home</Link></Box>
-        <Box><Link className={panelMainCSS} to={DELIVERABLE_REPORTS_PATH}>Scanning-Metadata</Link></Box>
-        <Box><Link className={panelMainCSS} to={QA_PATH}>QA-Work</Link></Box>
-        <Box><Link className={panelMainCSS} to={QA_REPORTS_METADATA_PATH}>QA-Work-Metadata</Link></Box>
-        <Box><Link className={panelMainCSS} to={GDRIVE_UPLOAD_PATH}>GDrive Upload-Work</Link></Box>
-        <Box><Link className={panelMainCSS} to={GDRIVE_UPLOAD_METADATA_PATH}>GDrive-Upload-Metadata</Link></Box>
+      <Grid container spacing={2}>
+        <Grid item lg={1} md={3} sm={6} xs={12} className="pb-2.5">
+          <Box><Link className={panelMainCSS} to={LANDING_PAGE_PATH}>Home</Link></Box>
+        </Grid>
+        <Grid item lg={1} md={3} sm={6} xs={12} className="min-w-[10rem]  pb-2.5">
+          <Box><Link className={panelMainCSS} to={DELIVERABLE_REPORTS_PATH}>Scanning-Metadata</Link></Box>
+        </Grid>
+        <Grid item lg={1} md={3} sm={6} xs={12} className="pb-2.5">
+          <Box><Link className={panelMainCSS} to={QA_PATH}>QA-Work</Link></Box>
+        </Grid>
+        <Grid item lg={1} md={3} sm={6} xs={12} className="min-w-[10rem]  pb-2.5">
+          <Box><Link className={panelMainCSS} to={QA_REPORTS_METADATA_PATH}>QA-Work-Metadata</Link></Box>
+        </Grid>
+        <Grid item lg={1} md={3} sm={6} xs={12} className="min-w-[12rem]  pb-2.5">
+          <Box><Link className={panelMainCSS} to={GDRIVE_UPLOAD_PATH}>GDrive Upload-Work</Link></Box>
+        </Grid>
+        <Grid item lg={1} md={3} sm={6} xs={12} className="min-w-[14rem] pb-2.5">
+          <Box><Link className={panelMainCSS} to={GDRIVE_UPLOAD_METADATA_PATH}>GDrive-Upload-Metadata</Link></Box>
+        </Grid>
         {/* <Box><Link className={panelMainCSS} to={CATALOG_PATH}>Catalog-Work</Link></Box>
         <Box><Link className={panelMainCSS} to={CATALOG_REPORTS_METADATA_PATH}>Catalog-Work-Metadata</Link></Box> */}
-        {(_isLoggedIn && _loggedUserRole === SUPERADMIN_ROLE) ? <Box><Link className={panelMainCSS} to={USERS}>Users</Link></Box> : <></>}
-        <Box><Link className={`${panelMainCSS} ${logoutCss}`} to="#" onClick={logout}>Logout</Link></Box>
-      </Stack>
+        {(_isLoggedIn && _loggedUserRole === SUPERADMIN_ROLE) &&
+          <Grid item lg={1} md={3} sm={6} xs={12} className="pb-2.5">
+            <Box><Link className={panelMainCSS} to={USERS}>Users</Link></Box>
+          </Grid>
+        }
+        <Grid item lg={1} md={3} sm={6} xs={12} className="pb-2.5">
+          <Box><Link className={`${panelMainCSS} ${logoutCss}`} to="#" onClick={logout}>Logout</Link></Box>
+        </Grid>
+      </Grid>
       <Box>
         {overrideLogin === true ? <Typography variant="h5">नीचे फिलहाल कोई भी पास्वर्ड डाल दो/Use any password for now</Typography> : <></>}
       </Box>
