@@ -81,8 +81,12 @@ const GDriveUploadeport = () => {
     setSnackBarMsg(["", ""]);
     if (SCAN_CENTERS.length > 0) {
       setCenter(SCAN_CENTERS[0]);
-      setLibrary(libraries[0]);
+      const _libraries = getLibrariesInCenter(SCAN_CENTERS[0]);
+      console.log(`_libraries ${_libraries} SCAN_CENTERS[0] ${SCAN_CENTERS[0]}`);
+      setLibrary(_libraries[0]);
+      setLibraries(_libraries);
     }
+    setGDriveLinkTextBoxes([""]);
     setPdfCount("0");
     setNotes("");
     setGDriveLinks([]);
@@ -141,15 +145,15 @@ const GDriveUploadeport = () => {
   const onFormSubmit = async (formData: GDriveUploadWorkReportType) => {
     console.log(`formData ${JSON.stringify(formData)}`);
   };
-  const [textBoxes, setTextBoxes] = useState<string[]>(['']);
-  const textBoxRefs = useRef<(HTMLInputElement | HTMLTextAreaElement)[]>([]);
+  const [gDriveLinkTextBoxes, setGDriveLinkTextBoxes] = useState<string[]>(['']);
+  const gDriveTextBoxRefs = useRef<(HTMLInputElement | HTMLTextAreaElement)[]>([]);
 
   const handleAddTextBox = () => {
-    setTextBoxes([...textBoxes, '']);
+    setGDriveLinkTextBoxes([...gDriveLinkTextBoxes, '']);
   };
   const handleMinusTextBox = (event: React.MouseEvent<HTMLButtonElement>, index: number) => {
-    const newTextBoxes = textBoxes.filter((_, i) => i !== index);
-    setTextBoxes(newTextBoxes);
+    const newTextBoxes = gDriveLinkTextBoxes.filter((_, i) => i !== index);
+    setGDriveLinkTextBoxes(newTextBoxes);
     const newValues = gDriveLinks.filter((_, i) => i !== index);
     setGDriveLinks(newValues);
     setGDriveUploadReport({ ...gDriveUploadReport, gDriveLinks: newValues, operatorName: _loggedUser });
@@ -157,28 +161,28 @@ const GDriveUploadeport = () => {
 
   const handleTextBoxChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
     const input = event.target.value;
-    console.log(`input ${input}(${index}) ${textBoxRefs.current[index]}`);
+    console.log(`input ${input}(${index}) ${gDriveTextBoxRefs.current[index]}`);
     console.log(`input?.trim().startsWith("https://drive.google.com/) 
       ${input?.trim().startsWith("https://drive.google.com/")}`);
 
     if (!input?.trim().startsWith("https://drive.google.com/") && input?.trim().length > 0) {
-      if (textBoxRefs.current[index]) {
-        textBoxRefs.current[index].style.background = 'red';
+      if (gDriveTextBoxRefs.current[index]) {
+        gDriveTextBoxRefs.current[index].style.background = 'red';
         setGgDriveInvalidErrorMsg("*Cannot be empty or not a valid G-Drive Link");
       }
     }
     else {
       setGgDriveInvalidErrorMsg("");
-      textBoxRefs.current[index].style.background = '';
+      gDriveTextBoxRefs.current[index].style.background = '';
     }
     const newValues = [...gDriveLinks];
     newValues[index] = input
     setGDriveLinks(newValues);
     setGDriveUploadReport({ ...gDriveUploadReport, gDriveLinks: newValues, operatorName: _loggedUser });
     console.log(`gDriveLinks ${gDriveLinks}`);
-    const newTextBoxes = [...textBoxes];
+    const newTextBoxes = [...gDriveLinkTextBoxes];
     newTextBoxes[index] = input;
-    setTextBoxes(newTextBoxes);
+    setGDriveLinkTextBoxes(newTextBoxes);
   }
 
   useEffect(() => {
@@ -252,17 +256,17 @@ const GDriveUploadeport = () => {
             <Stack spacing={5} direction="row">
               <Typography>G Drive Links of Uploads</Typography>
               <Box>
-                {textBoxes.map((textBox, index) => (
+                {gDriveLinkTextBoxes.map((textBox, index) => (
                   <Box key={index} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '10px' }}>
                     <TextField
                       key={index}
                       value={textBox}
                       sx={{ minWidth: "700px", paddingBottom: "10px" }}
                       onChange={(event) => handleTextBoxChange(event, index)}
-                      inputRef={(el) => (textBoxRefs.current[index] = el)}
+                      inputRef={(el) => (gDriveTextBoxRefs.current[index] = el)}
                     />
-                    {index == textBoxes.length - 1 && <Button sx={{ padding: "0" }} onClick={handleAddTextBox}><h2>+</h2></Button>}
-                    {index != textBoxes.length - 1 && <Button sx={{ padding: "0" }} onClick={(event) => handleMinusTextBox(event, index)}><h2>-</h2></Button>}
+                    {index == gDriveLinkTextBoxes.length - 1 && <Button sx={{ padding: "0" }} onClick={handleAddTextBox}><h2>+</h2></Button>}
+                    {index != gDriveLinkTextBoxes.length - 1 && <Button sx={{ padding: "0" }} onClick={(event) => handleMinusTextBox(event, index)}><h2>-</h2></Button>}
                   </Box>
                 ))}
                 <Box sx={{ color: "red" }}>{gDriveInvalidErrorMsg}</Box>
