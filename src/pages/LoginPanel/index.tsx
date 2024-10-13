@@ -17,7 +17,7 @@ import {
 import { loggedInState, loggedUser, loggedUserRole, loggedUserPassword } from "../../index";
 
 import { LoginProps } from "types/dailyWorkReportTypes";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { BASIC_ROLE, SUPERADMIN_ROLE } from 'mirror/FrontEndBackendCommonConsts'
 import {
   DELIVERABLE_REPORTS_PATH, GDRIVE_UPLOAD_METADATA_PATH, GDRIVE_UPLOAD_PATH,
@@ -79,37 +79,46 @@ const LoginPanel: React.FC = () => {
   };
 
 
+  const location = useLocation();
+  const { pathname } = location;
+  const splitLocation = pathname.split("/");
+
+  const activeClass = (_route: string) => {
+    const _equality = splitLocation[1] === _route.replace(/\//, "")
+    return `${panelMainCSS} hover:bg-turquoise-500 ${_equality ? "bg-turquoise-300" : ""} `;
+  }
+
   return (
     <Stack spacing={2}>
       {isLoading && <Spinner text={"Wait atleast 30-50 seconds"} />}
       <Grid container spacing={2}>
         <Grid item lg={1} md={3} sm={6} xs={12} className="pb-2.5">
-          <Box><Link className={panelMainCSS} to={LANDING_PAGE_PATH}>Home</Link></Box>
+          <Box><NavLink className={activeClass(LANDING_PAGE_PATH)} to={LANDING_PAGE_PATH}>Home</NavLink></Box>
         </Grid>
         <Grid item lg={1} md={3} sm={6} xs={12} className="min-w-[10rem]  pb-2.5">
-          <Box><Link className={panelMainCSS} to={DELIVERABLE_REPORTS_PATH}>Scanning-Metadata</Link></Box>
+          <Box><NavLink className={activeClass(DELIVERABLE_REPORTS_PATH)} to={DELIVERABLE_REPORTS_PATH}>Scanning-Metadata</NavLink></Box>
         </Grid>
         <Grid item lg={1} md={3} sm={6} xs={12} className="pb-2.5">
-          <Box><Link className={panelMainCSS} to={QA_PATH}>QA-Work</Link></Box>
+          <Box><NavLink className={activeClass(QA_PATH)} to={QA_PATH}>QA-Work</NavLink></Box>
         </Grid>
         <Grid item lg={1} md={3} sm={6} xs={12} className="min-w-[10rem]  pb-2.5">
-          <Box><Link className={panelMainCSS} to={QA_REPORTS_METADATA_PATH}>QA-Work-Metadata</Link></Box>
+          <Box><NavLink className={activeClass(QA_REPORTS_METADATA_PATH)} to={QA_REPORTS_METADATA_PATH}>QA-Work-Metadata</NavLink></Box>
         </Grid>
         <Grid item lg={1} md={3} sm={6} xs={12} className="min-w-[12rem]  pb-2.5">
-          <Box><Link className={panelMainCSS} to={GDRIVE_UPLOAD_PATH}>GDrive Upload-Work</Link></Box>
+          <Box><NavLink className={activeClass(GDRIVE_UPLOAD_PATH)} to={GDRIVE_UPLOAD_PATH}>GDrive Upload-Work</NavLink></Box>
         </Grid>
         <Grid item lg={1} md={3} sm={6} xs={12} className="min-w-[14rem] pb-2.5">
-          <Box><Link className={panelMainCSS} to={GDRIVE_UPLOAD_METADATA_PATH}>GDrive-Upload-Metadata</Link></Box>
+          <Box><NavLink className={activeClass(GDRIVE_UPLOAD_METADATA_PATH)} to={GDRIVE_UPLOAD_METADATA_PATH}>GDrive-Upload-Metadata</NavLink></Box>
         </Grid>
-        {/* <Box><Link className={panelMainCSS} to={CATALOG_PATH}>Catalog-Work</Link></Box>
-        <Box><Link className={panelMainCSS} to={CATALOG_REPORTS_METADATA_PATH}>Catalog-Work-Metadata</Link></Box> */}
+        {/* <Box><NavLink className={activeClass(LANDING_PAGE_PATH)} to={CATALOG_PATH}>Catalog-Work</NavLink></Box>
+        <Box><NavLink className={activeClass(LANDING_PAGE_PATH)} to={CATALOG_REPORTS_METADATA_PATH}>Catalog-Work-Metadata</NavLink></Box> */}
         {(_isLoggedIn && _loggedUserRole === SUPERADMIN_ROLE) &&
           <Grid item lg={1} md={3} sm={6} xs={12} className="pb-2.5">
-            <Box><Link className={panelMainCSS} to={USERS}>Users</Link></Box>
+            <Box><NavLink className={activeClass(USERS)} to={USERS}>Users</NavLink></Box>
           </Grid>
         }
         <Grid item lg={1} md={3} sm={6} xs={12} className="pb-2.5">
-          <Box><Link className={`${panelMainCSS} ${logoutCss}`} to="#" onClick={logout}>Logout</Link></Box>
+          <Box><NavLink className={`${panelMainCSS} ${logoutCss}`} to="#" onClick={logout}>Logout</NavLink></Box>
         </Grid>
       </Grid>
       <Box>
