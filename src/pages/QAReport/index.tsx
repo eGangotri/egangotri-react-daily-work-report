@@ -31,6 +31,7 @@ import Typography from "@mui/material/Typography";
 import { QAWorkReportType } from "mirror/qaWorkReportType";
 import SendQAReportDialog from "./SendQAReportToServerDialog";
 import { DecorateQAWorkReport } from "utils/AllQAReportStats";
+import CenterLibrarySelector from "pages/common/CenterLibrarySelector";
 
 
 const emptyQAStats = {
@@ -197,55 +198,16 @@ const QAReport = () => {
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onFormSubmit)}>
           <Stack spacing={2} direction="column">
-            <Grid container spacing={{ xs: 1, md: 4 }} columns={{ xs: 2, sm: 6, md: 12 }} direction="row">
-              <Grid item xs={2} sm={3} md={3}>
-                <Box className={panelOneCSS}>
-                  <InputLabel id="l1">Center</InputLabel>
-                </Box>
-                <Box className={panelOneCSS}>
-                  <Select
-                    labelId="l1"
-                    id="demo-simple-select-standard"
-                    value={center}
-                    onChange={handleCenterChange}
-                    sx={{ minWidth: '200px' }}
-                    disabled={!_isLoggedIn}
-                  >
-                    {SCAN_CENTERS.map((option: string) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </Box>
-              </Grid>
-              <Grid item xs={2} sm={3} md={3}>
-                <Box className={panelOneCSS}>
-                  <InputLabel id="l2">Library</InputLabel>
-                </Box>
-                <Box className={panelOneCSS}>
-                  <Select
-                    labelId="l2"
-                    id="demo-simple-select-filled"
-                    value={library}
-                    onChange={handleLibChange}
-                    label="Library"
-                    sx={{ minWidth: '200px' }}
-                    disabled={!_isLoggedIn}
-                  >
-                    {(libraries || []).map((option: string, index: number) => (
-                      <MenuItem
-                        key={option}
-                        value={option}
-                        selected={option === library || index === 1}
-                      >
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </Box>
-              </Grid>
-            </Grid>
+          <CenterLibrarySelector
+              center={center}
+              library={library}
+              libraries={libraries}
+              SCAN_CENTERS={SCAN_CENTERS}
+              panelOneCSS={panelOneCSS}
+              _isLoggedIn={_isLoggedIn}
+              handleCenterChange={handleCenterChange}
+              handleLibChange={handleLibChange}
+            />
 
             <Stack spacing={5} direction="row">
               <Typography>Folder Names Worked On (comma-separated)</Typography>
