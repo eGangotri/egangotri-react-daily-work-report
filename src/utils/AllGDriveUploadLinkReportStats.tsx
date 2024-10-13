@@ -20,6 +20,7 @@ On ${all.timeOfRequest}\n
 G-Drive Links pdfs uploaded to: ${all.gDriveLinks.map((x)=>{
   return `Link: ${x}\n`
 })} \n
+Pdf Count: ${all.pdfCount} 
 Notes: ${all.notes} 
 `;
   };
@@ -32,6 +33,7 @@ Notes: ${all.notes}
       "lib": qaData.lib,
       "dateOfReport": qaData.dateOfReport,
       "timeOfRequest": qaData.timeOfRequest,
+      "pdfCount": qaData.pdfCount,
       "notes": qaData.notes,
       "gDriveLinks": qaData.gDriveLinks,
     }
@@ -63,6 +65,10 @@ export const DecorateGDriveWorkReport: React.FC<{ all: GDriveUploadWorkReportTyp
           })}
           </ul>
         </span>{' '}
+      </Typography>
+      
+      <Typography>
+        Pdf-Count: <span style={{ fontWeight: 'bold' }}>{all.pdfCount}</span>
       </Typography>
       
       <Typography>

@@ -6,6 +6,7 @@ export interface GDriveUploadWorkReportType {
     notes: string;
     operatorName: string;
     gDriveLinks: string[],
+    pdfCount: number;
 }
 
 

@@ -13,7 +13,7 @@ import {
 import _, { add, set } from "lodash";
 import React, { ChangeEvent, ReactNode, useEffect, useRef, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { getLibrariesInCenter, SCAN_CENTERS, panelOneCSS, getCentersAndLibraries } from "service/CentersService";
+import { getLibrariesInCenter, SCAN_CENTERS, panelOneCSS, getCentersAndLibraries, LIBRARY_MENU_OPTIONS } from "service/CentersService";
 import LoginPanel from "pages/LoginPanel";
 import {
   useRecoilState,
@@ -36,6 +36,7 @@ const emptyQAStats = {
   timeOfRequest: new Date().toDateString(),
   dateOfReport: new Date(),
   notes: "",
+  pdfCount: 0,
   gDriveLinks: [],
   operatorName: "",
 } as GDriveUploadWorkReportType
@@ -58,6 +59,8 @@ const GDriveUploadeport = () => {
 
   const [center, setCenter] = React.useState<string>("");
   const [_notes, setNotes] = React.useState<string>("");
+  const [pdfCount, setPdfCount] = React.useState<string>("");
+
   const [gDriveLinks, setGDriveLinks] = React.useState<string[]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -76,6 +79,11 @@ const GDriveUploadeport = () => {
     setGDriveUploadReport(staffWithOperatorName(_loggedUser));
     setDisabledState(true);
     setSnackBarMsg(["", ""]);
+    if (SCAN_CENTERS.length > 0) {
+      setCenter(SCAN_CENTERS[0]);
+      setLibrary(libraries[0]);
+    }
+    setPdfCount("0");
     setNotes("");
     setGDriveLinks([]);
   };
@@ -90,6 +98,17 @@ const GDriveUploadeport = () => {
     setGDriveUploadReport(_gDriveWorkData);
   }
 
+
+  const pdfCountOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const val = event.target.value;
+    const _pdfCount = (isNaN(parseInt(val)) ? "0" : val); //returns a string
+    setPdfCount(val);
+    const _gDriveWorkData = {
+      ...gDriveUploadReport,
+      pdfCount: parseInt(_pdfCount),
+    }
+    setGDriveUploadReport(_gDriveWorkData);
+  }
 
   const handleCenterChange = (event: SelectChangeEvent) => {
     const val = event.target.value;
@@ -242,12 +261,23 @@ const GDriveUploadeport = () => {
                       onChange={(event) => handleTextBoxChange(event, index)}
                       inputRef={(el) => (textBoxRefs.current[index] = el)}
                     />
-                    {index == textBoxes.length-1 && <Button sx={{ padding: "0" }} onClick={handleAddTextBox}><h2>+</h2></Button>}
-                    {index != textBoxes.length-1 && <Button sx={{ padding: "0" }} onClick={(event) => handleMinusTextBox(event, index)}><h2>-</h2></Button>}
+                    {index == textBoxes.length - 1 && <Button sx={{ padding: "0" }} onClick={handleAddTextBox}><h2>+</h2></Button>}
+                    {index != textBoxes.length - 1 && <Button sx={{ padding: "0" }} onClick={(event) => handleMinusTextBox(event, index)}><h2>-</h2></Button>}
                   </Box>
                 ))}
-                <Box sx={{color:"red"}}>{gDriveInvalidErrorMsg}</Box>
+                <Box sx={{ color: "red" }}>{gDriveInvalidErrorMsg}</Box>
               </Box>
+            </Stack>
+            <Stack spacing={5} direction="row">
+              <Typography>Pdf Count</Typography>
+              <TextField
+                id="pdfCount"
+                type="number"
+                onChange={pdfCountOnChange}
+                sx={{ width: "400px" }}
+                value={pdfCount}
+                multiline={false}
+                maxRows={3} />
             </Stack>
             <Stack spacing={5} direction="row">
               <Typography>Any Optional Notes</Typography>
