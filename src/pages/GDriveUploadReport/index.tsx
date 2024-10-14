@@ -144,7 +144,7 @@ const GDriveUploadeport = () => {
   const methods = useForm<GDriveUploadWorkReportType>();
   const { handleSubmit } = methods;
   const onFormSubmit = async (formData: GDriveUploadWorkReportType) => {
-    console.log(`formData ${JSON.stringify(formData)}`);
+    console.log(`formData:onFormSubmit}`);
   };
   const [gDriveLinkTextBoxes, setGDriveLinkTextBoxes] = useState<string[]>(['']);
   const gDriveTextBoxRefs = useRef<(HTMLInputElement | HTMLTextAreaElement)[]>([]);

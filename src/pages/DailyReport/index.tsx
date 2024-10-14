@@ -151,7 +151,6 @@ const DailyReport = () => {
   const methods = useForm<DailyWorkReportType>();
   const { handleSubmit } = methods;
   const onFormSubmit = async (formData: DailyWorkReportType) => {
-    console.log(`formData ${JSON.stringify(formData)}`);
   };
 
   return (

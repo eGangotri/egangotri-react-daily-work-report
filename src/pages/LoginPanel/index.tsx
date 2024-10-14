@@ -53,7 +53,6 @@ const LoginPanel: React.FC = () => {
   const logoutCss = `bg-red-600 ${(overrideLogin === true || _isLoggedIn === false) ? "hidden" : ""}`;
 
   const onFormSubmit = async (formData: LoginFormPropsType) => {
-    console.log(`formData ${JSON.stringify(formData)}`);
     if (overrideLogin === true) {
       setIsLoggedIn(true);
       setLoggedUserRole(BASIC_ROLE);

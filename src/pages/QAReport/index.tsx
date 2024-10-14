@@ -177,7 +177,7 @@ const QAReport = () => {
   const methods = useForm<QAWorkReportType>();
   const { handleSubmit } = methods;
   const onFormSubmit = async (formData: QAWorkReportType) => {
-    console.log(`formData ${JSON.stringify(formData)}`);
+    console.log(`formData:onFormSubmit}`);
   };
 
   useEffect(() => {
