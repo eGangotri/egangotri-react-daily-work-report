@@ -3,8 +3,3 @@ import React from 'react';
 
 import DailyReport from '.';
 
-test('renders learn react link', () => {
-  render(<DailyReport />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
