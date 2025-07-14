@@ -22,7 +22,9 @@ import moment from "moment";
 import { DD_MM_YYYY_FORMAT } from "utils/DailyReportUtil";
 import Spinner from "widgets/Spinner";
 import { CATALOG_REPORTS_METADATA_PATH } from "Routes";
-import { sendFilteredFormToServerGet, sendFilteredFormToServerGetForBasicUser } from "api/service/ScannerReportService";
+import { sendFilteredFormToServerGet,
+     sendFilteredFormToServerGetForBasicUser
+     } from "api/service/ScannerReportService";
 
 
 const DeliverableReports = () => {
@@ -69,6 +71,7 @@ const DeliverableReports = () => {
     const generateAggregatedReport = async () => {
         generateReport(true);
     }
+   
     const [dayRangeValue, setDayRangeValue] = React.useState<DateRange<Dayjs | null>>([
         dayjs(null),
         dayjs(null),
@@ -138,9 +141,8 @@ const DeliverableReports = () => {
                                 </DemoItem>
                             </DemoContainer>
                         </LocalizationProvider>
-                        <Stack spacing="2" direction="row">
-                            <Box sx={{margin:'0 20px 0 0'}}>
-                                <Button
+                        <Stack spacing={3} direction="row">
+                            <Button
                                 color="primary"
                                 variant="contained"
                                 component="span"
@@ -149,7 +151,6 @@ const DeliverableReports = () => {
                             >
                                 Generate Report
                             </Button>
-                            </Box>
                             <Button
                                 color="primary"
                                 variant="contained"

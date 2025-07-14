@@ -82,7 +82,7 @@ export const panelOneCSS = "py-2";
 const range = _.range(1, 75);
 
 export const catalogProfiles = appendOthersItemToList(["Choose Profile",
-    ...(range.map(x => `Treasures-${x}`))]);
+    ...(range.map((x: number) => `Treasures-${x}`))]);
 
 
 export const getLibrariesInCenter = (center: string = ""): string[] => {
