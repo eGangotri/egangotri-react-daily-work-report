@@ -47,10 +47,11 @@ export default class AllPdfStats {
 On ${all.timeOfRequest}\n
 Work From Home: ${all.workFromHome ? "Yes" : "No"}
 Notes: ${all.notes} 
-Total Pdf Count: ${all.pdfCount} 
-Total Page Count: ${all.globalCount}\n
+${AllPdfStats.pdfDataArrayToString(all.pdfs)}
+Total Books scanned: ${all.pdfCount} 
+Total Pages scanned: ${all.globalCount}\n
 Total Size: ${FrontEndBackendCommonCode.sizeInfo(all.totalSize)}\n
-${AllPdfStats.pdfDataArrayToString(all.pdfs)}`;
+`;
   };
 
   static convertPdfStatsToDailyWorkReportTypeObject = (pdfData: ScanWorkReportType) => {
