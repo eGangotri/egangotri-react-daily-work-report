@@ -11,7 +11,6 @@ import { ADMIN_ROLE, BASIC_ROLE, CATALOGER_ROLE, QA_ROLE, SUPERADMIN_ROLE } from
 import { FaRegTrashAlt } from "react-icons/fa";
 
 import _ from "lodash";
-import moment from "moment";
 import Spinner from "widgets/Spinner";
 
 import {
@@ -40,7 +39,7 @@ const Users = () => {
         const pathname = window.location.pathname
         console.log(`addUser`, window.location.pathname);
         setIsLoading(true);
-        if (_loggedUserRole === SUPERADMIN_ROLE) {
+        if (_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE) {
             const resp = await addUserToBackend({
                 username: user,
                 password,
@@ -81,7 +80,7 @@ const Users = () => {
                 <LoginPanel />
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
-                {(_loggedUserRole === SUPERADMIN_ROLE) ?
+                {(_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE) ?
                     <Stack spacing={2}>
                         <Box>{addUserBackendResponse}</Box>
                         {<Box className={panelOneCSS} alignItems="columns">
