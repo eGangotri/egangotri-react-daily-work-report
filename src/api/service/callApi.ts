@@ -51,3 +51,31 @@ export const callBackendPostApi = async (route: string, _jsonBody: {}) => {
 
   return resp;
 }
+
+export const callBackendPatchApi = async (route: string, _jsonBody: {}) => {
+  const _url = `${backendServer}${route}`
+  console.log(`_url ${_url}`)
+
+  const options: RequestInit = {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(_jsonBody)
+  }
+  const resp = await fetchWithMiddleware(_url, options)
+
+  return resp;
+}
+
+export const callBackendDeleteApi = async (route: string, _jsonBody: {}) => {
+  const _url = `${backendServer}${route}`
+  console.log(`_url ${_url}`)
+
+  const options: RequestInit = {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(_jsonBody)
+  }
+  const resp = await fetchWithMiddleware(_url, options)
+
+  return resp;
+}
