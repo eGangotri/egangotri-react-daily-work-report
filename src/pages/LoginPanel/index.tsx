@@ -20,6 +20,7 @@ import { LoginProps } from "types/dailyWorkReportTypes";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { ADMIN_ROLE, BASIC_ROLE, SUPERADMIN_ROLE } from 'mirror/FrontEndBackendCommonConsts'
 import {
+  CENTERS,
   DELIVERABLE_REPORTS_PATH, GDRIVE_UPLOAD_METADATA_PATH, GDRIVE_UPLOAD_PATH,
   LANDING_PAGE_PATH, QA_PATH, QA_REPORTS_METADATA_PATH, USERS
 } from "Routes";
@@ -112,9 +113,12 @@ const LoginPanel: React.FC = () => {
         {/* <Box><NavLink className={activeClass(LANDING_PAGE_PATH)} to={CATALOG_PATH}>Catalog-Work</NavLink></Box>
         <Box><NavLink className={activeClass(LANDING_PAGE_PATH)} to={CATALOG_REPORTS_METADATA_PATH}>Catalog-Work-Metadata</NavLink></Box> */}
         {(_isLoggedIn && (_loggedUserRole === SUPERADMIN_ROLE || _loggedUserRole === ADMIN_ROLE)) &&
-          <Grid item lg={1} md={3} sm={6} xs={12} className="pb-2.5">
-            <Box><NavLink className={activeClass(USERS)} to={USERS}>Users</NavLink></Box>
-          </Grid>
+          <>
+            <Grid item lg={1} md={3} sm={6} xs={12} className="pb-2.5">
+              <Box><NavLink className={activeClass(USERS)} to={USERS}>Users</NavLink></Box>
+            </Grid> <Grid item lg={1} md={3} sm={6} xs={12} className="pb-2.5">
+              <Box><NavLink className={activeClass(CENTERS)} to={CENTERS}>Centers</NavLink></Box>
+            </Grid></>
         }
         <Grid item lg={1} md={3} sm={6} xs={12} className="pb-2.5">
           <Box><NavLink className={`${panelMainCSS} ${logoutCss}`} to="#" onClick={logout}>Logout</NavLink></Box>

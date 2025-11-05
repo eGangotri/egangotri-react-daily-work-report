@@ -7,6 +7,7 @@ import GDriveUploadeports from 'pages/GDriveUploadReports';
 import QAReport from 'pages/QAReport';
 import QAReports from 'pages/QAReports';
 import Users from 'pages/Users';
+import Centers from 'pages/Centers';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
@@ -19,6 +20,7 @@ export const GDRIVE_UPLOAD_PATH = "/gDriveUpload";
 export const GDRIVE_UPLOAD_METADATA_PATH = "/gDriveUploadReports";
 export const CATALOG_REPORTS_METADATA_PATH = "/catReports";
 export const USERS = "/users";
+export const CENTERS = "/centers";
 
 const DWRRoutes: React.FC = () => (
     <Routes>
@@ -33,6 +35,7 @@ const DWRRoutes: React.FC = () => (
             {<Route path={GDRIVE_UPLOAD_PATH} element={<GDriveUploadeport />} />}
             {<Route path={GDRIVE_UPLOAD_METADATA_PATH} element={<GDriveUploadeports />} />}
             {<Route path={USERS} element={<Users />} />}
+            {<Route path={CENTERS} element={<Centers />} />}
         </Route>
     </Routes>
 );
